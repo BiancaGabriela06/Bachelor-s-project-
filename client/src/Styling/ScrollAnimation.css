@@ -1,0 +1,31 @@
+.parallax{
+    width: auto;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.tourist{
+    background-image: url("../assets/images/tourist.png");
+    background-size: cover;
+    background-position: bottom;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    justify-content: center;
+    z-index: 3;
+
+}
+
+.plane{
+    background-image: url("../assets/images//plane.png");
+    background-size: cover;
+    justify-content: left;
+    width: 20%;
+    height: 20%;
+    position: absolute;
+
+}

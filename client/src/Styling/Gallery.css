@@ -1,0 +1,10 @@
+.galerie-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+  
+  .poza-galerie {
+    width: 30%; /* Ajustați dimensiunea imaginilor după necesități */
+    margin: 10px;
+  }
