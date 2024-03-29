@@ -95,7 +95,7 @@ export const userInfo = (req, res) => {
         }
         
         console.log(data);
-        const query2 = "Select * from users_info where userid = ?"
+        const query2 = "Select * from users_info where iduser = ?"
         db.query(query2, data[0].id, (err, data) => {
             if(err) {
                 console.log(err);
@@ -107,5 +107,57 @@ export const userInfo = (req, res) => {
                 return res.json({Status: "Success", data: data[0]});
             }
         })
+    })
+}
+
+export const isAdmin = (req, res) => {
+    console.log(req.query.username);
+    db.query("Select admin from users where username=?", [req.query.username], (err, data)=>{
+        if(err)
+            res.json({Status: "Error", Error: err});
+        else{
+            console.log(data);
+            if(data[0].admin == 1)
+               res.json({Status: "isAdmin"})
+            else
+               res.json({Status: "noAdmin"})
+
+        }
+    })
+}
+
+export const editInfo = (req, res) => {
+    console.log(req.body);
+    var id;
+    db.query('Select id from users where username = ?', [req.body.username], (err, data) => {
+        if(err){
+            console.log("Eroare select id editInfo");
+            console.log({Status: "Error"})
+        }
+        else{
+           id = data[0].id;
+           if(req.body.aboutUser != ''){
+            db.query('Update users_info set aboutUser = ? where iduser = ?', [req.body.aboutUser, id], (err1, result1) =>{
+                if(err1) console.log(err1);
+            })
+           }
+           if(req.body.phonenumber != ''){
+            db.query('Update users_info set phonenumber = ? where iduser = ?', [req.body.phonenumber, id], (err2, result2) =>{
+                if(err2) console.log(err2);
+            })
+           }
+           if(req.body.emailContact != ''){
+            db.query('Update users_info set emailContact = ? where iduser = ?', [req.body.emailContact, id], (err3, result3) =>{
+                if(err3) console.log(err3);
+            })
+           }
+
+           db.query('Select * from users_info where iduser = ?', [id], (err4, result4) => {
+              if(err4) console.log(err4);
+              else
+                 return res.json({Status: "Success", Data: result4[0]})
+           })
+           
+        }
     })
 }

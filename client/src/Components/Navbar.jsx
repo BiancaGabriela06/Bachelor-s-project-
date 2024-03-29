@@ -1,12 +1,13 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import AfterLogin from './AfterLogin';
 import { AppBar, Button, Grid,  Avatar} from '@mui/material';
 import EcoVoyageLogo from '../assets/images/logo.png'
 
 
+
 const Navbar = () => {
     var auth = localStorage.getItem("currentUser");
-
+    
     return auth ? (
      <AppBar position="static" style={{ background: '#228B22' }}>
     <Grid container spacing = {30} rowSpacing={1} sx={{ flexGrow: 1 }} justifyContent= 'space-between' alignItems="center">
@@ -18,7 +19,9 @@ const Navbar = () => {
                <Button href="/trip" sx={{color: 'white', fontSize: '15px'}}>Plan your trip</Button>
                <Button href="/button" sx={{color: 'white', fontSize: '15px'}}>Forum</Button>
                <Button href="/explore" sx={{color: 'white', fontSize: '15px'}}>Explore</Button>
-               <Button href="/about" sx={{color: 'white', fontSize: '15px'}}>About</Button>       
+               <Button href="/about" sx={{color: 'white', fontSize: '15px'}}>About</Button> 
+              
+              
         </Grid>
         <Grid item>
             <AfterLogin />

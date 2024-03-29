@@ -6,6 +6,7 @@ const MissionComponent = () => {
         <>
        
        <Box style={{background: "linear-gradient(180deg, #65A388, #c4e4e8)"}} sx={{ justifyContent: "center", textAlign: "center" }}>
+        
         <Typography  variant="h3">OUR MISSION</Typography>
         <Grid padding={10} sx={{display: "flex"}}>
            <Grid item padding={10}>

@@ -3,7 +3,7 @@ import { Canvas } from "@react-three/fiber";
 import { useGLTF, Stage, PresentationControls } from "@react-three/drei";
 import {Grid} from "@mui/material"
 
-function Model(props) {
+/*function Model(props) {
     const { scene } = useGLTF("/backpack2.glb");
     return <primitive object={scene} {...props} />
   }
@@ -30,5 +30,5 @@ const Backpack = () => {
     )
 
 }
-
-export default Backpack
+*/
+//export default Backpack

@@ -29,7 +29,7 @@ const UserPostsProfile = () => {
       try {
           const response = await axios.post('http://localhost:3001/image/user', { username });
           if (response.data.Status === 'Success') {
-          setProfileImage(response.data.profileimage);
+          setProfileImage(response.data.Data);
           } else {
           console.log(response.err);
           }
@@ -145,13 +145,13 @@ const UserPostsProfile = () => {
     
     return (
       <>
-        <Grid container>
-          User Posts: 
+        <Grid container justifyContent="center">
+          
           {userPosts.map((post) => (
             
             <Card key={post.postid} sx={{ width: '700px', m: 2 }}>
               <CardHeader
-                avatar={<Avatar alt="Profile picture" src={profileImage} />}
+                avatar={<Avatar alt="Profile picture" src={`http://localhost:3001/profileimages/` + profileImage} />}
                 action={
                   <IconButton aria-label="settings">
                     <MoreVertIcon />

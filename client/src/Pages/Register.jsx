@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import axios from "axios";
 import videobackground from '../assets/videos/register-background.mp4'
 import {useNavigate} from 'react-router-dom'
-import {Typography , Link, Box, CssBaseline, Container, Avatar, TextField, Grid, Button}from '@mui/material';
+import {Typography , Alert, Link, Box, CssBaseline, Container, Avatar, TextField, Grid, Button}from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import imageicon from "../assets/images/logo.png";
 import LoginIcon from '@mui/icons-material/Login';
@@ -80,11 +80,11 @@ const Register = () => {
           <Typography component="h1" variant="h5">
             Become a member of EcoVoyage!
           </Typography>
-          <Typography>
-                    {message && message}
-                    {error && error}
-          </Typography>
-          <Box component="form"  onSubmit={handleRegister} sx={{ mt: 3 }}>
+          {message && 
+          (<Alert severity="success">{message}</Alert>)
+          }
+          {error && (<Alert severity="error">{error}</Alert>)}
+          <Box component="form"  onSubmit={handleRegister} style={{padding: '10px'}}sx={{ mt: 3 }}>
             <Grid container spacing={2}>
             <Grid item xs={12}>
                 <TextField

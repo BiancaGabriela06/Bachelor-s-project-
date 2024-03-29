@@ -26,80 +26,70 @@ app.use(
 export const RegisterSendVerification = async (req, res) => {
     try {
       const error = validationResult(req);
-  
-      console.log(req.body.gmail)
+      console.log(req.body.gmail);
       if (!error.isEmpty()) {
-        return res.status(400).json({ errors: error.array() });
-      }
-
-      const gmailRegex = /^[a-zA-Z0-9._-]+@gmail\.com$/;
-      if(gmailRegex.test(req.body.gmail) == 0){
-        console.log("Required Gmail")
-        res.json({Status: "Error", Error: "Required Gmail"})
-      }
-      else {
-        const query = promisify(db.query).bind(db);
-  
-        const result = await query(
-          "SELECT * from users where LOWER(mail) = LOWER(?)",
-          [req.body.gmail]
-        );
-    
-        if (result && result.length) {
-          return res.status(409).send({
-            msg: 'This user is already in use!',
-          });
-        }
-    
-        const hash = await promisify(bycript.hash)(req.body.password, 10);
-        const image = 'icon-user.png';
-        const emailverified = 0;
-    
-        const insertResult = await query(
-          "INSERT INTO users (username, mail, password, profileimage, emailVerified) VALUES (?,?,?,?,?)",
-          [req.body.username, req.body.gmail, hash, image, emailverified]
-        );
-    
-        const mailSubject = 'Mail Verification';
-        const randomToken = Randomstring.generate();
-        console.log(randomToken);
-        const content = `<p>Hii ${req.body.username}, Please <a href="http://localhost:3000/verify-mail?token=${randomToken}">verify your email</a></p>`;
-    
-        await sendMail(req.body.gmail, mailSubject, content);
-    
-        await query(
-          'UPDATE users set tokenEmail = ? where mail = ?',
-          [randomToken, req.body.gmail]
-        );
-    
-        console.log('User has been created');
-        db.query("Select id from users where username = ?", [req.body.username], (err, data) => {
-            if(err) {
-                console.log(err);
-                return res.json(err);
-            }
-            else{
-                db.query("INSERT INTO users_info (userid) VALUES (?)", data[0].id, (err, data) =>{
-                    if(err) {
-                        console.log(err);
-                        return res.json(err);
-                    }
-                    else {
-                         console.log("Insert in users_info succesful")
-                    }
-                })
-            }
-         })
-        return res.json({ Status: 'Success', message:'Check you gmail for verification' });
+        return res.status(400).json({ Status: 'Error', Error: error.array() });
       }
   
-      
+      const query = promisify(db.query).bind(db);
+  
+      const result = await query(
+        "SELECT * from users where LOWER(mail) = LOWER(?)",
+        [req.body.gmail]
+      );
+  
+      if (result && result.length) {
+        return res.send({Status: "Error", 
+          Error: 'This user is already in use!',
+        });
+      }
+  
+      const hash = await promisify(bycript.hash)(req.body.password, 10);
+      const image = 'icon-user.png';
+      const emailverified = 0;
+  
+      const insertResult = await query(
+        "INSERT INTO users (username, mail, password, profileimage, emailVerified) VALUES (?,?,?,?,?)",
+        [req.body.username, req.body.gmail, hash, image, emailverified]
+      );
+  
+      const mailSubject = 'Mail Verification';
+      const randomToken = Randomstring.generate();
+      console.log(randomToken);
+      const content = `<p>Hii ${req.body.username}, Please <a href="http://localhost:3000/verify-mail?token=${randomToken}">verify your email</a></p>`;
+  
+      await sendMail(req.body.gmail, mailSubject, content);
+  
+      await query(
+        'UPDATE users set tokenEmail = ? where mail = ?',
+        [randomToken, req.body.gmail]
+      );
+  
+      console.log('User has been created');
+      db.query("Select id from users where username = ?", [req.body.username], (err, data) => {
+          if(err) {
+              console.log(err);
+              return res.json({Status: 'Error', Error: err});
+          }
+          else{
+              const datamembership = new Date();
+              db.query("INSERT INTO users_info (iduser, datamembership) VALUES (?, ?)", [data[0].id, datamembership], (err2, data) =>{
+                  if(err) {
+                      console.log(err);
+                      return res.json({Status: 'Error', Error: err2});
+                  }
+                  else {
+                       console.log("Insert in userinfo succesful")
+                  }
+              })
+          }
+       })
+      return res.json({ Status: 'Success', message:'Check you gmail for verification' });
     } catch (error) {
       console.error('Error in RegisterSendVerification:', error);
-      return res.status(500).json({ error: 'Internal Server Error' });
+      return res.json({ Status: 'Error', Error: 'Internal Server Error' });
     }
   };
-
   
 export const login = (req, res) => {
     ///CHECK USER
@@ -140,15 +130,25 @@ export const login = (req, res) => {
                         if(result.emailVerified == 0)
                             {
                                 console.log("Email-ul not verified. Check you mails.");
-                                return res.json({Status: "ErrorEmail", Message: "Email-ul not verified. Check you mails."});
+                                return res.json({Status: "Error", Message: "Gmail not verified. Check you mails."});
                             }
                         else {
                             const id = data[0].id;
                             const mail = data[0].mail;
                             const token = generateToken(id, mail)
-                            console.log("Success")
-                            console.log(data)
-                            return res.json({Status: "Success", Login: true, Token: token, Data: data[0]})
+                            db.query("UPDATE users SET tokenLogin = ? WHERE id = ?",[token, id], (error, message) => {
+                                if(error) {
+                                    console.log(error);
+                                    return res.json({Status: "Error", Message: "Token not inserted in database"});
+                                }
+                                else
+                                {
+                                    console.log("Success")
+                                    console.log(data)
+                                    return res.json({Status: "Success", Login: true, Token: token, Data: data[0]})
+                                }
+                            })
+                            
                         }
                        }
                   })

@@ -19,9 +19,9 @@ import AddTravelIntinerary from './Components/AddTravelIntinerary'
 import TripPlanner from './Components/TripPlanner';
 import Login from './Pages/Login'
 import Profile2 from './Pages/Profile2'
-import About from "./Pages/About"
 import Explore from "./Pages/Explore"
 import GalleryProfile from './Components/GalleryProfile';
+import HomeDashboard from "./Pages/Dashboard/HomeDashboard";
 
 function App() {
   
@@ -49,9 +49,9 @@ function App() {
         <Route path="/addtravelintinerary" element={<AddTravelIntinerary/>}/>
         <Route path="/tripplanner" element={<TripPlanner/>} />
         <Route path="/profile2" element={<Profile2/>}/>
-        <Route path="/profile/about" element={<About/>}/>
         <Route path="/profile/gallery" element={<GalleryProfile/>}/>
         <Route path="/explore" element={<Explore/>}/>
+        <Route path="/dashboard" element={<HomeDashboard/>}/>
       </Routes>
     </div>
     </>

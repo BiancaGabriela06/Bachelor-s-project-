@@ -13,6 +13,8 @@ import restarantsRoutes from "./routes/localrestaurants.js"
 import bikesRoutes from "./routes/rentbikes.js"
 import co2eRoutes from "./routes/travelco2.js"
 import placesRoutes from "./routes/places.js"
+import groupsRoutes from "./routes/groups.js"
+import dashboardRoutes from "./routes/dashboard.js"
 
 const app = express()
 
@@ -29,6 +31,8 @@ app.use('/restaurants', restarantsRoutes);
 app.use('/bikes', bikesRoutes);
 app.use('/co2e', co2eRoutes);
 app.use('/places', placesRoutes)
+app.use('/groups', groupsRoutes);
+app.use('/dashboard', dashboardRoutes)
 
 
 
@@ -79,10 +83,10 @@ app.post("/image/user", (req, res, err) => {
       return res.json(err);
     }
     else {
-      
+      console.log("Poza profil pentru " + req.body.username + " este : " + data[0].profileimage)
       return res.json({
         Status: "Success",
-        profileimage: data[0].profileimage
+        Data: data[0].profileimage
       });
     }
   })
@@ -107,6 +111,48 @@ app.post("/image/post", upload2.single('file'), (req, res, err) => {
   });
   /// tre sa trimitem inapoi req.file.path si req.file.filename pot
 });
+
+const storage3 = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'public/articleimages');
+  },
+  filename: function(req, file, cb) {
+    cb(null, file.fieldname + "_" + Date.now() + path.extname(file.originalname))
+  }
+})
+
+const upload3 = multer();
+
+app.post('/image/article', upload3.array('uploadedImages'), function(req, res, next) {
+  var file = req.files;
+  console.log(req.files);
+  if (req.files && req.files.length > 0) {
+    const filenames = req.files.map(file => file.filename);
+    return res.json({ Status: "Success", filenames: filenames });
+  } else {
+    return res.status(400).json({ error: "No files uploaded" });
+  }
+});
+
+/*app.post("/image/article", upload3.array('file'), (req, res, err) => {
+  if (!req.files || req.files.length === 0) {
+    console.log("No files uploaded")
+    return res.status(400). json({ error: "No files uploaded" });
+}
+
+try {
+    const filenames = req.files.map(file => file.filename);
+
+    return res.json({
+        status: "Success",
+        filenames: filenames
+    });
+} catch (err) {
+    console.error("Error uploading article images:", err);
+    return res.status(500).json({ error: "Error uploading article images" });
+}
+});
+*/
 
 const verifyJwt = (req, res, next) => {
   const token = req.headers["access-token"];

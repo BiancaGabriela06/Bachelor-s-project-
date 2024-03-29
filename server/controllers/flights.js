@@ -33,9 +33,6 @@ export const searchAirport = async (req, res) => {
 
 export const searchFlights = async (req, res) => {
   
-    console.log("Search Flight " + req.query.sourceCode + " " + req.query.destCode);
-    const departureLoc = req.query.sourceCode;
-    const destinationLoc = req.query.destCode;
     const flightDetailesArray = [];
     const options = {
         method: 'GET',

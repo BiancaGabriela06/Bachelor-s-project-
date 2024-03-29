@@ -1,16 +1,9 @@
 import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom'
 import axios from 'axios';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
+import {TextField, Alert, Link, Grid, Box, Container, Button, Avatar, Typography} from '@mui/material';
 import LoginIcon from '@mui/icons-material/Login';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import imageicon from "../assets/images/logo.png";
 import videobackground from '../assets/videos/login-background.mp4'
@@ -57,12 +50,6 @@ const Login = () => {
             else if(res.data.Status === 'Error'){
                setError(res.data.Error);
             }
-            else if(res.data.Status === 'ErrorEmail'){
-              setMessage(res.data.Message)
-            }
-
-
-           
         })
         .catch(err => console.log(err))
         
@@ -98,11 +85,11 @@ const Login = () => {
           <Typography component="h1" variant="h5">
             Welcome Back!
           </Typography>
-          <Typography>
-                    {message && message}
-                    {error && error}
-          </Typography>
-          <Box component="form"  onSubmit={handleLogin} sx={{ mt: 3 }}>
+          {message && 
+          (<Alert severity="success">{message}</Alert>)
+          }
+          {error && (<Alert severity="error">{error}</Alert>)}
+          <Box component="form"  onSubmit={handleLogin} style={{padding: '10px'}}sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
