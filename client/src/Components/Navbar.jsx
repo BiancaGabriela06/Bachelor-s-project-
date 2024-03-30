@@ -17,7 +17,7 @@ const Navbar = () => {
         <Grid item  sx={{ color: 'white',  display: 'flex', justifyContent: 'center' }}>
                <Button href="/home" sx={{color: 'white', fontSize: '15px'}}>Home</Button>
                <Button href="/trip" sx={{color: 'white', fontSize: '15px'}}>Plan your trip</Button>
-               <Button href="/button" sx={{color: 'white', fontSize: '15px'}}>Forum</Button>
+               <Button href="/forum" sx={{color: 'white', fontSize: '15px'}}>Forum</Button>
                <Button href="/explore" sx={{color: 'white', fontSize: '15px'}}>Explore</Button>
                <Button href="/about" sx={{color: 'white', fontSize: '15px'}}>About</Button> 
               
