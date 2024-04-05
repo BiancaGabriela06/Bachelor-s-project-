@@ -22,6 +22,7 @@ import Profile2 from './Pages/Profile2'
 import Explore from "./Pages/Explore"
 import GalleryProfile from './Components/GalleryProfile';
 import HomeDashboard from "./Pages/Dashboard/HomeDashboard";
+import UserPage from "./Pages/UserPage"
 
 function App() {
   
@@ -52,6 +53,7 @@ function App() {
         <Route path="/profile/gallery" element={<GalleryProfile/>}/>
         <Route path="/explore" element={<Explore/>}/>
         <Route path="/dashboard" element={<HomeDashboard/>}/>
+        <Route path="/users/:username" element={<UserPage/>}/>
       </Routes>
     </div>
     </>

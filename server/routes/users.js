@@ -1,5 +1,5 @@
 import express from "express";
-import {changePassword, changeUserInfo, editInfo, isAdmin, userInfo } from "../controllers/users.js"
+import {changePassword, changeUserInfo, editInfo, getUsers, get_userdata, get_usergroup, isAdmin, userInfo } from "../controllers/users.js"
 
 
 const router = express.Router()
@@ -9,5 +9,8 @@ router.post('/changeuserinfo', changeUserInfo)
 router.get('/userinfo', userInfo);
 router.get('/isAdmin', isAdmin);
 router.put('/editinfo', editInfo)
+router.get('/getusers', getUsers)
+router.get('/getuser', get_userdata)
+router.get('/getusergroups', get_usergroup)
 
 export default router;

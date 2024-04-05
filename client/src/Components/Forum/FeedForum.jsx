@@ -3,6 +3,8 @@ import axios from 'axios'
 import {useNavigate} from 'react-router-dom'
 import {Container, Grid, Avatar, Button, TextField, Autocomplete, Typography} from "@mui/material"
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
+import ForumPosts from "./UsersPosts"
+import UserPostsProfile from './UserPostsProfile';
 
 const FeedForum = () => {
     const navigate = useNavigate();
@@ -10,15 +12,17 @@ const FeedForum = () => {
     const [username, setUsername] = useState(currentUser.replace(/^"|"$/g, ''));
     const [file, setFile] = useState("");
     const [places, setPlaces] = useState([])
-    const [groupSelected, setGroupSelected] = useState([])
+    const [groupSelected, setGroupSelected] = useState("")
     const [location, setLocation] = useState("")
+    const [groups, setGroups] = useState([])
     var [profileImage, setProfileImage] = useState();
-    const [groups, setGroups] = useState([]);
+
     const [post, setPost] = useState({
         username: "",
         filename: "",
         description: "",
-        location: ""
+        location: "",
+        group: ""
     });
 
     useEffect(() => {
@@ -91,7 +95,10 @@ const FeedForum = () => {
       };
 
     const sharePost = () => {
+        post.location = location
+        post.group =  groupSelected
         post.username = username;
+
         console.log(post);
 
         axios.post('http://localhost:3001/posts/sharepost', post)
@@ -99,7 +106,7 @@ const FeedForum = () => {
               if(res.data.Status === 'Success') {
                    post.filename =""
                    setFile("")
-                   navigate("/profile2")
+                   window.location.reload(false);
               }
               else{
                  console.log(res.data.Error)
@@ -117,14 +124,13 @@ const FeedForum = () => {
                                 <Grid item xs = {1}>
                                      <Avatar src={`http://localhost:3001/profileimages/` + profileImage} alt={username} />
                                 </Grid>
-                                <Grid item xs = {12}>
+                                <Grid item xs = {15}>
                                  <TextField fullWidth={true} label={`What's on your mind, ${username}?`} 
                                          onChange={e => setPost({...post, description: e.target.value})}
                                          style={{ borderBottom: 'none' }}/>
                                 </Grid>
-                                <Grid item xs={4}>
+                                <Grid item xs={2}>
                                      <Button>
-                                         
                                          <input
                                                  type="file"
                                                  id="file"
@@ -143,13 +149,12 @@ const FeedForum = () => {
                                      </Grid>
                                       )}
                                  </Grid>
-                                 <Grid item xs={6}>
-                                     <Grid item xs = {2}> 
+                                <Grid item xs = {5}> 
                                      <Autocomplete
                                             disablePortal
                                             id="combo-box-demo"
                                             options={groups.map((group) => group.title)}
-                                            sx={{ width: 300 }}
+                                            sx={{ width: 200, height: 50 }}
                                             value={groupSelected}
                                             onChange={(event, newValue) => {
                                                 setGroupSelected(newValue);
@@ -159,24 +164,23 @@ const FeedForum = () => {
                                             )}
                                         />
                                       </Grid>
-                                     <Grid item xs = {6}>
+                                     <Grid item xs = {5}>
                                              <Autocomplete id="combo-box-demo" options={places.map((option) => option.name)} sx={{ width: 200, height: 50 }}
-                                                 renderInput={(params) => <TextField {...params} label="Location" variant="filled" 
+                                                 renderInput={(params) => <TextField {...params} label="Location" 
                                                  value={location}
                                                  onChange={(e) => { setLocation( e.target.value)}}
                                                  />}
                                                  value={location}
                                                  onChange={(event, value) => setLocation(value)}/>
-                                 
                                      </Grid>
-                
- 
-                                </Grid>
-                                <Grid item xs = {2}>
+                                <Grid item xs = {3}>
                                     <Button variant = "outlined" style = {{color: '#228B22'}}onClick={sharePost}>Share Post</Button>
                                 </Grid>
                                  
-                             </Grid>
+        </Grid>
+        <Grid container>
+            <UserPostsProfile/>
+        </Grid>
          </Container>
         </>
     )

@@ -2,15 +2,11 @@ import React, {useState, useEffect} from "react";
 import axios from "axios"
 import Navbar from "../Components/Navbar"
 import Footer from "../Components/Footer"
-import Backpack from "../Components/Backpack3D";
-import pikbig from "../assets/images/instructionspik.jpg"
 import ScrollAnimation from "../Components/ScrollAnimation";
 import WelcomeComponent from "../Components/WelcomeComponent";
 import MissionComponent from "../Components/MissionComponent";
 import FunctionsWebsite from "../Components/FunctionsWebsite";
 import ReviewUsers from "../Components/ReviewUsers";
-import AlertGroup from "../Components/AlertGroup"
-import {motion, useScroll} from "framer-motion";
 
 const Home = () => {
 
@@ -44,16 +40,11 @@ const Home = () => {
        <Navbar/>
       </div>
       <div>
-        {alert && (
-          <AlertGroup/>
-        )}
-        </div>
-        <div>
-       <WelcomeComponent/>
-       <MissionComponent/>
-       <ScrollAnimation/>
-       <FunctionsWebsite/>
-       <ReviewUsers/>
+          <WelcomeComponent/>
+          <MissionComponent/>
+          <ScrollAnimation/>
+          <FunctionsWebsite/>
+          <ReviewUsers/>
       </div>
       <div>
         <Footer/>

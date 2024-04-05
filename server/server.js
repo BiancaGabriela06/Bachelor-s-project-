@@ -65,7 +65,7 @@ app.post("/image/profile", upload.single('file'), (req, res, err) => {
 });
 
 app.post("/image/profile/user", (req,res, err) => {
-  const query = "UPDATE users SET profileimage = ? where username = ?";
+  const query = "UPDATE users SET profileImage = ? where username = ?";
   db.query(query, [req.body.filename, req.body.user], (err, result) => {
     if(err) return json(err);
     else {
@@ -76,17 +76,17 @@ app.post("/image/profile/user", (req,res, err) => {
 })
 
 app.post("/image/user", (req, res, err) => {
-  const query = "Select profileimage from users where username = ?";
-  db.query(query, [req.body.username], (err, data) => {
+  console.log(req.body.username)
+  db.query("Select profileImage from users where username = ?;", [req.body.username], (err, data) => {
     if(err) {
       console.log(err);
       return res.json(err);
     }
     else {
-      console.log("Poza profil pentru " + req.body.username + " este : " + data[0].profileimage)
+      console.log("Poza profil pentru " + req.body.username + " este : " + data[0].profileImage)
       return res.json({
         Status: "Success",
-        Data: data[0].profileimage
+        Data: data[0].profileImage
       });
     }
   })

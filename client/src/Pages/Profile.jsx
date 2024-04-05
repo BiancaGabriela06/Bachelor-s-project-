@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from '../Components/Navbar'
 import "../Styling/Profile.css"
 import Share from "../Components/Share"
-import PostsUserTimeline from "../Components/PostsUserTimeline"
+
 import {Grid, Button} from '@mui/material';
 
 const Profile = () => {
@@ -89,7 +89,7 @@ const Profile = () => {
                           <Share/>
                           <br/><br/>
                         </div>
-                          <PostsUserTimeline/>
+                          
                       </div>
                     </div> 
                   </div>

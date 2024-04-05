@@ -4,7 +4,7 @@ import { Container, Alert, Typography, Paper, Button, Grid, Chip } from "@mui/ma
 import AddIcon from '@mui/icons-material/Add';
 import CheckIcon from '@mui/icons-material/Check';
 
-const Groups = () => {
+const Groups = (user) => {
     const [groups, setGroups] = useState([]);
     var currentUser = localStorage.getItem("currentUser");
     const [username, setUsername] = useState(currentUser.replace(/^"|"$/g, ''));
@@ -13,7 +13,7 @@ const Groups = () => {
     const [lastJoinedGroup, setLastJoinedGroup] = useState(null);
 
     useEffect(() => {
-        axios.get('http://localhost:3001/dashboard/groups', {params: { username: username}})
+        axios.get('http://localhost:3001/groups/groups', {params: { username: username}})
             .then(response => {
                 if(response.data.Status === 'Success')
                 setGroups(response.data.Data);
@@ -28,7 +28,7 @@ const Groups = () => {
             groupid: groupid,
             username: username
         }
-        axios.post('http://localhost:3001/dashboard/groups/join', values)
+        axios.post('http://localhost:3001/groups/join', values)
         .then(response => {
             if(response.data.Status === 'Success'){
                 setMessage(response.data.Message);

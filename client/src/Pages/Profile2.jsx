@@ -7,7 +7,7 @@ import FolderSharedIcon from '@mui/icons-material/FolderShared';
 import CollectionsIcon from '@mui/icons-material/Collections';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import Navbar from "../Components/Navbar"
-import UserPostsProfile from '../Components/UserPostsProfile';
+import UserPostsProfile from '../Components/Forum/UserPostsProfile';
 import Footer from '../Components/Footer';
 
 const Profile = () => {
@@ -75,43 +75,6 @@ const Profile = () => {
         fetchData1();
     }, []);
 
-
-    const fileHandler = async (e) => {
-        const selectedFile = e.target.files[0];
-        setFile(selectedFile);
-      
-        const formdata = new FormData();
-        formdata.append('file', selectedFile);
-      
-        try {
-          const response = await axios.post('http://localhost:3001/image/post', formdata);
-      
-          if (response.data.Status === 'Success') {
-            post.filename = response.data.filename;
-          }
-        } catch (error) {
-          console.error('Error uploading file:', error);
-        }
-      };
-
-    const sharePost = () => {
-        post.username = username;
-        console.log(post);
-
-        axios.post('http://localhost:3001/posts/sharepost', post)
-        .then(res => {
-              if(res.data.Status === 'Success') {
-                   post.filename =""
-                   setFile("")
-                   navigate("/profile2")
-              }
-              else{
-                 console.log(res.data.Error)
-              }
-        })
-        .catch(err => console.log(err))
-
- }
 
     return (
         <>

@@ -2,26 +2,34 @@ import db from "../database.js";
 
 export const insertPost = (req, res) => {
 
+    console.log(req.body);
     const query = "Select id from users where username = ?"
     db.query(query, [req.body.username], (err, data) => {
         if(err) {
             console.log(err);
             return res.json(err);
         }
-
-        console.log(data[0].id);
-        const datePost =  new Date();
-        const query2 = "Insert into posts (userid, image, location, description, date, likes, comments) values (?, ?, ?, ?, ? , ?, ?)"
-        db.query(query2, [data[0].id, req.body.filename, req.body.location, req.body.description, datePost, 0, 0], (err, data) => {
-            if(err) {
-                console.log(err);
-                return res.json(err);
+         
+        db.query("Select idgroup from `groups` where title = ?", [req.body.group], (error, data2) =>{
+               if(error) console.log(error)
+               else{
+                console.log(data[0].id);
+                const datePost =  new Date();
+                const groupid = data2[0].idgroup;
+                const query2 = "Insert into posts (userid, image, location, description, date, likes, comments, groupid) values (?, ?, ?, ?, ? , ?, ?, ?)"
+                db.query(query2, [data[0].id, req.body.filename, req.body.location, req.body.description, datePost, 0, 0, groupid], (err, data) => {
+                    if(err) {
+                        console.log(err);
+                        return res.json(err);
+                    }
+                    else{
+                        console.log("Post has been created")
+                        return res.json({Status: "Success"})
+                    }
+                })
             }
-            else{
-                console.log("Post has been created")
-               return res.json({Status: "Success"})
-            }
-        })
+        } )
+        
     })
 }
 
@@ -91,7 +99,7 @@ export const showComments = (req, res) => {
         else if(data.length == 0)
             return res.json({Status: "Success", Message: "No comments"})
         else {
-            console.log(data);
+            console.log("Select comment: " + data);
             return res.json({Status: "Success", Message: "Post with comments", Comments: data})
         }
            
@@ -139,5 +147,41 @@ export const deleteComment = (req, res) => {
         else{
             return res.json({Status: "Success"})
         }
+    })
+}
+
+export const posts = (req, res) => {
+    const query1 = `SELECT 
+                    p.postid, 
+                    u.username, 
+                    p.image, 
+                    p.location, 
+                    p.description, 
+                    p.date, 
+                    p.likes, 
+                    p.comments, 
+                    g.title,
+                    u.profileImage
+                    FROM  posts p JOIN  \`groups\` g ON p.groupid = g.idgroup
+                    JOIN  group_user gu ON gu.groupid = g.idgroup
+                    JOIN users u ON u.id = gu.userid
+                    ORDER by p.date desc; `
+
+    db.query(query1, [], (err, data) => {
+        if(err) console.log(err)
+        else{
+          return res.json({Status: "Success", Data: data})
+       
+    }
+    })
+}
+
+export const increaseLikes = (req, res) => {
+    const query = "Update posts SET likes = ? where postid = ?"
+    db.query(query, [req.body.likes, req.body.postid], (err, data) => {
+        if(err) console.log(err)
+        else{
+           return res.json({Status: "Success"})
+    }
     })
 }
