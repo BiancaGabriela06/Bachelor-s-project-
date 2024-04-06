@@ -5,7 +5,7 @@ import {Grid, Avatar, Divider, Alert, Typography} from "@mui/material"
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 
 
-const About = (profileImage, aboutUser, phonenumber, emailContact) => {
+const About = ({profileImage, aboutUser, phonenumber, emailContact}) => {
 
   return (
     <>

@@ -1,6 +1,6 @@
 import React, {useState} from "react"
 import axios from 'axios'
-import {Grid, TextField, Button, Alert} from "@mui/material"
+import {Grid, TextField, Button, Alert, Autocomplete} from "@mui/material"
 import CheckIcon from '@mui/icons-material/Check';
 
 const AddArticle = () => {
@@ -11,13 +11,33 @@ const AddArticle = () => {
     const [username, setUsername] = useState(currentUser.replace(/^"|"$/g, ''));
     const [idArticle, setIdArticle] = useState(0);
     const [files, setFiles] = useState([]);
-
+    const [selectedCategories, setSelectedCategories] = useState([]);
+    const [groupTitle, setGroupTitle] = useState("");
     const [values, setValues] = useState({
       username: username,
       title: "",
-      text: ""
+      text: "",
+      categories: ""
     })
 
+    const categories = [
+      {label: "mountains"},
+      {label: "city"},
+      {label: "vegan"},
+      {label: "sea"},
+      {label: "couple"},
+      {label: "single"},
+      {label: "europe"}
+  ]
+  const handleDelete = (index) => {
+    setSelectedCategories((prevAttributes) => prevAttributes.filter((_, i) => i !== index));
+};
+
+    const addCategory = () => {
+        if (selectedCategories.indexOf(groupTitle) === -1 && groupTitle !== "") {
+            setSelectedCategories([...selectedCategories, groupTitle]);
+        }
+    };
     const handleImageChange = (event) => {
       const selectedImages = Array.from(event.target.files);
       setImages(selectedImages);
@@ -34,7 +54,8 @@ const AddArticle = () => {
           }
       })
     .catch(err => console.log(err));
- 
+     
+    values.categories = selectedCategories;
     axios.post('http://localhost:3001/dashboard/article', values)
     .then(res => {
         if (res.data.Status === 'Success') {
@@ -88,6 +109,23 @@ const AddArticle = () => {
             </Grid>
           </div>
         )}
+      </Grid>
+      <Grid item xs = {12}>
+           <Autocomplete
+                    multiple
+                    disablePortal
+                    id="combo-box-demo"
+                    options={categories.map((option) => option.label)}
+                    sx={{ width: 300 }}
+                    value={selectedCategories}
+                    onChange={(event, newValue) => {
+                        setSelectedCategories(newValue);
+                    }}
+                    renderInput={(params) => (
+                        <TextField {...params} label="Categories" />
+                    )}
+                />
+      <Button onClick={addCategory} disabled={!groupTitle.trim()} style={{marginLeft: "10px"}}>Add Category</Button>
       </Grid>
       <Grid item>
         <Button variant="contained" color="primary" onClick={submitArticle}>

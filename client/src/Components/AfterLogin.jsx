@@ -24,7 +24,7 @@ const Accesibility = () => {
       };
     const handleProfile = () => {
         setAnchorEl(null);
-        navigate("/profile2")
+        navigate("/profile")
       };
 
     const handleLogout = () => {

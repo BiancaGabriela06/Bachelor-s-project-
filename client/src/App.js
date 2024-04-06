@@ -4,9 +4,8 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home"
 import Register from "./Pages/Register"
 import ForgotPassword from "./Pages/ForgotPassword"
-import Profile from "./Pages/Profile"
 import ProfileSettings from './Pages/ProfileSettings';
-import AboutProfile from "./Pages/AboutProfile"
+import AboutProfile from "./Components/UserProfile/AboutProfile"
 import Gallery from "./Pages/Gallery"
 import Forum from "./Pages/Forum"
 import EmailVerification from "./Pages/EmailVerification"
@@ -18,7 +17,7 @@ import Footer from './Components/Footer';
 import AddTravelIntinerary from './Components/AddTravelIntinerary'
 import TripPlanner from './Components/TripPlanner';
 import Login from './Pages/Login'
-import Profile2 from './Pages/Profile2'
+import Profile from './Pages/Profile'
 import Explore from "./Pages/Explore"
 import GalleryProfile from './Components/GalleryProfile';
 import HomeDashboard from "./Pages/Dashboard/HomeDashboard";
@@ -35,7 +34,6 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
-        <Route path="/profile" element={<Profile />} />
         <Route path="/profilesettings" element={<ProfileSettings />} />
         <Route path="/profile/timeline" element = {<Profile />} />
         <Route path="/profile/about" element ={<AboutProfile />}/>
@@ -49,7 +47,7 @@ function App() {
         <Route path="/footer" element = {<Footer/>} />
         <Route path="/addtravelintinerary" element={<AddTravelIntinerary/>}/>
         <Route path="/tripplanner" element={<TripPlanner/>} />
-        <Route path="/profile2" element={<Profile2/>}/>
+        <Route path="/profile" element={<Profile/>}/>
         <Route path="/profile/gallery" element={<GalleryProfile/>}/>
         <Route path="/explore" element={<Explore/>}/>
         <Route path="/dashboard" element={<HomeDashboard/>}/>

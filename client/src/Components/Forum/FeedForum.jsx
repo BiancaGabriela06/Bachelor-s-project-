@@ -3,7 +3,6 @@ import axios from 'axios'
 import {useNavigate} from 'react-router-dom'
 import {Container, Grid, Avatar, Button, TextField, Autocomplete, Typography} from "@mui/material"
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
-import ForumPosts from "./UsersPosts"
 import UserPostsProfile from './UserPostsProfile';
 
 const FeedForum = () => {

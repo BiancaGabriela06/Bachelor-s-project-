@@ -6,17 +6,25 @@ import CheckIcon from '@mui/icons-material/Check';
 
 const Groups = (username) => {
     const [groups, setGroups] = useState([]);
-    //var currentUser = localStorage.getItem("currentUser");
-    //const [username, setUsername] = useState(currentUser.replace(/^"|"$/g, ''));
+    var currentUser = localStorage.getItem("currentUser");
+    const [userconnected, setUsername] = useState(currentUser.replace(/^"|"$/g, ''));
     const [message, setMessage] = useState("")
     const [success, setSuccess] = useState(0);
     const [lastJoinedGroup, setLastJoinedGroup] = useState(null);
 
     useEffect(() => {
-        axios.get('http://localhost:3001/users/getusergroups', {params: { username: username}})
+        axios.get('http://localhost:3001/users/getusergroups', {
+            params: {
+              username: username,
+              userconnected: userconnected
+            }
+          })
             .then(response => {
-                if(response.data.Status === 'Success')
-                setGroups(response.data.Data);
+                if(response.data.Status === 'Success'){
+                    console.log(response.data.Data);
+                    setGroups(response.data.Data);
+                }
+                
             })
             .catch(error => {
                 console.error("Error fetching groups:", error);

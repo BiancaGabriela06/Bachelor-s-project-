@@ -181,27 +181,62 @@ export const getUsers = (req, res) => {
 
 export const get_userdata = (req, res) => {
     const username = req.query.username;
-    const query = `Select u.username, u.profileimage, ui.datamembership, ui.phonenumber, 
+    console.log('USer is : ' + username)
+    const query = `Select u.username, u.profileImage,  DATE_FORMAT(ui.datamembership, '%Y-%m-%d') AS datamembership, ui.phonenumber, 
                     ui.emailContact, ui.aboutUser
-                     JOIN users_info ui ON u.id = ui.iduser
-                     Where u.username =? `
+                   From users u  JOIN users_info ui ON u.id = ui.iduser
+                     Where u.username = ? `
     db.query(query, [username], (err, data) => {
         if(err) console.log(err);
         else {
-            return res.json({Status: "Success", Data: data})
+            console.log( data[0])
+            return res.json({Status: "Success", Data: data[0]})
         }
     })
 }
 
 export const get_usergroup = (req, res) =>{
-   const username = req.query.username;
-   query = `SELECT g.idgroup, g.title, g.description, g.attributes
-        FROM \`groups\` g 
-        LEFT JOIN \`group_user\` gu ON g.idgroup = gu.groupid 
-        join users u on u.id = gu.usedid
-        GROUP BY g.idgroup`
-
-    db.query(query, [username], (err, data) => {
-        if(err) console.log
-    })
+   const username = req.query.username.username
+   const userconnected = req.query.userconnected;
+   db.query(`
+   SELECT g.idgroup, g.title, g.description, g.attributes
+   FROM \`groups\` g 
+   LEFT JOIN \`group_user\` gu ON g.idgroup = gu.groupid 
+   LEFT join \`users\` u on u.id = gu.userid
+   where u.username = ?
+   GROUP BY g.idgroup`, [req.query.username.username],
+   (err, data) => {
+       if (err) {
+           console.log(err);
+           return res.send({ Status: 'Error', Message: 'Failed to fetch groups' });
+       } else {
+           const groupsWithArrayAttributes = data.map(group => ({
+               ...group,
+               attributes: group.attributes.split(',').map(attribute => attribute.trim())
+           }));
+           
+           db.query(`
+               SELECT gu.groupid 
+               FROM users u JOIN group_user gu ON u.id = gu.userid 
+               WHERE u.username = ?`, 
+               [req.query.userconnected], 
+               (error, result) => {
+                   if (error) {
+                       console.log(error);
+                       return res.status(500).send({ Status: 'Error', Message: 'Failed to check user membership' });
+                   } else {
+                      
+                       const userGroups = result.map(row => row.groupid);
+                       const groupsWithMembership = groupsWithArrayAttributes.map(group => ({
+                           ...group,
+                           isMember: userGroups.includes(group.idgroup)
+                       }));
+                    
+                       return res.send({ Status: 'Success', Data: groupsWithMembership });
+                   }
+               }
+           );
+       }
+   }
+);
 }

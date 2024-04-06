@@ -1,106 +1,149 @@
-import React, { useState, useEffect } from 'react';
+import {React, useState, useEffect} from 'react';
 import axios from 'axios';
-import {NavLink, useNavigate} from 'react-router-dom'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Navbar from '../Components/Navbar'
-import "../Styling/Profile.css"
-import Share from "../Components/Share"
+import {useNavigate} from 'react-router-dom'
+import {Grid, Avatar,  Typography, Button, Box, Tab, Tabs } from "@mui/material"
+import Navbar from "../Components/Navbar"
+import Footer from '../Components/Footer';
+import Timeline from '../Components/UserPage/Timeline';
+import PropTypes from 'prop-types';
+import About from "../Components/UserProfile/AboutProfile"
+import Gallery from "../Components/UserProfile/GalleryProfile"
 
-import {Grid, Button} from '@mui/material';
+function CustomTabPanel(props) {
+    const { children, value, index, ...other } = props;
+  
+    return (
+      <div
+        role="tabpanel"
+        hidden={value !== index}
+        id={`simple-tabpanel-${index}`}
+        aria-labelledby={`simple-tab-${index}`}
+        {...other}
+      >
+        {value === index && (
+          <Box sx={{ p: 3 }}>
+            <Typography>{children}</Typography>
+          </Box>
+        )}
+      </div>
+    );
+  }
+  
+  CustomTabPanel.propTypes = {
+    children: PropTypes.node,
+    index: PropTypes.number.isRequired,
+    value: PropTypes.number.isRequired,
+  };
+  
+  function a11yProps(index) {
+    return {
+      id: `simple-tab-${index}`,
+      'aria-controls': `simple-tabpanel-${index}`,
+    };
+  }
+
 
 const Profile = () => {
 
-  const navigate = useNavigate();
+    var currentUser = localStorage.getItem("currentUser");
+    const [username, setUsername] = useState(currentUser.replace(/^"|"$/g, ''));
+    const [datemember, setDateMember] = useState("");
+    var [profileImage, setProfileImage] = useState();
+    const [places, setPlaces] = useState("")
+    const [value, setValue] = useState(0);
 
-  var currentUser = localStorage.getItem("currentUser");
-  const [username, setUsername] = useState(currentUser.replace(/^"|"$/g, ''));
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+      };
 
-  var [profileImage, setProfileImage] = useState();
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.post('http://localhost:3001/image/user', { username });
-        if (response.data.Status === 'Success') {
-          setProfileImage(response.data.profileimage);
-        } else {
-          console.log(response.err);
+    useEffect(() => {
+        const fetchData1 = async () => {
+        try {
+            const response = await axios.post('http://localhost:3001/image/user', { username });
+            if (response.data.Status === 'Success') {
+            console.log(response.data.Data);
+            setProfileImage(response.data.Data);
+            } else {
+            console.log(response.err);
+            }
+        } catch (error) {
+            console.error(error);
         }
-      } catch (error) {
-        console.error(error);
-      }
-    };
+        };
 
-    fetchData();
-  }, []);
-  const settingsButton = (e) => {
-    navigate("/profilesettings");
-  }
+        const fetchData2 = async () => {
+            try {
+                const response = await axios.post('http://localhost:3001/user/info', { username });
+                if (response.data.Status === 'Success') {
+                  setDateMember(response.data.Data.datemembership);
+                } else {
+                console.log(response.err);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+            };
+        
+            const fetchData3 = async () => {
+                try {
+                    const response = await axios.get('http://localhost:3001/places/listofcities');
+                    if (response.data.Status === 'Success') {
+                        setPlaces(response.data.Data);
+                    } else {
+                        console.log(response.data.err);
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
 
-  return (
-		<div>
-      <Navbar />
-			<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"/>
-        <div class="container bootdey">
-        <div class="content-page">
-            <div class="profile-banner" style={{/*background:url(https://bootdey.com/img/Content/bg1.jpg);*/}}>
-            <div class="col-sm-3 avatar-container">
-              { profileImage && ( <img src={`http://localhost:3001/profileimages/` + profileImage} class="img-circle profile-avatar" alt="User avatar"/> )}
+     }
+        console.log(profileImage);
+
+        fetchData3();
+        fetchData2();
+        fetchData1();
+    }, []);
+
+
+    return (
+        <>
+            <div>
+                <Navbar/>
             </div>
-            <div class="col-sm-12 profile-actions text-right">
-              <button onClick= {settingsButton} type="button" class="btn btn-primary btn-sm"><i class=""></i>Settings</button>
-            </div>
-          </div>
-            <div class="content">
+            
+            <Grid container  style={{ padding: '100px' }} spacing={1}>
+                  <Grid item xs={4} align="center" style={{ boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)' }}>
+                  <Avatar src={`http://localhost:3001/profileimages/` + profileImage} alt="Profile Image"/>
 
-            <div class="row">
-              <div class="col-sm-3">
-                
-                <div class="text-center user-profile-2" style={{/*margin-top:120px*/}}>
-                  <ul class="list-group">
-                              <li class="list-group-item">
-                                    <h4><b>{username}</b></h4>   
-                              </li>
-                              <li class="list-group-item">
-                                  <Button href="/tripplanner" style={{textDecoration: 'none'}}><h4>Trips</h4> </Button>   
-                              </li>
-                  </ul>
-                </div>
-                
-              </div>
-              
-              <div class="col-sm-9">
-                <div class="widget widget-tabbed">
-                  
-                  <ul class="nav nav-tabs nav-justified">
-                  <li><NavLink to ="/profile/timeline" data-toggle="tab" class="fa fa-pencil">Timeline</NavLink></li>
-                    <li><NavLink to ="/profile/about" data-toggle="tab" className="fa fa-user"> About</NavLink></li>
-                    <li><NavLink to ="/profile/gallery" data-toggle="tab" className="fa fa-laptop"> Gallery</NavLink></li>
-                  </ul>
-                  
-
-                  
-                  <div class="tab-content">
-                    
-                    <div class="tab-pane animated active fadeInRight" id="my-timeline">
-                      <div class="user-profile-content">
-                        
-                        
-                        <div class="the-timeline">
-                          <Share/>
-                          <br/><br/>
-                        </div>
-                          
-                      </div>
-                    </div> 
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>	
-        </div>
-        </div>
-		</div>
-	);
-};
+                       <Typography variant="h4" >{username}</Typography>
+                       <Typography>Member since 23-07-2023{datemember}</Typography>
+                       <Button href="/tripplanner">Trip intineraries</Button>
+                       
+                  </Grid>
+                  <Grid item row xs={8} style={{ boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)', justifyContent: 'space-between' }}>
+                  <Box sx={{ padding: '100px', width: '100%' }}>
+                        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                            <Tabs value={value} justifyContent="space-between" sx={{padding: '10px', margin: '10px'}} onChange={handleChange} aria-label="basic tabs example">
+                                <Tab label="Timeline" sx={{ color: '#228B22', fontSize: '13px' }} {...a11yProps(0)} />
+                                <Tab label="About"  sx={{ color: '#228B22', fontSize: '13px' }} {...a11yProps(1)} />
+                                <Tab label="Gallery"  sx={{ color: '#228B22', fontSize: '13px' }} {...a11yProps(2)} />
+                            </Tabs>
+                        </Box>
+                        <CustomTabPanel value={value} index={0}>
+                            <Timeline username={username}/>
+                        </CustomTabPanel>
+                        <CustomTabPanel value={value} index={1}>
+                            <About/>
+                        </CustomTabPanel>
+                        <CustomTabPanel value={value} index={2}>
+                            <Gallery/>
+                        </CustomTabPanel>
+                   </Box>       
+                  </Grid>     
+            </Grid>
+            <Footer/>
+        </>
+    )
+}
 
 export default Profile;

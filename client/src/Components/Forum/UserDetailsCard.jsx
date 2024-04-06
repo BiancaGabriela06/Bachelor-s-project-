@@ -5,9 +5,11 @@ import { Avatar, Card, CardContent, Typography, Grid } from '@mui/material';
 const UserDetailsCard = ({ user }) => {
   const navigate = useNavigate();
   const handleNameClick = () => {
+    console.log(user);
     navigate(`/users/${user.username}`)
     console.log(`Navigating to ${user.username}'s profile`);
   };
+  
 
   return (
     <Card>

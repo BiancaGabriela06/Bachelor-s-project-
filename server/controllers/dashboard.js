@@ -15,7 +15,7 @@ export const postArticle = (req, res) => {
             console.log(data[0])
             iduser = data[0].id;
             if(iduser != 0){
-                db.query('Insert into articles (idauthor, date, title, text) VALUES (?, ?, ?, ?)', [iduser, date, req.body.title, req.body.text], (err2, result) => {
+                db.query('Insert into articles (idauthor, date, title, text, categories) VALUES (?, ?, ?, ?, ?)', [iduser, date, req.body.title, req.body.text, req.body.categories], (err2, result) => {
                     if(err)
                         console.log("Error insert article: " + err2);
                     else {

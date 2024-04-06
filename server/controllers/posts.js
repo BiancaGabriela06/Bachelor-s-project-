@@ -33,32 +33,6 @@ export const insertPost = (req, res) => {
     })
 }
 
-export const userPosts = (req, res) => {
-    const query = "Select id from users where username = ?"
-    console.log("User Posts: ")
-    console.log(req.query.username);
-    db.query(query, [req.query.username], (err, data) => {
-        if(err) {
-            console.log(err);
-            return res.json(err);
-        }
-        
-        console.log(data);
-        const query2 = "Select * from posts where userid = ?"
-        db.query(query2, data[0].id, (err, data) => {
-            if(err) {
-                console.log(err);
-                return res.json(err);
-            }
-
-            else if(data.length != 0) {
-                console.log(data);
-                return res.json({Status: "Success", data: data});
-            }
-        })
-    })
-
-}
 
 export const imagesUser = (req, res) => {
     const query = "Select id from users where username = ?"
@@ -164,7 +138,7 @@ export const posts = (req, res) => {
                     u.profileImage
                     FROM  posts p JOIN  \`groups\` g ON p.groupid = g.idgroup
                     JOIN  group_user gu ON gu.groupid = g.idgroup
-                    JOIN users u ON u.id = gu.userid
+                    JOIN users u ON u.id = p.userid
                     ORDER by p.date desc; `
 
     db.query(query1, [], (err, data) => {
@@ -184,4 +158,48 @@ export const increaseLikes = (req, res) => {
            return res.json({Status: "Success"})
     }
     })
+}
+
+export const userPosts = (req, res) => {
+    const query1 = `SELECT 
+                    p.postid, 
+                    u.username, 
+                    p.image, 
+                    p.location, 
+                    p.description, 
+                    p.date, 
+                    p.likes, 
+                    p.comments, 
+                    g.title,
+                    u.profileImage
+                    FROM  posts p JOIN  \`groups\` g ON p.groupid = g.idgroup
+                    JOIN  group_user gu ON gu.groupid = g.idgroup
+                    JOIN users u ON u.id = p.userid
+                    where u.username = ?
+                    ORDER by p.date desc; `
+
+    db.query(query1, [req.query.username.username], (err, data) => {
+        if(err) console.log(err)
+        else{
+          console.log("Post for user : " + req.query.username.username + " : ")
+          console.log(data)
+          return res.json({Status: "Success", Data: data})
+       
+    }
+    })
+}
+
+export const getImages = (req, res) => {
+    db.query(`Select p.image, p.location 
+            from posts p join users u on u.id = p.userid
+            where u.username = 'BiancaA' AND p.image IS NOT NULL  AND p.image != ''
+            order by p.date desc`, [req.query.username], (err, data) => {
+                if(err) console.log(err);
+                else {
+                    console.log("Posts for user: ")
+                    console.log(data);
+                    return res.json({Status: "Success", Data: data})
+                }
+            })
+    
 }
