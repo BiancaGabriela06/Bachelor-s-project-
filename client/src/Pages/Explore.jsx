@@ -3,11 +3,11 @@ import {useNavigate} from 'react-router-dom'
 import Navbar from "../Components/Navbar"
 import Footer from "../Components/Footer"
 import {Grid, Typography, Divider, Button} from "@mui/material"
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import Intro from "../Components/Articles/Intro"
 import SearchBar from '../Components/Articles/SearchBar'
 import Categories from '../Components/Articles/Categories'
 import Articles from '../Components/Articles/Articles'
+import Itinerary from '../Components/Itinerary/Itinerary'
 
 const Explore = () => {
   const navigate =  useNavigate();
@@ -25,16 +25,16 @@ const Explore = () => {
         <Navbar/>
           <Intro/>
           <Divider/>
-        <Grid container padding={5}>
-          <Grid item>
+        <Grid container xs = {18} padding={5}>
+          <Grid item spacing = {5} xs = {6}>
             <SearchBar/>
-            <Categories onCategorySelect={handleCategorySelect} />
+            <Categories sx={{margin: 10}}onCategorySelect={handleCategorySelect} />
           </Grid>
-          <Grid item>
+          <Grid item xs = {12} sm={6} md={2}>
           <Articles selectedCategory={selectedCategory} />
           </Grid>
         </Grid>
-
+        <Itinerary/>
         <Footer/>
         </>
       )

@@ -2,11 +2,10 @@ import React, {useState, useEffect} from "react";
 import axios from "axios"
 import Navbar from "../Components/Navbar"
 import Footer from "../Components/Footer"
-import ScrollAnimation from "../Components/ScrollAnimation";
-import WelcomeComponent from "../Components/WelcomeComponent";
-import MissionComponent from "../Components/MissionComponent";
-import FunctionsWebsite from "../Components/FunctionsWebsite";
-import ReviewUsers from "../Components/ReviewUsers";
+import ScrollAnimation from "../Components/Home/ScrollAnimation";
+import WelcomeComponent from "../Components/Home/WelcomeComponent";
+import MissionComponent from "../Components/Home/MissionComponent";
+import ReviewUsers from "../Components/Home/ReviewUsers";
 
 const Home = () => {
 
@@ -43,7 +42,6 @@ const Home = () => {
           <WelcomeComponent/>
           <MissionComponent/>
           <ScrollAnimation/>
-          <FunctionsWebsite/>
           <ReviewUsers/>
       </div>
       <div>

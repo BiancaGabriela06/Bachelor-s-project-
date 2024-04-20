@@ -10,14 +10,15 @@ const AddArticle = () => {
     var currentUser = localStorage.getItem("currentUser");
     const [username, setUsername] = useState(currentUser.replace(/^"|"$/g, ''));
     const [idArticle, setIdArticle] = useState(0);
-    const [files, setFiles] = useState([]);
+    const [selectedFiles, setSelectedFiles] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [groupTitle, setGroupTitle] = useState("");
     const [values, setValues] = useState({
       username: username,
       title: "",
       text: "",
-      categories: ""
+      categories: "",
+      files: ""
     })
 
     const categories = [
@@ -29,6 +30,11 @@ const AddArticle = () => {
       {label: "single"},
       {label: "europe"}
   ]
+
+  const handleFileChange = (e) => {
+    setSelectedFiles(e.target.files);
+};
+
   const handleDelete = (index) => {
     setSelectedCategories((prevAttributes) => prevAttributes.filter((_, i) => i !== index));
 };
@@ -38,30 +44,32 @@ const AddArticle = () => {
             setSelectedCategories([...selectedCategories, groupTitle]);
         }
     };
-    const handleImageChange = (event) => {
-      const selectedImages = Array.from(event.target.files);
-      setImages(selectedImages);
-      setFiles(event.target.files);
-  };
+   
 
-  const submitArticle = () => {
-    console.log(files);
-    const config = {header : {'Content-Type' : 'multipart/form-data'}}
-    axios.post('http://localhost:3001/image/article', files, config)
-    .then(res => {
-      if (res.data.Status === 'Success') {
-          setMessage(res.data.Message);
-          }
-      })
-    .catch(err => console.log(err));
-     
+  const submitArticle = (e) => {
+    e.preventDefault();  
     values.categories = selectedCategories;
     axios.post('http://localhost:3001/dashboard/article', values)
     .then(res => {
         if (res.data.Status === 'Success') {
             setMessage(res.data.Message);
             setIdArticle(res.data.Article);
-        }
+            const formData = new FormData();
+            for (let file of selectedFiles) {
+                formData.append('photos', file);
+            }
+        
+            formData.append('articleId', res.data.Article);
+            console.log(formData);
+            const config = {header : {'Content-Type' : 'multipart/form-data'}}
+            axios.post('http://localhost:3001/image/article', formData, config)
+            .then(res => {
+              if (res.data.Status === 'Success') {
+                  setMessage(res.data.Message);
+                  }
+              })
+            .catch(err => console.log(err));
+                }
     })
     .catch(err => console.log(err));
 
@@ -93,9 +101,9 @@ const AddArticle = () => {
         <input
           type="file"
           accept="image/*"
-          multiple // Allow multiple file selection
+          multiple 
           name="uploadedImages"
-          onChange={handleImageChange}
+          onChange={handleFileChange}
         />
         {images.length > 0 && (
           <div>

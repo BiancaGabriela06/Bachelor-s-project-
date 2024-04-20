@@ -1,7 +1,6 @@
 import {React, useState, useEffect} from 'react'
 import {Grid, Button, Avatar} from '@mui/material';
 import AddTravelIntinerary from "../Components/AddTravelIntinerary"
-import TravelIntineraries from './TravelIntineraries';
 import Navbar from "../Components/Navbar"
 import axios from "axios"
 import {Row, Col, Container} from "react-bootstrap"
@@ -71,7 +70,7 @@ const TripPlanner = () => {
                 : (
                     
                     <Col sm={8} justifyContent="right"  style={{ backgroundColor: '#DEF5F1', padding: '16px' }}>
-                         <TravelIntineraries/>
+                         
                     </Col>
                     
                     )

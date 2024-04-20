@@ -13,9 +13,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 const Post = ({postid, user, likes, profileImage, postData, description, location, group, photo }) => {
   const [comments, setComments] = useState([]);
   var currentUser = localStorage.getItem("currentUser");
-  var [Likes, setLikes] = useState(likes);
   const [username, setUsername] = useState(currentUser.replace(/^"|"$/g, ''));
   var [commentsBool, setShowComments] = useState(1);
+  var [Likes, setLikes] = useState(likes);
 
   var [comment, setComment] = useState({
     username: username,
@@ -111,9 +111,9 @@ const Post = ({postid, user, likes, profileImage, postData, description, locatio
         subheader={new Date(postData).toLocaleString()}
       />
       <CardContent>
-        <Typography variant="body2">{description}</Typography>
-        <Typography variant="body2"><PlaceIcon sx={{padding: "3px"}}/>{location}</Typography>
-        <Typography variant="body2"><PeopleIcon sx={{padding: "3px"}}/>{group}</Typography>
+        <Typography variant="h5">{description}</Typography>
+        <Typography variant="h6"><PlaceIcon sx={{fontSize: '2rem' , padding: "3px"}}/>{location}</Typography>
+        <Typography variant="h6"><PeopleIcon sx={{fontSize: '2rem' , padding: "3px"}}/>{group}</Typography>
       </CardContent>
       {photo && <CardMedia component="img" image={`http://localhost:3001/postimages/` + photo} alt="Post" />}
       <CardContent>

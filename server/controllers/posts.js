@@ -66,7 +66,7 @@ export const showComments = (req, res) => {
      const postid = req.query.postid;
  
      console.log("postid = " + postid);
-     const query = "Select c.comment, c.commentid, c.date, u.profileimage, u.username, u.id from comments c, users u  where c.postid = ? and c.userid = u.id "
+     const query = "Select c.comment, c.commentid, c.date, u.profileimage, u.username, u.id from post_comments c, users u  where c.postid = ? and c.userid = u.id "
      db.query(query, [postid], (err, data) =>{
         if(err)
             return res.json({Status: "Error", error: err})
@@ -93,7 +93,7 @@ export const addComment = (req, res) => {
         }
         else{
             userid = data[0].id;
-            const query2 = "Insert into comments (postid, comment, date, userid) values (?, ?, ?, ? )";
+            const query2 = "Insert into post_comments (postid, comment, date, userid) values (?, ?, ?, ? )";
             db.query(query2, [postid, comment, dateComment, userid], (error, data2) => {
             if(error){
               console.log(error);
@@ -111,7 +111,7 @@ export const addComment = (req, res) => {
 export const deleteComment = (req, res) => {
     const commentid = req.params.id;
     console.log("Delete com with " + commentid);
-    const query = "Delete from comments where commentid = ?"
+    const query = "Delete from post_comments where commentid = ?"
     db.query(query, [commentid], (err, data) => {
         if(err)
         {

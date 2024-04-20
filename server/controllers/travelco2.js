@@ -32,36 +32,41 @@ export const calculate = async (req, res) => {
       try {
           const response = await axios.request(options);
           let found = false;
-          console.log(response);
           const title = `Comparing ways of traveling between from ${req.body.info.from} to ${req.body.info.to} `;
           const tripsLength = response.data.trips.length;
-          const Trips = [];
-          for(let i = 0; i < tripsLength; i++){
-              found = true;
-              const co2e = response.data.trips[i].co2e;
-              const vehicle_title = response.data.trips[i].steps[0].transport.vehicle.title;
-              const transportation_title = response.data.trips[i].steps[0].transport.title;
-
-              const Trip = [];
-              Trip["Transporation_title"] = transportation_title;
-              Trip["Vehicle_title"] = vehicle_title;
-              Trip["Co2e"] = co2e;
-              Trips.push(Trip);
-          }
-
-          console.log(title);
-          console.log(Trips[0]);
-          if(found == true) {
-                return res.json({Status: "Success", Title: title, 
-                Transportation_title: Trips[0].Transporation_title,
-                Vehicle_title : Trips[0].Transporation_title,
-                Co2e: Trips[0].Co2e})
+          if(tripsLength != 0) {
+            const Trips = [];
+            for(let i = 0; i < tripsLength; i++){
+                found = true;
+                const co2e = response.data.trips[i].co2e;
+                const vehicle_title = response.data.trips[i].steps[0].transport.vehicle.title;
+                const transportation_title = response.data.trips[i].steps[0].transport.title;
+  
+                const Trip = [];
+                Trip["Transporation_title"] = transportation_title;
+                Trip["Vehicle_title"] = vehicle_title;
+                Trip["Co2e"] = co2e;
+                Trips.push(Trip);
+            }
+  
+            console.log(title);
+            console.log(Trips[0]);
+            if(found == true) {
+                  return res.json({Status: "Success", Title: title, 
+                  Transportation_title: Trips[0].Transporation_title,
+                  Vehicle_title : Trips[0].Vehicle_title,
+                  Co2e: Trips[0].Co2e})
+            }
+            else{
+              return res.json({Status: "No Found", Message: "No way. Try another transporaton method."})
+            }
           }
           else{
-            return res.json({Status: "No Found", Message: "No way. Try another transporaton method."})
+             return res.json({Status: "No Found", Message: "No way. Try another transporaton method."})
           }
+         
           
       } catch (error) {
-          console.error(error);
+          return res.json({Status: "No Found", Message: "No way. Try another transporaton method."})
       }
 }

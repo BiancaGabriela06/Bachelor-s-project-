@@ -15,6 +15,10 @@ import co2eRoutes from "./routes/travelco2.js"
 import placesRoutes from "./routes/places.js"
 import groupsRoutes from "./routes/groups.js"
 import dashboardRoutes from "./routes/dashboard.js"
+import exploreRoutes from "./routes/explore.js"
+import { rmdirSync } from 'fs';
+import e from 'express';
+
 
 const app = express()
 
@@ -33,6 +37,7 @@ app.use('/co2e', co2eRoutes);
 app.use('/places', placesRoutes)
 app.use('/groups', groupsRoutes);
 app.use('/dashboard', dashboardRoutes)
+app.use('/explore', exploreRoutes)
 
 
 
@@ -92,6 +97,22 @@ app.post("/image/user", (req, res, err) => {
   })
 })
 
+app.post("/article/images", (req, res, err) => {
+  console.log("Get images articol id: " + req.body.idarticle)
+  db.query("Select filename from article_photos where idarticle = ?", [req.body.idarticle], (err, data) => {
+    if(err) {
+      console.log(err);
+      return res.json(err);
+    }
+    else {
+      console.log(data);
+      return res.json({
+        Status: "Success",
+        Data: data
+      })
+    }
+  })
+})
 const storage2 = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, 'public/postimages');
@@ -113,46 +134,44 @@ app.post("/image/post", upload2.single('file'), (req, res, err) => {
 });
 
 const storage3 = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'public/articleimages');
+  destination: function (req, file, cb) {
+      cb(null, 'public/articleimages');
   },
-  filename: function(req, file, cb) {
-    cb(null, file.fieldname + "_" + Date.now() + path.extname(file.originalname))
-  }
-})
-
-const upload3 = multer();
-
-app.post('/image/article', upload3.array('uploadedImages'), function(req, res, next) {
-  var file = req.files;
-  console.log(req.files);
-  if (req.files && req.files.length > 0) {
-    const filenames = req.files.map(file => file.filename);
-    return res.json({ Status: "Success", filenames: filenames });
-  } else {
-    return res.status(400).json({ error: "No files uploaded" });
+  filename: function (req, file, cb) {
+      cb(null, file.originalname);
   }
 });
 
-/*app.post("/image/article", upload3.array('file'), (req, res, err) => {
-  if (!req.files || req.files.length === 0) {
-    console.log("No files uploaded")
-    return res.status(400). json({ error: "No files uploaded" });
-}
+const upload3 = multer({ storage: storage3 });
 
-try {
-    const filenames = req.files.map(file => file.filename);
 
-    return res.json({
-        status: "Success",
-        filenames: filenames
-    });
-} catch (err) {
-    console.error("Error uploading article images:", err);
-    return res.status(500).json({ error: "Error uploading article images" });
-}
+app.post('/image/article', upload3.array('photos'), function(req, res, next) {
+  var files = req.files;
+  var articleId = req.body.articleId;
+  console.log("Get images for article " + articleId)
+  if(articleId != 0){
+    if (req.files && req.files.length > 0) {
+      files.forEach(file => {
+        const filename = file.filename;
+        db.query('INSERT INTO article_photos (idarticle, filename) VALUES (?, ?)', [articleId, filename], (err, result) => {
+            if (err) {
+                console.error(err);
+                return res.json({ error: "Error inserting file into database" });
+            }
+            else{
+              console.log(`File ${filename} inserted into database for article with ID ${articleId}`);
+              return res.json({ Status: "Success" });
+            }      
+        });
+       });
+    }
+  }
+   else {
+    return res.json({ error: "No files uploaded" });
+  }
 });
-*/
+
+
 
 const verifyJwt = (req, res, next) => {
   const token = req.headers["access-token"];

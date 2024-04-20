@@ -45,7 +45,7 @@ const Groups = (user) => {
 
     return (
         <Container>
-            <Typography variant="h4" gutterBottom>Grupuri</Typography>
+            <Typography variant="h4" gutterBottom>Groups</Typography>
             {groups.map(group => (
                 <Paper key={group.id} elevation={3} style={{ padding: "20px", marginBottom: "20px" }}>
                     {group.isMember ? (<Grid item xs={12}>

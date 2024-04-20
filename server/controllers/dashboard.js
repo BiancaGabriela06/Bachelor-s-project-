@@ -2,9 +2,6 @@ import axios from 'axios';
 import db from "../database.js";
 
 export const postArticle = (req, res) => {
-    console.log("Add Article");
-    console.log(req.body)
-
     const date = new Date();
     var iduser = 0;
 
@@ -12,15 +9,14 @@ export const postArticle = (req, res) => {
         if(err)
             console.log(err);
         else{
-            console.log(data[0])
             iduser = data[0].id;
+            const categoriesString = JSON.stringify(req.body.categories.join(','));
             if(iduser != 0){
-                db.query('Insert into articles (idauthor, date, title, text, categories) VALUES (?, ?, ?, ?, ?)', [iduser, date, req.body.title, req.body.text, req.body.categories], (err2, result) => {
-                    if(err)
+                db.query('Insert into articles (idauthor, date, title, text, categories) VALUES (?, ?, ?, ?, ?)', [iduser, date, req.body.title, req.body.text, categoriesString], (err2, result) => {
+                    if(err2)
                         console.log("Error insert article: " + err2);
                     else {
-                        console.log("Articol added sucessfully")
-                        console.log(result.insertId);
+                        console.log("Articol added sucessfully " + result.insertId)
                         return res.json({Status: "Success", Message: "Article posted successfully", Article: result.insertId})
                     }
                 })

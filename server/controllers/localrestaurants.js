@@ -47,6 +47,7 @@ export const localrestaurants = async (req, res) => {
           console.log(restaurantsDetailsArray);
           return res.json({Status: "Success", Data: restaurantsDetailsArray})
       } catch (error) {
+          console.log("Error local restaurants")
           console.error(error);
       }
 }

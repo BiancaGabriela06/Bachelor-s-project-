@@ -1,29 +1,40 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios'
+import Article from "./Article"
+import {Grid} from "@mui/material"
 
 const Articles = ({ selectedCategory }) => {
-
-  const articles = [
-    { title: "Article 1", category: "food" },
-    { title: "Article 2", category: "vegan" },
-    { title: "Article 3", category: "couple" },
-    { title: "Article 4", category: "food" },
-  ];
+  const [articles, setArticles] = useState([]);
 
   useEffect(() => {
     console.log("Selected category")
     console.log(selectedCategory)
-  })
-  
-  const filteredArticles = selectedCategory ? articles.filter(article => article.category === selectedCategory) : articles;
+    const fetchData = async () => {
+      try {
+          const response = await axios.get('http://localhost:3001/explore/articles');
+          if (response.data.Status === 'Success') {
+              setArticles(response.data.Data);
+          } else {
+              console.log(response.data.err);
+          }
+      } catch (error) {
+          console.log(error);
+      }
+
+      }
+      fetchData();
+
+        }, [selectedCategory])
+        
+  const filteredArticles = selectedCategory ? articles.filter(article => article.categories === selectedCategory) : articles;
 
   return (
-    <div>
-      <h2>Articles</h2>
-      <ul>
+    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
         {filteredArticles.map((article, index) => (
-          <li key={index}>{article.title}</li>
+           <Grid item >
+                <Article article={article}/> 
+          </Grid>
         ))}
-      </ul>
     </div>
   );
 };

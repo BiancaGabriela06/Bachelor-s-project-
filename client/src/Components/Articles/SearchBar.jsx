@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { TextField, IconButton } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
-const SearchBar = ({ onSearch }) => {
+const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleChange = (event) => {
@@ -11,7 +11,7 @@ const SearchBar = ({ onSearch }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onSearch(searchTerm);
+    
   };
 
   return (

@@ -19,9 +19,6 @@ const Navbar = () => {
                <Button href="/trip" sx={{color: 'white', fontSize: '15px'}}>Plan your trip</Button>
                <Button href="/forum" sx={{color: 'white', fontSize: '15px'}}>Forum</Button>
                <Button href="/explore" sx={{color: 'white', fontSize: '15px'}}>Explore</Button>
-               <Button href="/about" sx={{color: 'white', fontSize: '15px'}}>About</Button> 
-              
-              
         </Grid>
         <Grid item>
             <AfterLogin />

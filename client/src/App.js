@@ -12,7 +12,6 @@ import EmailVerification from "./Pages/EmailVerification"
 import ChangePassword from './Pages/ChangePassword';
 import Trip from "./Pages/Trip";
 import Map from "./Components/Map";
-import CalculatorCo2E from './Components/CalculatorCo2E';
 import Footer from './Components/Footer';
 import AddTravelIntinerary from './Components/AddTravelIntinerary'
 import TripPlanner from './Components/TripPlanner';
@@ -22,6 +21,7 @@ import Explore from "./Pages/Explore"
 import GalleryProfile from './Components/GalleryProfile';
 import HomeDashboard from "./Pages/Dashboard/HomeDashboard";
 import UserPage from "./Pages/UserPage"
+import { ItineraryProvider } from "./Components/Itinerary/ItineraryContext";
 
 function App() {
   
@@ -43,7 +43,6 @@ function App() {
         <Route path="/changepassword" element = {<ChangePassword/> } />
         <Route path="/trip" element = {<Trip/>} />
         <Route path="/map" element = {<Map/>} />
-        <Route path="/calculator" element = {<CalculatorCo2E/>} />
         <Route path="/footer" element = {<Footer/>} />
         <Route path="/addtravelintinerary" element={<AddTravelIntinerary/>}/>
         <Route path="/tripplanner" element={<TripPlanner/>} />

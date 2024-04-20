@@ -26,6 +26,7 @@ export const searchAirport = async (req, res) => {
     }
     
   } catch (error) {
+    console.log("Error code flight")
     console.error(error);
     return res.json({Error: error})
   }

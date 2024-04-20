@@ -6,6 +6,7 @@ import {Grid} from "@mui/material"
 import Groups from '../Components/Forum/Groups';
 import FeedForum from '../Components/Forum/FeedForum';
 import Users from "../Components/Forum/Users"
+import Itinerary from '../Components/Itinerary/Itinerary';
 
 const Forum = () => {
     var currentUser = localStorage.getItem("currentUser");
@@ -26,6 +27,7 @@ const Forum = () => {
                     <Users/>
                 </Grid>
             </Grid>
+            <Itinerary/>
             <div>
                 <Footer/>
             </div>
