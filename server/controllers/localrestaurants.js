@@ -18,8 +18,9 @@ export const localrestaurants = async (req, res) => {
       try {
           const response = await axios.request(options);
           const datalength = response.data.data.length;
-          let name, full_address, rating, timezone, website, place_link, type, photo_url;
+          let name, full_address, rating, timezone, website, place_link, type, photo_url ="";
           const restaurantsDetailsArray = [];
+          console.log(response.data.data[0]);
           for(let i = 0; i < datalength; i++){
             const Restaurant = {};
              name = response.data.data[i].name;
@@ -29,9 +30,11 @@ export const localrestaurants = async (req, res) => {
              website = response.data.data[i].website;
              place_link = response.data.data[i].place_link;
              type = response.data.data[i].type;
-             
-             
-             photo_url = response.data.data[i].photos_sample[0].photo_url;
+        
+            if (response.data.data[i].photos_sample && response.data.data[i].photos_sample.length > 0) {
+                photo_url = response.data.data[i].photos_sample[0].photo_url;
+            }
+
 
              Restaurant["Name"] = name;
              Restaurant["Address"] = full_address;

@@ -69,7 +69,7 @@ const Calculator = () => {
     return (
         <>
         <Grid container>
-        <Button variant="outlined" onClick={handleClickOpen}>
+        <Button variant="outlined" color="success" onClick={handleClickOpen}>
                  Calculator Co2 emissions
         </Button>
         <Dialog
@@ -78,11 +78,11 @@ const Calculator = () => {
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title">
-                {"Calculate emissions of Co2 for an unplaned trip."}
+                <DialogTitle id="alert-dialog-title" style={{ fontSize: '2.5rem', textAlign: 'center' }}>
+                   Calculate emissions of Co2 for an unplaned trip.
                 </DialogTitle>
                 <DialogContent>
-                <DialogContentText id="alert-dialog-description">
+                <DialogContentText id="alert-dialog-description" style={{ fontSize: '2rem', textAlign: 'center' }}>
                     Verify emissions of Co2 for more than one transport type
                     and choose the right option for the planet and your comfort.
                 </DialogContentText>
@@ -150,13 +150,13 @@ const Calculator = () => {
                 {value && vehicle && title && (
                   <Grid container justifyContent="center">
                     <Grid item xs = {10} justifyContent="center">
-                        <Typography style={{textAlign: 'center'}}>
-                            Your trip emission of <span style={{fontWeight: 'bold', color: 'darkgreen'}}>{value && value}</span>
+                        <Typography style={{textAlign: 'center'}} variant = "h3">
+                            Your trip emission of Co2 is <span style={{fontWeight: 'bold', color: 'darkgreen'}}>{value && value}</span>
                         </Typography>
                     </Grid> 
                     <Grid item xs = {10} justifyContent="center">
-                        <Typography style={{textAlign: 'center'}} >
-                            <span style={{fontWeight: 'bold', color: 'darkgreen'}}>{vehicle && vehicle}</span>
+                        <Typography style={{textAlign: 'center'}} variant="h3">
+                            Transport Type: <span style={{fontWeight: 'bold', color: 'darkgreen'}}>{vehicle && vehicle}</span>
                         </Typography>
                     </Grid>       
                   </Grid>   

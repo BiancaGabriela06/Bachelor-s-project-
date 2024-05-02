@@ -15,7 +15,7 @@ export const getComments = (req, res) => {
     const articleid = req.query.idarticle;
  
     console.log("article = " + articleid);
-    const query = "Select c.comment, c.idcomment, c.date, u.profileimage, u.username, u.id from article_comments c, users u  where c.idarticle = ? and c.iduser = u.id "
+    const query = "Select c.comment, c.idcomment, DATE_FORMAT(c.date, '%Y-%m-%d') AS date, u.profileimage, u.username, u.id from article_comments c, users u  where c.idarticle = ? and c.iduser = u.id "
     db.query(query, [articleid], (err, data) =>{
        if(err)
            return res.json({Status: "Error", error: err})
@@ -23,6 +23,7 @@ export const getComments = (req, res) => {
            return res.json({Status: "Success", Message: "No comments"})
        else {
            console.log("Select comment: " + data);
+           console.log(data)
            return res.json({Status: "Success", Message: "Article with comments", Comments: data})
        }
           

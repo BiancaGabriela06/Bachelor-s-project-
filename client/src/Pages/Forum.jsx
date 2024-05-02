@@ -6,7 +6,7 @@ import {Grid} from "@mui/material"
 import Groups from '../Components/Forum/Groups';
 import FeedForum from '../Components/Forum/FeedForum';
 import Users from "../Components/Forum/Users"
-import Itinerary from '../Components/Itinerary/Itinerary';
+import OpenItinerary from '../Components/Itinerary/OpenItinerary';
 
 const Forum = () => {
     var currentUser = localStorage.getItem("currentUser");
@@ -16,7 +16,7 @@ const Forum = () => {
            <div>
             <Navbar />
            </div>
-           <Grid container spacing={2} padding={5}>
+           <Grid container spacing={2} padding={5} sx={{marginTop: '10rem'}}>
                 <Grid item xs={12} sm={4} md={3} style={{ borderRight: "1px solid #228B22" }}>
                     <Groups username={username}/>
                 </Grid>
@@ -27,7 +27,7 @@ const Forum = () => {
                     <Users/>
                 </Grid>
             </Grid>
-            <Itinerary/>
+            <OpenItinerary/>
             <div>
                 <Footer/>
             </div>

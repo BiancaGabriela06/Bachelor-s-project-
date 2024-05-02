@@ -14,14 +14,14 @@ import Trip from "./Pages/Trip";
 import Map from "./Components/Map";
 import Footer from './Components/Footer';
 import AddTravelIntinerary from './Components/AddTravelIntinerary'
-import TripPlanner from './Components/TripPlanner';
 import Login from './Pages/Login'
 import Profile from './Pages/Profile'
 import Explore from "./Pages/Explore"
 import GalleryProfile from './Components/GalleryProfile';
 import HomeDashboard from "./Pages/Dashboard/HomeDashboard";
 import UserPage from "./Pages/UserPage"
-import { ItineraryProvider } from "./Components/Itinerary/ItineraryContext";
+import TripItineraries from './Components/Itinerary/TripItineraries';
+
 
 function App() {
   
@@ -45,12 +45,12 @@ function App() {
         <Route path="/map" element = {<Map/>} />
         <Route path="/footer" element = {<Footer/>} />
         <Route path="/addtravelintinerary" element={<AddTravelIntinerary/>}/>
-        <Route path="/tripplanner" element={<TripPlanner/>} />
         <Route path="/profile" element={<Profile/>}/>
         <Route path="/profile/gallery" element={<GalleryProfile/>}/>
         <Route path="/explore" element={<Explore/>}/>
         <Route path="/dashboard" element={<HomeDashboard/>}/>
         <Route path="/users/:username" element={<UserPage/>}/>
+        <Route path="/profile/:username/tripitineraries" element={<TripItineraries/>}/>
       </Routes>
     </div>
     </>

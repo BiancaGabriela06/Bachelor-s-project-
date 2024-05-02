@@ -74,7 +74,7 @@ export default function SwipeableTemporaryDrawer() {
 
   return (
     <div>
-      <Button onClick={toggleDrawer(anchor, true)} variant="outlined">How to</Button>
+      <Button onClick={toggleDrawer(anchor, true)} variant="outlined" color="success">How to</Button>
       <SwipeableDrawer
         anchor={anchor}
         open={state[anchor]}

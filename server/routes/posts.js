@@ -1,5 +1,5 @@
 import express from "express";
-import {addComment, deleteComment, getImages, imagesUser, increaseLikes, insertPost, posts, showComments, userPosts} from "../controllers/posts.js"
+import {addComment, deletePost, deleteComment, getImages, imagesUser, increaseLikes, insertPost, posts, showComments, userPosts} from "../controllers/posts.js"
 
 
 const router = express.Router()
@@ -13,5 +13,6 @@ router.delete('/deletecomment/:id', deleteComment);
 router.get('/getposts', posts)
 router.post('/increaselikes', increaseLikes)
 router.get('/getimages', getImages)
+router.delete('/deletepost/:id', deletePost)
 
 export default router;

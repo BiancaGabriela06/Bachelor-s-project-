@@ -1,21 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import {NavLink, useNavigate} from 'react-router-dom'
+import { useNavigate} from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Navbar from '../Navbar'
 import "../../Styling/Profile.css"
-import {Grid, Avatar, Divider, Alert, Typography, Button, TextField, Autocomplete} from "@mui/material"
-import PsychologyIcon from '@mui/icons-material/Psychology';
-import FolderSharedIcon from '@mui/icons-material/FolderShared';
-import CollectionsIcon from '@mui/icons-material/Collections';
-import CameraAltIcon from '@mui/icons-material/CameraAlt';
+import {Grid, Avatar,  Alert, Typography, Button, TextField, Autocomplete} from "@mui/material"
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import CheckIcon from "@mui/icons-material/Check"
 
 const About = () => {
 
   const navigate = useNavigate();
-  const [datemember, setDateMember] = useState("");
   var [editInfo, setEditInfo] = useState(0);
   var [profileImage, setProfileImage] = useState();
   

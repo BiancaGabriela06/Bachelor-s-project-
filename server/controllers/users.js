@@ -111,12 +111,10 @@ export const userInfo = (req, res) => {
 }
 
 export const isAdmin = (req, res) => {
-    console.log(req.query.username);
     db.query("Select admin from users where username=?", [req.query.username], (err, data)=>{
         if(err)
             res.json({Status: "Error", Error: err});
         else{
-            console.log(data);
             if(data[0].admin == 1)
                res.json({Status: "isAdmin"})
             else

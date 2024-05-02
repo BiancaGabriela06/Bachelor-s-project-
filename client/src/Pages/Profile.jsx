@@ -1,6 +1,5 @@
 import {React, useState, useEffect} from 'react';
 import axios from 'axios';
-import {useNavigate} from 'react-router-dom'
 import {Grid, Avatar,  Typography, Button, Box, Tab, Tabs } from "@mui/material"
 import Navbar from "../Components/Navbar"
 import Footer from '../Components/Footer';
@@ -8,6 +7,7 @@ import Timeline from '../Components/UserPage/Timeline';
 import PropTypes from 'prop-types';
 import About from "../Components/UserProfile/AboutProfile"
 import Gallery from "../Components/UserProfile/GalleryProfile"
+import NotificationProfile from "../Components/Itinerary/NotificationProfile"
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -49,8 +49,12 @@ const Profile = () => {
     const [username, setUsername] = useState(currentUser.replace(/^"|"$/g, ''));
     const [datemember, setDateMember] = useState("");
     var [profileImage, setProfileImage] = useState();
-    const [places, setPlaces] = useState("")
     const [value, setValue] = useState(0);
+    const [nextTrip, setNextTrip] = useState("");
+
+    const handleCloseNotification = () => {
+      setNextTrip(null);
+    };
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -83,22 +87,18 @@ const Profile = () => {
                 console.error(error);
             }
             };
-        
-            const fetchData3 = async () => {
-                try {
-                    const response = await axios.get('http://localhost:3001/places/listofcities');
-                    if (response.data.Status === 'Success') {
-                        setPlaces(response.data.Data);
-                    } else {
-                        console.log(response.data.err);
-                    }
-                } catch (error) {
-                    console.log(error);
-                }
-
-     }
-        console.log(profileImage);
-
+          const fetchData3 = async () => {
+              try {
+                  const response = await axios.get('http://localhost:3001/itinerary/soonesttrip');
+                  if (response.data.Status === 'Success') {
+                      setNextTrip(response.data.Data);
+                  } else {
+                      console.log(response.data.err);
+                  }
+              } catch (error) {
+                  console.log(error);
+              }}
+  
         fetchData3();
         fetchData2();
         fetchData1();
@@ -113,12 +113,15 @@ const Profile = () => {
             
             <Grid container  style={{ padding: '100px' }} spacing={1}>
                   <Grid item xs={4} align="center" style={{ boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)' }}>
-                  <Avatar src={`http://localhost:3001/profileimages/` + profileImage} alt="Profile Image"/>
+                  <Avatar src={`http://localhost:3001/profileimages/` + profileImage} 
+                  alt="Profile Image"
+                  style={{ width: '10rem', height: '10rem', marginBottom: '3rem' }}
+                  />
 
-                       <Typography variant="h4" >{username}</Typography>
-                       <Typography>Member since 23-07-2023{datemember}</Typography>
-                       <Button href="/tripplanner">Trip intineraries</Button>
-                       
+                       <Typography variant="h3" >{username}</Typography>
+                       <Typography variant="subtitle1">Member since 23-07-2023{datemember}</Typography>
+                       <Button href={`/profile/${username}/tripitineraries`}>Trip intineraries</Button>
+                       {nextTrip && <NotificationProfile itinerary={nextTrip} onClose={handleCloseNotification} />}
                   </Grid>
                   <Grid item row xs={8} style={{ boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)', justifyContent: 'space-between' }}>
                   <Box sx={{ padding: '100px', width: '100%' }}>

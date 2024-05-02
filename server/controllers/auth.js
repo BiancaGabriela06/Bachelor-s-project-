@@ -144,8 +144,19 @@ export const login = (req, res) => {
                                 else
                                 {
                                     console.log("Success")
-                                    console.log(data)
-                                    return res.json({Status: "Success", Login: true, Token: token, Data: data[0]})
+                                    console.log(data);
+                                    const status="in-work";
+                                    db.query("Insert into possible_itinerary (iduser, status) VALUES (?, ?)", [id, status], (err3, data3) =>{
+                                        if(err) {
+                                            console.log("Error in inserting in possible_itinerary")
+                                        }
+                                        else{
+                                            console.log("Succes in insert possible_itinerary");
+                                            console.log(data3);
+                                            return res.json({Status: "Success", Login: true, Token: token, Data: data[0], IdPossibleItinerary: data3.insertId})
+                                        }
+                                    })
+                                   
                                 }
                             })
                             

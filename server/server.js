@@ -16,6 +16,7 @@ import placesRoutes from "./routes/places.js"
 import groupsRoutes from "./routes/groups.js"
 import dashboardRoutes from "./routes/dashboard.js"
 import exploreRoutes from "./routes/explore.js"
+import itineraryRoutes from "./routes/itinerary.js"
 import { rmdirSync } from 'fs';
 import e from 'express';
 
@@ -38,6 +39,7 @@ app.use('/places', placesRoutes)
 app.use('/groups', groupsRoutes);
 app.use('/dashboard', dashboardRoutes)
 app.use('/explore', exploreRoutes)
+app.use('/itinerary', itineraryRoutes)
 
 
 
@@ -88,7 +90,6 @@ app.post("/image/user", (req, res, err) => {
       return res.json(err);
     }
     else {
-      console.log("Poza profil pentru " + req.body.username + " este : " + data[0].profileImage)
       return res.json({
         Status: "Success",
         Data: data[0].profileImage

@@ -66,7 +66,7 @@ export const showComments = (req, res) => {
      const postid = req.query.postid;
  
      console.log("postid = " + postid);
-     const query = "Select c.comment, c.commentid, c.date, u.profileimage, u.username, u.id from post_comments c, users u  where c.postid = ? and c.userid = u.id "
+     const query = "Select c.comment, c.commentid, DATE_FORMAT(c.date, '%Y-%m-%d') AS date, u.profileimage, u.username, u.id from post_comments c, users u  where c.postid = ? and c.userid = u.id "
      db.query(query, [postid], (err, data) =>{
         if(err)
             return res.json({Status: "Error", error: err})
@@ -151,13 +151,53 @@ export const posts = (req, res) => {
 }
 
 export const increaseLikes = (req, res) => {
-    const query = "Update posts SET likes = ? where postid = ?"
-    db.query(query, [req.body.likes, req.body.postid], (err, data) => {
+    console.log("Increase likes : ")
+    db.query("Select id from users where username = ?", [req.body.user], (err, result) => {
         if(err) console.log(err)
         else{
-           return res.json({Status: "Success"})
+          var userId = result[0].id;
+          console.log(userId);
+          db.query('SELECT * FROM likes WHERE idpost = ? AND iduser = ?', [req.body.postId, userId], (err, data) => {
+            if (err) {
+              console.error('Error checking like:', err);
+              return res.json({ error: 'Internal server error' });
+            }
+        
+            if (data.length > 0) {
+              console.log('User has already liked this post')
+              return res.json({ Status: "Error", Error: 'User has already liked this post' });
+            }
+        
+            db.query('INSERT INTO likes (idpost, iduser) VALUES (?, ?)', [req.body.postId, userId], (err, results) => {
+              if (err) {
+                console.error('Error liking post:', err);
+                return res.json({ error: 'Internal server error' });
+              }
+              db.query('UPDATE posts SET likes = likes + 1 where postid = ? ', [req.body.postId], (err, datas) => {
+                if(err){
+                    console.error("Error update likes in posts")
+                }
+
+                db.query('SELECT count(*) as likes FROM likes WHERE idpost = ?', req.body.postId, (err, results) => {
+                    if (err) {
+                      console.error('Error fetching likes:', err);
+                      return res.json({ error: 'Internal server error' });
+                    }
+                    else{
+                        console.log("Number of likes :")
+                        console.log(results);
+                        res.json({ Status: "Success", Likes: results[0].likes });
+                    }
+                    
+                  });
+              })
+        
+              
+            });
+          });
     }
     })
+    
 }
 
 export const userPosts = (req, res) => {
@@ -202,4 +242,24 @@ export const getImages = (req, res) => {
                 }
             })
     
+}
+
+export const deletePost = (req, res) => {
+    const postid = req.params.id;
+    db.query('Delete from posts where postid = ?', [postid], (err, result) => {
+       if(err) {
+        console.log(err);
+       }
+       else{
+        db.query('Delete from post_comments where postid = ?', [postid], (error, data) => {
+            if(error){
+                console.log(error)
+            }
+            else{
+                console.log("Success la delete")
+                return res.json({Status: "Success"})
+            }
+        })
+       }
+    })
 }

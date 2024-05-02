@@ -7,7 +7,7 @@ import Intro from "../Components/Articles/Intro"
 import SearchBar from '../Components/Articles/SearchBar'
 import Categories from '../Components/Articles/Categories'
 import Articles from '../Components/Articles/Articles'
-import Itinerary from '../Components/Itinerary/Itinerary'
+import OpenItinerary from '../Components/Itinerary/OpenItinerary'
 
 const Explore = () => {
   const navigate =  useNavigate();
@@ -34,7 +34,7 @@ const Explore = () => {
           <Articles selectedCategory={selectedCategory} />
           </Grid>
         </Grid>
-        <Itinerary/>
+        <OpenItinerary/>
         <Footer/>
         </>
       )

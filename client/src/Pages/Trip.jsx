@@ -10,16 +10,17 @@ import instructionspik from "../assets/images/instructionspik.jpg"
 import picture_co2 from "../assets/images/co2pik_card.jpg";
 import CalculatorCo2 from "../Components/InfoTrip/CalculatorCo2";
 import Instructions from "../Components/InfoTrip/InstructionsTripPage"
-import Itinerary from '../Components/Itinerary/Itinerary'
+import OpenItinerary from '../Components/Itinerary/OpenItinerary'
 
 const Trip = () => {
+
     return (
        <>
       <div>
        <Navbar/>
        </div>
 
-       <Grid container>
+       <Grid container sx={{marginTop: '8rem'}}>
            <img src={cover} style={{ width: "100%", position: "center"}} alt="Cover Trip"/>
         </Grid>  
       
@@ -66,7 +67,7 @@ const Trip = () => {
               </Grid>
             
           </Grid>
-        <Itinerary/>
+        <OpenItinerary/>
        </Grid>
       <div>
         <Footer/>

@@ -6,7 +6,7 @@ import CheckIcon from '@mui/icons-material/Check';
 const Days = () => {
   const [days, setDays] = useState([]);
   const [tripNotes, setNotesPlan] = useState('');
-  var [titleTrip, setTitleTrip] = useState("Title Trip");
+  var [titleTrip, setTitleTrip] = useState("");
   var idPossibleItinerary = localStorage.getItem('idPossibleItinerary');
   const [selectedDateFrom, setSelectedDateFrom] = useState("");
   const [selectedDateTo, setSelectedDateTo] = useState("");
@@ -14,32 +14,6 @@ const Days = () => {
   var [message, setMessage] = useState("");
   var [savedTrip, setSavedTrip] = useState("");
   var [idUser, setIdUser] = useState(0);
-
-  useEffect(() => {
-    
-    axios.get('http://localhost:3001/itinerary/possibleitinerary', { params: { idPossibleItinerary: idPossibleItinerary } })
-      .then(response => {
-        if (response.data.Status === 'Success') {
-          const data = response.data.Data;
-          console.log(data);
-          const dayKeysWithData = Object.keys(data).filter(key => /^day_\d+$/.test(key) && data[key] !== null);
-          const daysWithData = dayKeysWithData.map(dayKey => ({
-            title: `Day ${parseInt(dayKey.split('_')[1])}`,
-            details: data[dayKey]
-          }));
-          setDays(daysWithData);
-          setNotesPlan(data.notes);
-          setLocation(data.location);
-          setTitleTrip(data.title);
-          setSelectedDateFrom(data.start_date);
-          setSelectedDateTo(data.end_date);
-          setIdUser(data.iduser);
-        }
-      })
-      .catch(error => {
-        console.error("Error get possible itinerary:", error);
-      });
-  }, []);
 
   const handleAddDay = () => {
     const newDay = {
@@ -56,27 +30,6 @@ const Days = () => {
   const handleDateFrom = (e) => {setSelectedDateFrom(e.target.value)}
   const handleDateTo = (e) => {setSelectedDateTo(e.target.value)}
 
-  const handleSaveInfo = () => {
-    const tripPlan = {
-      title_trip: titleTrip,
-      notes: tripNotes,
-      tripDays: days,
-      start_date: selectedDateFrom,
-      end_date: selectedDateTo,
-      location: location
-    }
-    
-    axios.put(`http://localhost:3001/itinerary/updatepossibleitinerary/${idPossibleItinerary}`, tripPlan)
-      .then(response => {
-        if (response.data.Status === 'Success') {
-          setMessage("Info saved")
-        }
-      })
-      .catch(error => {
-        console.error("Error get possible itinerary:", error);
-      });
-   
-  };
 
   const handleSaveItinerary = () => {
     console.log("Itinerary saved:");
@@ -117,7 +70,7 @@ const Days = () => {
           <Typography variant="h3"  style={{ marginBottom: '2rem', textAlign: 'center'}}>TRIP ITINERARY</Typography>
           <TextField
               id="trip-plan"
-              label="Trip Notes"
+              label="Title"
               value={titleTrip}
               onChange={handleTitleChange}
               variant="outlined"
@@ -171,9 +124,6 @@ const Days = () => {
             />
           </div>
         ))}
-        <Button onClick={handleSaveInfo} variant="contained" color="secondary">
-          Save Info
-        </Button>
         <Button onClick={handleSaveItinerary} variant="contained" color="success">
           Save Itinerary
         </Button>

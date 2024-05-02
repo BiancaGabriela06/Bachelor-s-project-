@@ -44,6 +44,7 @@ const Login = () => {
                 const token = res.data.Token;
                 axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
                 localStorage.setItem('token', token);
+                localStorage.setItem('idPossibleItinerary', res.data.IdPossibleItinerary);
                 console.log(token);
                 navigate("/home");
             }

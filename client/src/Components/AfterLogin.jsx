@@ -1,13 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import styled from 'styled-components'
-import { Link, useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 import {Button, Avatar, Menu, MenuItem} from "@mui/material"
 
-const AccesibilityContainer = styled.div`
-    display: flex;
 
-`
 const Accesibility = () => {
 
     var [profileImage, setProfileImage] = useState();
@@ -81,18 +77,22 @@ const Accesibility = () => {
       }, []);
 
     return (
-        <AccesibilityContainer>
-            <Button sx={{color: 'white'}}>
-            <Avatar src={`http://localhost:3001/profileimages/` + profileImage} alt="Profile Image"/>
-            <Button
+        <>
+             <Button
               id="basic-button"
               aria-controls={open ? 'basic-menu' : undefined}
               aria-haspopup="true"
               aria-expanded={open ? 'true' : undefined}
               onClick={handleClick}
-              sx={{color: 'white', fontSize: '10px'}}
+              sx={{color: 'white', fontSize: '10px', marginRight: '3rem',
+              '&:focus': {
+                outline: 'none',
+              },
+              '&:active': {
+                boxShadow: 'none',
+              }}}
             >
-              {username}
+            <Avatar sx={{marginRight: '1rem'}} src={`http://localhost:3001/profileimages/` + profileImage} alt="Profile Image"/>  {username}
             </Button>
             <Menu
               id="basic-menu"
@@ -109,9 +109,7 @@ const Accesibility = () => {
                )}
               <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
-            
-            </Button>
-        </AccesibilityContainer>
+        </>
     )
 }
 

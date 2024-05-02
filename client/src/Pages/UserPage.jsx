@@ -74,16 +74,6 @@ const UserPage = () => {
         fetchData();
     }, [])
 
-    /* <Grid container justifyContent="space-between" style={{padding: '10px', margin: '10px'}}>
-                            <Button href="/users/:username" sx={{ color: '#228B22', fontSize: '13px' }}><PsychologyIcon sx ={{fontSize: '24px'}}/> Timeline</Button>
-                            <Button href="/profile/about" sx={{ color: '#228B22', fontSize: '13px' }}><FolderSharedIcon sx ={{fontSize: '24px'}}/> About</Button>
-                            <Button href="/profile/gallery" sx={{ color: '#228B22', fontSize: '13px' }}><CollectionsIcon sx ={{fontSize: '24px'}}/> Gallery</Button>
-                        </Grid>
-                        
-                    <Grid container justifyContent="center">
-                        <UserPostsProfile username = {username}/>  
-                    </Grid>
-                     */
     return (
         <>
         <div>
@@ -92,10 +82,13 @@ const UserPage = () => {
         
         <Grid container  style={{ padding: '100px' }} spacing={1}>
               <Grid item xs={4} align="center" style={{ boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)' }}>
-              <Avatar src={`http://localhost:3001/profileimages/` + dataUser.profileImage} alt="Profile Image"/>
+              <Avatar src={`http://localhost:3001/profileimages/` + dataUser.profileImage} 
+              alt="Profile Image"
+              style={{ width: '10rem', height: '10rem', marginBottom: '3rem' }}
+              />
 
-                   <Typography variant="h4" >{dataUser.username}</Typography>
-                   <Typography>Member since {dataUser.datamembership}</Typography>
+                   <Typography variant="h3" >{dataUser.username}</Typography>
+                   <Typography variant="subtitle1">Member since {dataUser.datamembership}</Typography>
                    <Groups username={username}/>
                    
               </Grid>

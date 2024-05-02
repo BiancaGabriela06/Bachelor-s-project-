@@ -134,11 +134,13 @@ function SimpleDialog({ open, onClose, article }) {
                             <Avatar alt="Remy Sharp" src={`http://localhost:3001/profileimages/` + comm.profileimage} 
                                style={{ width: '20px', height: '20px'}}/>
                         </Grid>
-                        <Grid justifyContent="left" item xs zeroMinWidth>
-                            <h5 style={{  margin: 0, textAlign: "left" }}>{comm.username}</h5>
-                            <p style={{ textAlign: "left" }}> {comm.comment}</p>
-                            <p style={{ textAlign: "left", color: "gray" }}>{comm.date}</p>
-                          </Grid>
+                        <Grid justifyContent="left" item xs zeroMinWidth style={{ display: 'flex', flexDirection: 'column', marginBottom: '16px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
+                                <h5 style={{ margin: 0 }}>{comm.username}</h5>
+                            </div>
+                            <p style={{ marginBottom: '8px', wordWrap: 'break-word' }}>{comm.comment}</p>
+                            <p style={{ color: 'gray', fontSize: '0.8rem', marginTop: 'auto' }}>{comm.date}</p>
+                        </Grid>
                         <Grid justifyContent="right" item xs zeroMinWidth>
                              {currentUser && currentUser.id === comm.idcomment}
                              <Tooltip title="Delete">
@@ -159,7 +161,7 @@ function SimpleDialog({ open, onClose, article }) {
                       />
                   </Grid>
                   <Grid item xs={3}>
-                      <Button variant="contained" onClick={() => handleComment(article.idarticle)} endIcon={<ReplyIcon />}>
+                      <Button variant="contained" color = "success" onClick={() => handleComment(article.idarticle)} endIcon={<ReplyIcon />}>
                           Reply
                       </Button>
                   </Grid>
@@ -182,7 +184,7 @@ SimpleDialog.propTypes = {
 
 const Article = ({ article }) => {
   const [open, setOpen] = React.useState(false);
-  const [images, setImages] = useState([])
+  const [image, setImage] = useState("")
 
   const idarticle = article.idarticle;
   const handleClickOpen = () => {
@@ -198,7 +200,9 @@ const Article = ({ article }) => {
       try {
         const response = await axios.post('http://localhost:3001/article/images', {idarticle});
         if (response.data.Status === 'Success') {
-          setImages(response.data.Data);
+          console.log("Filename 1: ")
+          console.log(response.data.Data[0].filename)
+          setImage(response.data.Data[0].filename);
         } else {
           console.log(response.err);
         }
@@ -221,7 +225,7 @@ const Article = ({ article }) => {
           <CardMedia
             component="img"
             height="194"
-            image={`http://localhost:3001/articleimages/${images[0].filename}`}
+            image={`http://localhost:3001/articleimages/${image}`}
             
           />
           <CardContent>
