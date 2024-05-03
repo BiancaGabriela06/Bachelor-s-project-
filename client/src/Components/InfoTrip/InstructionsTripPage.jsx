@@ -61,8 +61,6 @@ export default function SwipeableTemporaryDrawer() {
             <ListItem><DirectionsBikeIcon color="success"/>Check local business of renting bikes to visit the city</ListItem>
             <Divider component="li" />
             <ListItem><RowingIcon color="success"/>You don't have any idea of activities? Find our ideas to spend the time in a new city</ListItem>
-            <Divider component="li" />
-            <ListItem><TungstenIcon color="success"/>What is nice to know when you visit a new city</ListItem>
          </List>
         </Grid>
         

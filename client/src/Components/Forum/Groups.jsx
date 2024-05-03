@@ -4,13 +4,17 @@ import { Container, Alert, Typography, Paper, Button, Grid, Chip } from "@mui/ma
 import AddIcon from '@mui/icons-material/Add';
 import CheckIcon from '@mui/icons-material/Check';
 
-const Groups = (user) => {
+const Groups = ({onSelect}) => {
     const [groups, setGroups] = useState([]);
     var currentUser = localStorage.getItem("currentUser");
     const [username, setUsername] = useState(currentUser.replace(/^"|"$/g, ''));
     const [message, setMessage] = useState("")
     const [success, setSuccess] = useState(0);
     const [lastJoinedGroup, setLastJoinedGroup] = useState(null);
+    
+    const handleClick = (group) => {
+        onSelect(group);
+    };
 
     useEffect(() => {
         axios.get('http://localhost:3001/groups/groups', {params: { username: username}})
@@ -52,7 +56,7 @@ const Groups = (user) => {
                     <Alert severity="success" >Member</Alert> </Grid>) : (
                       <Grid/>
                    )}
-                    <Typography variant="h5">{group.title}</Typography>
+                    <Button onClick={() => handleClick(group)} variant="h5">{group.title}</Button>
                     <Typography variant="body1" style={{ marginBottom: "10px" }}>{group.description}</Typography>
                     <Typography variant="body2" gutterBottom>Atribute:</Typography>
                     <Grid container spacing={1} style={{ marginBottom: "10px" }}>

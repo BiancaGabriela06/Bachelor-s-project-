@@ -1,8 +1,10 @@
 import React from "react"
 
 const TopArticles = () => {
-    return (<>
-    </>)
+    return (
+        <>
+        </>
+    )
 }
 
 export default TopArticles;

@@ -133,10 +133,10 @@ const AddArticle = () => {
                         <TextField {...params} label="Categories" />
                     )}
                 />
-      <Button onClick={addCategory} disabled={!groupTitle.trim()} style={{marginLeft: "10px"}}>Add Category</Button>
+      <Button variant="outlined" color="success" onClick={addCategory} disabled={!groupTitle.trim()} style={{marginLeft: "10px"}}>Add Category</Button>
       </Grid>
       <Grid item>
-        <Button variant="contained" color="primary" onClick={submitArticle}>
+        <Button variant="contained" color="success" onClick={submitArticle}>
           Post Article
         </Button>
       </Grid>

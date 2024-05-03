@@ -106,17 +106,17 @@ const About = () => {
   };
   return (
     <>
-    <Grid container  style={{ padding: '100px' }} spacing={1}>
+    <Grid container  style={{ marginLeft: '10rem'}} spacing={1}>
       
         <Grid item row xs={8} style={{ boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)', justifyContent: 'space-between' }}>
               <Grid  container padding = {5} justifyContent="space-between">
-                <Grid item justifyContent = "center" xs = {6}>
-                  <Typography variant = "h4" style={{ fontWeight: 'bold' }} ><AccountBoxIcon style={{fontSize: '30px'}}/>About user</Typography>
+                <Grid item justifyContent = "center" >
+                  <Typography variant = "h4" style={{textAlign: 'center', fontWeight: 'bold' }} ><AccountBoxIcon style={{fontSize: '2rem'}}/>About user</Typography>
                   {editInfo === 0 ? (
-                    <Avatar src={`http://localhost:3001/profileimages/` + profileImage} alt="Profile Image"/>
+                    <Avatar sx={{marginTop: '1.5rem', marginBottom: '1.5rem'}} src={`http://localhost:3001/profileimages/` + profileImage} alt="Profile Image"/>
                   ) : (
                     <Grid>
-                       <Avatar src={`http://localhost:3001/profileimages/` + profileImage} alt="Profile Image"/>
+                       <Avatar sx={{marginTop: '1.5rem', marginBottom: '1.5rem'}} src={`http://localhost:3001/profileimages/` + profileImage} alt="Profile Image"/>
                         <input
                           type="file"
                           name="profile"
@@ -137,9 +137,9 @@ const About = () => {
                   )}
                 </Grid>
                 <Grid item padding= {2} xs = {12}>
-                  <Typography style={{ fontWeight: 'bold' }}>About</Typography>
+                  <Typography variant="h4"   style={{ fontWeight: 'bold' }}>About</Typography>
                    {editInfo === 0 ? (
-                    <Typography>{userInfo.aboutUser}</Typography>
+                    <Typography variant="h4">{userInfo.aboutUser}</Typography>
                    ) : (
                      <TextField defaultValue={userInfo.aboutUser}
                      onChange={e => { 
@@ -148,26 +148,26 @@ const About = () => {
                    )}
                 </Grid>
                 <Grid item padding= {2} xs = {12}>
-                  <Typography style={{ fontWeight: 'bold' }}>Phone Number</Typography>
+                  <Typography variant="h4" style={{ fontWeight: 'bold' }}>Phone Number</Typography>
                   {editInfo === 0 ? (
-                    <Typography>{userInfo.phonenumber}</Typography>
+                    <Typography variant="h4">{userInfo.phonenumber}</Typography>
                    ) : (
                      <TextField onChange = {e => setValues({...values, phonenumber: e.target.value})} defaultValue={userInfo.phonenumber}></TextField>
                    )}
                 </Grid>
                 <Grid item padding= {2} xs = {12}>
-                <Typography style={{ fontWeight: 'bold' }}>Contact Email</Typography>
+                <Typography variant="h4" style={{ fontWeight: 'bold' }}>Contact Email</Typography>
                   {editInfo === 0 ? (
-                    <Typography>{userInfo.emailContact}</Typography>
+                    <Typography variant="h4">{userInfo.emailContact}</Typography>
                    ) : (
                      <TextField onChange = {e => setValues({...values, emailContact: e.target.value})} defaultValue={userInfo.emailContact}></TextField>
                    )}
                 </Grid>
               </Grid>
-              <Grid container justifyContent="center">
-                <Button variant = "outlined" onClick={(e) => setEditInfo(1)}>Edit</Button>
+              <Grid container justifyContent="center" sx={{ marginBottom: '1rem'}}>
+                <Button color="success" variant = "outlined" onClick={(e) => setEditInfo(1)}>Edit</Button>
                 {editInfo === 1 ? (
-                  <Button variant = "outlined" onClick = {saveData}>Save</Button>
+                  <Button color="success" variant = "outlined" onClick = {saveData}>Save</Button>
                 ) : <Typography/>}
               </Grid>
         </Grid>

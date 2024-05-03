@@ -28,6 +28,7 @@ const Categories = ({ onCategorySelect }) => {
               <ButtonGroup orientation="vertical" aria-label="Vertical button group">
                 {buttons.map(({ label, category }) => (
                   <Button
+                    color="success"
                     key={category}
                     onClick={() => handleCategorySelect(category)}
                     variant={selectedCategory === category ? "contained" : "outlined"}

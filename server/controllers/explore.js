@@ -2,7 +2,9 @@ import axios from 'axios';
 import db from "../database.js";
 
 export const getArticles = (req, res) => {
-    db.query('Select * from articles', [], (err, data) => {
+    db.query(`Select a.idarticle, u.username, DATE_FORMAT(a.date, '%Y-%m-%d') AS date,
+             a.text, a.title, a.categories FROM articles AS a
+             JOIN users AS u ON a.idauthor = u.id;`, [], (err, data) => {
         if(err) console.log(err);
         else{
             console.log(data);

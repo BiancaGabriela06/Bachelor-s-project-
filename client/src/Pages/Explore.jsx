@@ -27,7 +27,6 @@ const Explore = () => {
           <Divider/>
         <Grid container xs = {18} padding={5}>
           <Grid item spacing = {5} xs = {6}>
-            <SearchBar/>
             <Categories sx={{margin: 10}}onCategorySelect={handleCategorySelect} />
           </Grid>
           <Grid item xs = {12} sm={6} md={2}>

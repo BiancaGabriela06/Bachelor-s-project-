@@ -1,12 +1,10 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
-import {useNavigate} from 'react-router-dom'
 import {Container, Grid, Avatar, Button, TextField, Autocomplete, Typography} from "@mui/material"
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
-import UserPostsProfile from './UserPostsProfile';
+import FeedPosts from './FeedPosts';
 
-const FeedForum = () => {
-    const navigate = useNavigate();
+const FeedForum = ({selectedGroup}) => {
     var currentUser = localStorage.getItem("currentUser");
     const [username, setUsername] = useState(currentUser.replace(/^"|"$/g, ''));
     const [file, setFile] = useState("");
@@ -178,7 +176,7 @@ const FeedForum = () => {
                                  
         </Grid>
         <Grid container>
-            <UserPostsProfile/>
+            <FeedPosts selectedGroup={selectedGroup}/>
         </Grid>
          </Container>
         </>

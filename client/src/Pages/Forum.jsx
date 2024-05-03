@@ -11,6 +11,13 @@ import OpenItinerary from '../Components/Itinerary/OpenItinerary';
 const Forum = () => {
     var currentUser = localStorage.getItem("currentUser");
     const [username, setUsername] = useState(currentUser.replace(/^"|"$/g, ''));
+    const [selectedGroup, setSelectedGroup] = useState(null);
+
+    const handleGroupSelect = (group) => {
+        setSelectedGroup(group);
+        console.log(selectedGroup);
+    };
+
     return (
         <>
            <div>
@@ -18,10 +25,10 @@ const Forum = () => {
            </div>
            <Grid container spacing={2} padding={5} sx={{marginTop: '10rem'}}>
                 <Grid item xs={12} sm={4} md={3} style={{ borderRight: "1px solid #228B22" }}>
-                    <Groups username={username}/>
+                    <Groups  onSelect={handleGroupSelect}/>
                 </Grid>
                 <Grid item xs={12} sm={8} md={6} style={{ borderRight: "1px solid #228B22" }}>
-                    <FeedForum/>
+                    <FeedForum selectedGroup={selectedGroup}/>
                 </Grid>
                 <Grid item xs={12} sm={4} md={3}>
                     <Users/>

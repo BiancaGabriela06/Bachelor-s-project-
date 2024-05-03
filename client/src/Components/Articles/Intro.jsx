@@ -3,7 +3,6 @@ import 'devextreme/dist/css/dx.light.css';
  import { Gallery } from 'devextreme-react/gallery';
 import photo1 from "../../assets/images/Couple.png";
 import photo2 from "../../assets/images/Bicycle.png"
-import {Grid} from "@mui/material"
 
 const Intro = () => {
    

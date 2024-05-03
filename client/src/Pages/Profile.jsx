@@ -127,9 +127,9 @@ const Profile = () => {
                   <Box sx={{ padding: '100px', width: '100%' }}>
                         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                             <Tabs value={value} justifyContent="space-between" sx={{padding: '10px', margin: '10px'}} onChange={handleChange} aria-label="basic tabs example">
-                                <Tab label="Timeline" sx={{ color: '#228B22', fontSize: '13px' }} {...a11yProps(0)} />
-                                <Tab label="About"  sx={{ color: '#228B22', fontSize: '13px' }} {...a11yProps(1)} />
-                                <Tab label="Gallery"  sx={{ color: '#228B22', fontSize: '13px' }} {...a11yProps(2)} />
+                                <Tab label="Timeline" sx={{ color: '#228B22', fontSize: '2rem' }} {...a11yProps(0)} />
+                                <Tab label="About"  sx={{ color: '#228B22', fontSize: '2rem' }} {...a11yProps(1)} />
+                                <Tab label="Gallery"  sx={{ color: '#228B22', fontSize: '2rem' }} {...a11yProps(2)} />
                             </Tabs>
                         </Box>
                         <CustomTabPanel value={value} index={0}>

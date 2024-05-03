@@ -11,6 +11,7 @@ import picture_co2 from "../assets/images/co2pik_card.jpg";
 import CalculatorCo2 from "../Components/InfoTrip/CalculatorCo2";
 import Instructions from "../Components/InfoTrip/InstructionsTripPage"
 import OpenItinerary from '../Components/Itinerary/OpenItinerary'
+import Feedback from "../Components/Feedback";
 
 const Trip = () => {
 
@@ -68,6 +69,7 @@ const Trip = () => {
             
           </Grid>
         <OpenItinerary/>
+        <Feedback/>
        </Grid>
       <div>
         <Footer/>

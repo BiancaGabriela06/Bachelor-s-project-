@@ -103,6 +103,35 @@ const RestaurantComponent = ({localRestaurantDetails}) => {
         </>
     )
 }
+
+const AttractionComponent = ({attractionDetails}) => {
+    return (
+        <>
+    <div style={{ width: "514px", margin: "16px" }}>
+    <Grid container>
+       {attractionDetails.Photo !== '' ? (
+            <Grid item xs={6}>
+                <img src={attractionDetails.Photo} alt="Attraction" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            </Grid>
+        ) : (
+            <Grid item xs={6}>
+                <img src={restaurant} alt="Attraction" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            </Grid>
+        )}
+        <Grid item xs={6}>
+            <Card style={{ height: "100%", width: "95rem", padding: "20px" }}>
+                <CardContent>
+                    <Typography variant="h3">{attractionDetails.Name}</Typography>
+                    <Typography variant="h4"> {attractionDetails.Description}</Typography>
+                    <Typography variant="h4">Price: {attractionDetails.Price}</Typography>
+                </CardContent>
+            </Card>
+        </Grid>
+    </Grid>
+</div>
+        </>
+    )
+}
 const BarSearchTrip = () => {
     
     const [places, setPlaces] = useState([])
@@ -114,6 +143,7 @@ const BarSearchTrip = () => {
     const [selectedDateTo, setSelectedDateTo] = useState("");
     const [numPersons, setNumPersons] = useState(1);
     const [flights, setFlights] = useState([]);
+    const [attractions, setAttractions] = useState([])
     const [codefromAirport, setCodeFromAirport] = useState("");
     const [codetoAirport, setCodeToAirport] = useState("");
     const [loading, setLoading] = useState(false);
@@ -237,6 +267,21 @@ const BarSearchTrip = () => {
        }catch(error){
         console.error(error);
        }
+
+       try{
+        const response =  await axios.get('http://localhost:3001/attractions/getattractions', {params: {
+          city: toLocation,
+           }
+        });
+        if (response.data.Status === 'Success') {
+            setLoading(false);
+            setAttractions(response.data.Data);
+        } else {
+            console.log(response.data.err);
+        }
+       }catch(error){
+        console.error(error);
+       }
       
     }
     
@@ -338,6 +383,20 @@ const BarSearchTrip = () => {
            {localRestaurants && localRestaurants.map((restaurant, index) => (
                 <div key={index}>
                     <RestaurantComponent localRestaurantDetails={restaurant}/>
+                </div>
+            ))}
+        </div>
+        {attractions && attractions.length > 0 ? (
+           <Typography variant='h3' style={{ marginTop: '30px', marginBottom: '10px' }}> Attractions in {toLocation}</Typography>
+        ) : searched === 1 && attractions.length === 0 ?(
+            <Alert variant="outlined" severity="warning" sx={{ margin: '4rem', fontSize: '2rem'}}>
+                No attractions found in {toLocation}
+            </Alert>
+         ): null}
+        <div style={{ overflowY: 'scroll', overflowX: 'hidden', maxHeight: '400px', margin: '20px'}}>
+           {attractions && attractions.map((attraction, index) => (
+                <div key={index}>
+                    <AttractionComponent attractionDetails={attraction}/>
                 </div>
             ))}
         </div>

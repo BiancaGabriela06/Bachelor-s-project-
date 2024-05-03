@@ -3,7 +3,7 @@ import db from "../database.js";
 
 export const getCities = async (req, res) => {
   
-    const query = "Select * from countries";
+    const query = "Select * from countries where idcountry >=78"; /// next time de la 78 -> Hong Kong
     let countries = [];
     db.query(query, async (err, data) => {
       if(err) console.log(err);
@@ -83,7 +83,7 @@ export const getCountries = async (req, res) => {
 }
 
 export const listofcities = async (req, res) => {
-  const query = "Select name from cities";
+  const query = "Select DISTINCT name from cities";
   db.query(query, (err, data) => {
     if(err)
        console.log(err);

@@ -135,6 +135,7 @@ export const posts = (req, res) => {
                     p.likes, 
                     p.comments, 
                     g.title,
+                    g.idgroup,
                     u.profileImage
                     FROM  posts p JOIN  \`groups\` g ON p.groupid = g.idgroup
                     JOIN  group_user gu ON gu.groupid = g.idgroup

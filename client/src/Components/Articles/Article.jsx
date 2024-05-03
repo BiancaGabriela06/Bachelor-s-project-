@@ -7,6 +7,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CommentIcon from '@mui/icons-material/Comment';
 import PropTypes from 'prop-types';
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 
 function SimpleDialog({ open, onClose, article }) {
   var currentUser = localStorage.getItem("currentUser");
@@ -22,6 +23,20 @@ function SimpleDialog({ open, onClose, article }) {
     articleid: 0,
   })
   
+  const navigate = useNavigate();
+  const handleNameClick = (user) => {
+    console.log(user);
+    if(username === user){
+      navigate(`/profile`);
+    }
+    else{
+      navigate(`/users/${user}`)
+    }
+  
+    console.log(`Navigating to ${user}'s profile`);
+  };
+  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -102,20 +117,24 @@ function SimpleDialog({ open, onClose, article }) {
     }
  }
   return (
+    <>
     <Dialog onClose={handleClose} open={open}>
-      <DialogTitle  sx={{ m: 'auto', p: 2, textAlign: 'center', fontSize: '4rem' }} >{article.title}</DialogTitle>
+      <DialogTitle  sx={{ m: 'auto', p: 2, textAlign: 'center', color: '#228B22', fontSize: '4rem', fontWeight: 'bold'}} >{article.title}</DialogTitle>
       <DialogContent>
-         <Grid>
+        <Grid>
+        <Typography onClick={() => handleNameClick(article.username)} variant="h4" sx={{marginLeft: '1rem'}}>Author: {article.username}</Typography>
+        <Typography variant="h4" sx={{marginLeft: '1rem'}}>Date: {article.date}</Typography>
+        <Typography variant="h4" sx={{marginLeft: '1rem'}}>Categories: {article.categories}</Typography>
+        </Grid>
+         <Grid sx={{marginTop: '4rem'}}>
           <Typography variant="h4" sx={{ pb: 2 }}>{article.text}</Typography>
          {images.map((image, index) => (
         <img key={index} 
           src={`http://localhost:3001/articleimages/${image.filename}`} 
           alt={`Image ${index}`} 
           style={{ 
-            width: '90%', 
-            height: '90%', 
-            margin: '0 auto', 
-            marginBottom: '20px' 
+            width: '100%', 
+            height: '100%', 
         }}
           />
           ))}
@@ -170,9 +189,11 @@ function SimpleDialog({ open, onClose, article }) {
          )}
       
       <DialogActions>
-        <Button onClick={handleClose}>Close</Button>
+        <Button color="success" variant="contained" onClick={handleClose}>Close</Button>
       </DialogActions>
     </Dialog>
+    </>
+   
   );
 }
 
@@ -219,20 +240,19 @@ const Article = ({ article }) => {
       <Button onClick={handleClickOpen}>
         <Card sx={{ width: '100rem' }} >
           <CardHeader
-            title={article.title}
+            title={
+              <Typography variant="h4" fontWeight="bold">
+                {article.title}
+              </Typography>
+            }
             subheader={article.date}
           />
           <CardMedia
             component="img"
-            height="194"
+            height="200"
             image={`http://localhost:3001/articleimages/${image}`}
             
           />
-          <CardContent>
-            <Typography variant="body2" color="text.secondary">
-
-            </Typography>
-          </CardContent>
         </Card>
       </Button>
       <SimpleDialog

@@ -3,8 +3,8 @@ import axios from 'axios'
 import {Grid} from "@mui/material"
 import Post from "./Post"
 
-const UserPostsProfile = () => {
-    var [userPosts, setUserPosts] = useState([])
+const FeedPosts = ({selectedGroup}) => {
+    var [posts, setUserPosts] = useState([])
 
     useEffect(() => { 
       const fetchData = async() => {
@@ -13,7 +13,7 @@ const UserPostsProfile = () => {
             if(res.data.Status === 'Success')
             {
                 setUserPosts(res.data.Data);
-                console.log(userPosts);
+                console.log(posts);
             }
             else {
                 console.log(res.err);
@@ -24,15 +24,17 @@ const UserPostsProfile = () => {
         }
       }
 
+      console.log(selectedGroup);
       fetchData();
     }, []);
-
+    
+    const filteredPosts = selectedGroup ? posts.filter(post => post.idgroup === selectedGroup.idgroup) : posts;
     
     
     return (
       <>
         <Grid container justifyContent="center">
-        {userPosts.map((post, index) => (
+        {filteredPosts.map((post, index) => (
               <Post
                   postid={post.postid}
                   user={post.username}
@@ -50,4 +52,4 @@ const UserPostsProfile = () => {
     );
 }
 
-export default UserPostsProfile;
+export default FeedPosts;
