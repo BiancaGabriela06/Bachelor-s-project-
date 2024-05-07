@@ -5,9 +5,7 @@ import { Avatar, Card, CardContent, Typography, Grid } from '@mui/material';
 const UserDetailsCard = ({ user }) => {
   const navigate = useNavigate();
   const handleNameClick = () => {
-    console.log(user);
     navigate(`/users/${user.username}`)
-    console.log(`Navigating to ${user.username}'s profile`);
   };
   
 
@@ -19,13 +17,13 @@ const UserDetailsCard = ({ user }) => {
             <Avatar alt={user.username} src={`http://localhost:3001/profileimages/` + user.profileImage} />
           </Grid>
           <Grid item>
-            <Typography variant="h6" onClick={handleNameClick} style={{ cursor: 'pointer' }}>
+            <Typography variant="h5" fontWeight="bold" onClick={handleNameClick} style={{ cursor: 'pointer' }}>
               {user.username}
             </Typography>
           </Grid>
         </Grid>
-        <Typography variant="body1">Date Membership: {user.datamembership}</Typography>
-        <Typography variant="body2">About User: {user.aboutUser}</Typography>
+        <Typography style={{marginTop: '1rem'}} variant="h6">Date Membership: {user.datamembership}</Typography>
+        <Typography variant="h6">About User: {user.aboutUser}</Typography>
       </CardContent>
     </Card>
   );

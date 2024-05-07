@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import { Card, CardContent, CardHeader, CardMedia,
+import { Card,  CardHeader, CardMedia,
      Typography, Button, Dialog, DialogTitle, DialogContent, DialogActions,
-     Grid, GridItem, Tooltip, TextField, Avatar, IconButton } from "@mui/material";
+     Grid,  Tooltip, TextField, Avatar, IconButton } from "@mui/material";
 import ReplyIcon from '@mui/icons-material/Reply';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CommentIcon from '@mui/icons-material/Comment';
@@ -25,15 +25,12 @@ function SimpleDialog({ open, onClose, article }) {
   
   const navigate = useNavigate();
   const handleNameClick = (user) => {
-    console.log(user);
     if(username === user){
       navigate(`/profile`);
     }
     else{
       navigate(`/users/${user}`)
     }
-  
-    console.log(`Navigating to ${user}'s profile`);
   };
   
 
@@ -59,7 +56,6 @@ function SimpleDialog({ open, onClose, article }) {
   };
 
   const showComments = async () => {
-    console.log("Show comments for string: " + article.idarticle.toString());
     try {
       if (commentsBool === 0) {
         setShowComments(1);
@@ -71,9 +67,7 @@ function SimpleDialog({ open, onClose, article }) {
             idarticle: article.idarticle }});
   
           if (response.data.Status === 'Success') {
-            console.log("intra");
             setComments(response.data.Comments);
-            console.log(comments);
           } else {
             console.error('Error fetching comments:', response.data.ErrorMessage);
           }
@@ -110,7 +104,6 @@ function SimpleDialog({ open, onClose, article }) {
      const response = await axios.delete(`http://localhost:3001/explore/article/deletecomment/${commId}`);
      if(response.data.Status === 'Success'){
        showComments(articleid);
-       console.log('Foarte bine');
      }
     }catch(error){
      console.log(error);
@@ -221,8 +214,6 @@ const Article = ({ article }) => {
       try {
         const response = await axios.post('http://localhost:3001/article/images', {idarticle});
         if (response.data.Status === 'Success') {
-          console.log("Filename 1: ")
-          console.log(response.data.Data[0].filename)
           setImage(response.data.Data[0].filename);
         } else {
           console.log(response.err);

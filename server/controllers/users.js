@@ -54,6 +54,10 @@ export const changeUserInfo = (req, res) => {
         }
         if(typeof req.body.emailAddress != undefined)
         {
+                const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                console.log(pattern.test(req.body.emailAddress))
+                if(pattern.test(req.body.emailAddress) == false)
+                    return res.json({Status: "Error", Error: "Please insert a valid mail."})
             const query2 = "Update users_info set emailContact = ? where userid = ?"
             db.query(query2, [req.body.emailAddress, data[0].id], (err, data) =>{
                 if(err) {
@@ -79,7 +83,7 @@ export const changeUserInfo = (req, res) => {
                 }
             } )
         }
-
+        console.log("Data updated succesfully")
         return res.json({Status: "Success",  Event: "Data updated succesfully!"})
     })
 }
@@ -87,14 +91,12 @@ export const changeUserInfo = (req, res) => {
 
 export const userInfo = (req, res) => {
     const query = "Select id from users where username = ?"
-    console.log(req.query.username);
     db.query(query, [req.query.username], (err, data) => {
         if(err) {
             console.log(err);
             return res.json(err);
         }
         
-        console.log(data);
         const query2 = "Select * from users_info where iduser = ?"
         db.query(query2, data[0].id, (err, data) => {
             if(err) {
@@ -103,7 +105,7 @@ export const userInfo = (req, res) => {
             }
           
             else if(data.length != 0) {
-                console.log(data[0]);
+                console.log(data[0])
                 return res.json({Status: "Success", data: data[0]});
             }
         })
@@ -125,6 +127,7 @@ export const isAdmin = (req, res) => {
 }
 
 export const editInfo = (req, res) => {
+    console.log("Edit profile")
     console.log(req.body);
     var id;
     db.query('Select id from users where username = ?', [req.body.username], (err, data) => {
@@ -145,6 +148,9 @@ export const editInfo = (req, res) => {
             })
            }
            if(req.body.emailContact != ''){
+            const pattern =  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            if(pattern.test(req.body.emailContact) == false)
+                return res.json({Status: "Error", Error: "Please insert a valid mail."})
             db.query('Update users_info set emailContact = ? where iduser = ?', [req.body.emailContact, id], (err3, result3) =>{
                 if(err3) console.log(err3);
             })

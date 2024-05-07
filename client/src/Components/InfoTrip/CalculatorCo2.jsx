@@ -2,31 +2,42 @@ import React, {useState, useEffect} from 'react';
 import axios from 'axios'
 import {Grid, Button, Dialog, DialogContent, DialogActions,
         DialogTitle, DialogContentText, Autocomplete, TextField, 
-       Typography} from "@mui/material"
+       Typography, CircularProgress} from "@mui/material"
 
-const Calculator = () => {
+const Calculator = ({ fromLocation, toLocation }) => {
 
     const [open, setOpen] = useState(false);
     const [places, setPlaces] = useState([])
-    var [vehicle, setVehicle] = useState("");
-    var [value, setValue] = useState([]);
-    var [title, setTitle] = useState("");
     var [error, setError] = useState("");
+    var [trips, setTrips] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const [info, setInfo] = useState({
-        from: "",
-        to: "",
+        from: fromLocation,
+        to: toLocation,
         ways: "",
         people: 1,
         transport_type: ""
     })
     const handleClickOpen = () => { setOpen(true);};
     const handleClose = () => { setOpen(false);};
-    
+
+    useEffect(() => {
+        // Update 'info' state when 'fromLocation' or 'toLocation' change
+        console.log(fromLocation + " " + toLocation)
+        setInfo(prevInfo => ({
+          ...prevInfo,
+          from: fromLocation,
+          to: toLocation 
+        }));
+
+      }, [fromLocation, toLocation]);
     
 
      useEffect( () => {
-
+        console.log("Calculator");
+        console.log(info.from);
+        console.log(info.to);
         const fetchData = async () => {
                 try {
                     const response = await axios.get('http://localhost:3001/places/listofcities');
@@ -45,17 +56,12 @@ const Calculator = () => {
 
      const handleCalculate = () => {
        
-        setValue("");
-        setVehicle("");
-        setTitle("");
+        setTrips([])
         setError("");
         axios.post('http://localhost:3001/co2e/calculate', {info})
         .then(response => {
             if(response.data.Status === 'Success'){
-                console.log("Trips: " + response.data.Transportation_title)
-                setValue(response.data.Co2e);
-                setVehicle(response.data.Vehicle_title);
-                setTitle(response.data.Title)
+                setTrips(response.data.Trips)
             }
             else if(response.data.Status === 'No Found')
             {
@@ -119,7 +125,7 @@ const Calculator = () => {
                         />
                     </Grid>
                     <Grid item padding={3}>
-                        <Autocomplete freeSolo id = "free-solo-2-demo" options = {[1, 2]}  
+                        <Autocomplete freeSolo id = "free-solo-2-demo" options = {["1", "2"]}  
                             renderInput={(params) => < TextField {...params} label="Ways" value = {info.ways} 
                             onChange={(e) => { console.log('Input Value:', e.target.value); setInfo({...info, ways: e.target.value})}
                         }/>
@@ -129,14 +135,14 @@ const Calculator = () => {
                             setInfo({...info, ways: newValue || ''})}}/>
                     </Grid>
                     <Grid item padding={3}>
-                        <Autocomplete freeSolo id = "free-solo-2-demo" options = {[1, 2, 3, 4, 5, 6]}  
-                            renderInput={(params) => < TextField {...params} label="People" 
+                        <Autocomplete freeSolo id = "free-solo-2-demo" options = {["1", "2", "3", "4", "5", "6"]}  
+                            renderInput={(params) => < TextField {...params} label="Travellers" 
                             />} 
                             value = {info.people} onChange={(e, newValue )=> { console.log('Input Value:', e.target.value); 
                             setInfo({...info, people: newValue || ''})}}/>
                     </Grid>
                     <Grid item padding={3}>
-                        <Autocomplete freeSolo id = "free-solo-2-demo" options = {["flying", "public-transport", "driving"]}
+                        <Autocomplete freeSolo id = "free-solo-2-demo" options = {["flying", "public-transport", "driving", "bicycling", "walking"]}
                             renderInput={(params) => < TextField {...params} label="Transport Type"/>}
                             value = {info.transport_type} onChange={(e, newValue) => {
                                 console.log('Input Value:', e.target.value);
@@ -145,22 +151,22 @@ const Calculator = () => {
 
                     </Grid>
                 </Grid>  
-
+               
                 </DialogContent>
-                {value && vehicle && title && (
-                  <Grid container justifyContent="center">
-                    <Grid item xs = {10} justifyContent="center">
-                        <Typography style={{textAlign: 'center'}} variant = "h3">
-                            Your trip emission of Co2 is <span style={{fontWeight: 'bold', color: 'darkgreen'}}>{value && value}</span>
-                        </Typography>
-                    </Grid> 
-                    <Grid item xs = {10} justifyContent="center">
-                        <Typography style={{textAlign: 'center'}} variant="h3">
-                            Transport Type: <span style={{fontWeight: 'bold', color: 'darkgreen'}}>{vehicle && vehicle}</span>
-                        </Typography>
-                    </Grid>       
-                  </Grid>   
-                )}
+                {
+                    trips.length!==0 && (
+                        <Grid container>
+                            <Typography style={{textAlign: 'center'}} variant="h4" >Options:</Typography>
+                            {trips.map((trip, index) => (
+                                <Typography key={index} style={{textAlign: 'center'}} variant="h5">
+                                    {index+1}. Using <span style={{fontWeight: 'bold', color: 'darkgreen'}}>{trip.Vehicle_title}</span>
+                                    : <span style={{fontWeight: 'bold', color: 'darkgreen'}}>{trip.Co2}</span>
+                                    kilograms emission CO2
+                                </Typography>
+                            ))}
+                        </Grid>
+                    )     
+                }
                 {error && (
                     <Grid container justifyContent="center">
                          <Typography style={{textAlign: 'center'}} >
@@ -169,8 +175,8 @@ const Calculator = () => {
                     </Grid>
                 )}
                 <DialogActions>
-                <Button onClick={handleCalculate}>CALCULATE</Button>
-                <Button onClick={handleClose} autoFocus> Done</Button>
+                <Button color="success" variant="contained" onClick={handleCalculate}>CALCULATE</Button>
+                <Button color="success" variant="outlined" onClick={handleClose} autoFocus> Done</Button>
                 </DialogActions>
           </Dialog>
         </Grid>

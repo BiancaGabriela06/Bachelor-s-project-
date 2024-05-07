@@ -3,6 +3,7 @@ import axios from "axios";
 import { Container, Alert, Typography, Paper, Button, Grid, Chip } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import CheckIcon from '@mui/icons-material/Check';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
 
 const Groups = ({onSelect}) => {
     const [groups, setGroups] = useState([]);
@@ -49,34 +50,44 @@ const Groups = ({onSelect}) => {
 
     return (
         <Container>
-            <Typography variant="h4" gutterBottom>Groups</Typography>
+            <Typography variant="h4" gutterBottom textAlign="center">Groups</Typography>
             {groups.map(group => (
                 <Paper key={group.id} elevation={3} style={{ padding: "20px", marginBottom: "20px" }}>
-                    {group.isMember ? (<Grid item xs={12}>
-                    <Alert severity="success" >Member</Alert> </Grid>) : (
-                      <Grid/>
-                   )}
-                    <Button onClick={() => handleClick(group)} variant="h5">{group.title}</Button>
-                    <Typography variant="body1" style={{ marginBottom: "10px" }}>{group.description}</Typography>
-                    <Typography variant="body2" gutterBottom>Atribute:</Typography>
-                    <Grid container spacing={1} style={{ marginBottom: "10px" }}>
-                        {group.attributes.map((attribute, index) => (
-                            <Grid item key={index}>
-                                <Chip label={attribute} />
-                            </Grid>
-                        ))}
+                <Grid container justifyContent="space-between" alignItems="center">
+                    <Grid item xs={8}>
+                        <Button onClick={() => handleClick(group)} style={{ textAlign: 'center', fontSize: '1.5rem' }} variant="h4">
+                            {group.title}
+                        </Button>
                     </Grid>
-                    <Typography variant="body2" gutterBottom>Membrii în grup: {group.member_count}</Typography>
-                    {group.isMember ? (<Grid/>) : (
-                         <Button variant="contained" color="primary" onClick={() => handleJoinGroup(group.idgroup)}><AddIcon/></Button>
-                   )}
-                    
-                    {success && lastJoinedGroup === group.idgroup ? (
-                        <Grid item xs={12}>
-                            <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">{message}</Alert>
+                    {group.isMember && (
+                        <Grid item xs={4} style={{ display: 'flex', alignItems: 'center' }}>
+                            <CheckBoxIcon style={{ color: '#228B22', marginRight: '5px' }} />
+                            <Typography style={{ color: "#228B22" }}>Member</Typography>
                         </Grid>
-                    ) : (<Grid/>)}
-                </Paper>
+                    )}
+                </Grid>
+                <Typography variant="h6" style={{ marginBottom: "10px" }}>{group.description}</Typography>
+                <Typography variant="body2" gutterBottom>Atribute:</Typography>
+                <Grid container spacing={1} style={{ marginBottom: "10px" }}>
+                    {group.attributes.map((attribute, index) => (
+                        <Grid item key={index}>
+                            <Chip label={attribute} />
+                        </Grid>
+                    ))}
+                </Grid>
+                <Typography variant="body2" gutterBottom>Membrii în grup: {group.member_count}</Typography>
+                {group.isMember ? <Grid /> : (
+                    <Button variant="contained" color="primary" onClick={() => handleJoinGroup(group.idgroup)}>
+                        <AddIcon />
+                    </Button>
+                )}
+                {success && lastJoinedGroup === group.idgroup ? (
+                    <Grid item xs={12}>
+                        <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">{message}</Alert>
+                    </Grid>
+                ) : <Grid />}
+            </Paper>
+            
             ))}
         </Container>
     );

@@ -21,7 +21,6 @@ const Groups = (username) => {
           })
             .then(response => {
                 if(response.data.Status === 'Success'){
-                    console.log(response.data.Data);
                     setGroups(response.data.Data);
                 }
                 

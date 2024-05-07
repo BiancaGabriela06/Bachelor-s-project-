@@ -222,8 +222,6 @@ export const userPosts = (req, res) => {
     db.query(query1, [req.query.username.username], (err, data) => {
         if(err) console.log(err)
         else{
-          console.log("Post for user : " + req.query.username.username + " : ")
-          console.log(data)
           return res.json({Status: "Success", Data: data})
        
     }

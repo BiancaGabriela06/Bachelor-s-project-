@@ -181,7 +181,6 @@ export const soonestTrip = (req, res) => {
       console.log(err);
     }
     else{
-      console.log(data[0])
       return res.json({Status: "Success", Data: data[0]})
     }
   })

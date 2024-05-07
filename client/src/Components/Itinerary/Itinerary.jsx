@@ -15,7 +15,6 @@ const Itinerary = ({itinerary}) => {
     const [error, setError] = useState("");
     var [locationEdit, setLocation] = useState(location);
     var [savedTrip, setSavedTrip] = useState("");
-    var [idUser, setIdUser] = useState(0);
 
     useEffect(() => {
         const daysArray = [day_1, day_2, day_3, day_4, day_5, day_6, day_7];
@@ -54,15 +53,9 @@ const Itinerary = ({itinerary}) => {
         }
 
     }
-    const handleEdit = () => {
-          setEditItinerary(1);
-          console.log(days);
-         
-    }
+    const handleEdit = () => {setEditItinerary(1);}
 
     const handleSaveChanges = () => {
-        console.log(start_date);
-        console.log(end_date);
         if(start_date === "")  setError("Please complete Start Date!");
         else if(end_date === "")  setError("Please complete End Date!");
         else{

@@ -14,6 +14,8 @@ import OpenItinerary from '../Components/Itinerary/OpenItinerary'
 import Feedback from "../Components/Feedback";
 
 const Trip = () => {
+  const [fromLocation, setFromLocation] = useState('');
+  const [toLocation, setToLocation] = useState('');
 
     return (
        <>
@@ -27,7 +29,10 @@ const Trip = () => {
       
        <Grid container padding = {5} justifyContent="center">
             <Grid item justifyContent="center">
-                  <BarSearchTrip/>
+                  <BarSearchTrip  fromLocation={fromLocation}
+                                  setFromLocation={setFromLocation}
+                                  toLocation={toLocation}
+                                  setToLocation={setToLocation}/>
             </Grid>
         </Grid>
         <Grid container padding = {1} >
@@ -45,7 +50,9 @@ const Trip = () => {
                 </Typography>
               </CardContent>
               <CardActions>
-                <Button size="small"><CalculatorCo2/></Button>
+                <Button size="small">
+                      <CalculatorCo2 fromLocation={fromLocation}
+                                     toLocation={toLocation}/></Button>
               </CardActions>
        </Card>
           </Grid>

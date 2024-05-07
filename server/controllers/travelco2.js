@@ -42,20 +42,17 @@ export const calculate = async (req, res) => {
                 const vehicle_title = response.data.trips[i].steps[0].transport.vehicle.title;
                 const transportation_title = response.data.trips[i].steps[0].transport.title;
   
-                const Trip = [];
+                const Trip = {};
                 Trip["Transporation_title"] = transportation_title;
                 Trip["Vehicle_title"] = vehicle_title;
                 Trip["Co2e"] = co2e;
                 Trips.push(Trip);
             }
-  
-            console.log(title);
-            console.log(Trips[0]);
+   
             if(found == true) {
-                  return res.json({Status: "Success", Title: title, 
-                  Transportation_title: Trips[0].Transporation_title,
-                  Vehicle_title : Trips[0].Vehicle_title,
-                  Co2e: Trips[0].Co2e})
+                  console.log(title);
+                  console.log(Trips);
+                  return res.json({Status: "Success", Title: title, Trips: Trips})
             }
             else{
               return res.json({Status: "No Found", Message: "No way. Try another transporaton method."})

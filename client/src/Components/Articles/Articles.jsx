@@ -7,8 +7,6 @@ const Articles = ({ selectedCategory }) => {
   const [articles, setArticles] = useState([]);
 
   useEffect(() => {
-    console.log("Selected category")
-    console.log(selectedCategory)
     const fetchData = async () => {
       try {
           const response = await axios.get('http://localhost:3001/explore/articles');

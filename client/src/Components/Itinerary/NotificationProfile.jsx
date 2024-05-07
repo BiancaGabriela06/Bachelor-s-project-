@@ -1,7 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {Alert, Typography, Button} from  '@mui/material'
 import CancelPresentationIcon from '@mui/icons-material/CancelPresentation';
-import axios from 'axios';
 
 const NotificationProfile = ({itinerary,  onClose }) => {
 

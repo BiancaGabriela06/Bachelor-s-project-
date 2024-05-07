@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import About from "../Components/UserProfile/AboutProfile"
 import Gallery from "../Components/UserProfile/GalleryProfile"
 import NotificationProfile from "../Components/Itinerary/NotificationProfile"
+import moment from 'moment'; 
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -77,9 +78,13 @@ const Profile = () => {
 
         const fetchData2 = async () => {
             try {
-                const response = await axios.post('http://localhost:3001/user/info', { username });
+                const response = await axios.get('http://localhost:3001/users/userinfo', {params: {
+                  username: username,
+                   }
+                })
                 if (response.data.Status === 'Success') {
-                  setDateMember(response.data.Data.datemembership);
+                  const formattedDate = moment(response.data.data.datamembership).format('MMMM Do YYYY');
+                  setDateMember(formattedDate);
                 } else {
                 console.log(response.err);
                 }
@@ -119,8 +124,8 @@ const Profile = () => {
                   />
 
                        <Typography variant="h3" >{username}</Typography>
-                       <Typography variant="subtitle1">Member since 23-07-2023{datemember}</Typography>
-                       <Button href={`/profile/${username}/tripitineraries`}>Trip intineraries</Button>
+                       <Typography fontWeight="bold" variant="subtitle1">Member since {datemember}</Typography>
+                       <Button color="success" href={`/profile/${username}/tripitineraries`}>Trip intineraries</Button>
                        {nextTrip && <NotificationProfile itinerary={nextTrip} onClose={handleCloseNotification} />}
                   </Grid>
                   <Grid item row xs={8} style={{ boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)', justifyContent: 'space-between' }}>

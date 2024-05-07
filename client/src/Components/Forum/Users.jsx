@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import {Container, Grid} from "@mui/material"
+import {Container, Grid, Typography} from "@mui/material"
 import UserDetailsCard from './UserDetailsCard'
 
 const Users = () => {
@@ -26,6 +26,7 @@ const Users = () => {
     return (
         <>
            <Container>
+                <Typography variant="h4" gutterBottom textAlign="center">Users</Typography>
                 <Grid container spacing={2}>
                     {users.map(user => (
                     <Grid item key={user.id} style={{width: '350px'}}>

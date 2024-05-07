@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate} from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "../../Styling/Profile.css"
-import {Grid, Avatar,  Alert, Typography, Button, TextField, Autocomplete} from "@mui/material"
+import {Grid, Avatar,  Alert, Typography, Button, TextField} from "@mui/material"
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import CheckIcon from "@mui/icons-material/Check"
 
@@ -111,6 +111,7 @@ const About = () => {
         <Grid item row xs={8} style={{ boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)', justifyContent: 'space-between' }}>
               <Grid  container padding = {5} justifyContent="space-between">
                 <Grid item justifyContent = "center" >
+                  
                   <Typography variant = "h4" style={{textAlign: 'center', fontWeight: 'bold' }} ><AccountBoxIcon style={{fontSize: '2rem'}}/>About user</Typography>
                   {editInfo === 0 ? (
                     <Avatar sx={{marginTop: '1.5rem', marginBottom: '1.5rem'}} src={`http://localhost:3001/profileimages/` + profileImage} alt="Profile Image"/>
@@ -164,11 +165,18 @@ const About = () => {
                    )}
                 </Grid>
               </Grid>
+              {error && (
+                    <Alert icon={<CheckIcon fontSize="inherit" />} severity="error">
+                    {error}
+                  </Alert>
+                  )}
               <Grid container justifyContent="center" sx={{ marginBottom: '1rem'}}>
-                <Button color="success" variant = "outlined" onClick={(e) => setEditInfo(1)}>Edit</Button>
+                
                 {editInfo === 1 ? (
                   <Button color="success" variant = "outlined" onClick = {saveData}>Save</Button>
-                ) : <Typography/>}
+                ) : (
+                  <Button color="success" variant = "outlined" onClick={(e) => setEditInfo(1)}>Edit</Button>
+                )}
               </Grid>
         </Grid>
     </Grid>

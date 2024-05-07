@@ -49,6 +49,8 @@ const Login = () => {
                 navigate("/home");
             }
             else if(res.data.Status === 'Error'){
+               setValues({...values, username: ""})
+               setValues({...values, password: ""})
                setError(res.data.Error);
             }
         })

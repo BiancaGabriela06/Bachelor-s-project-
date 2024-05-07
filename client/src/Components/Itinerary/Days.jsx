@@ -21,7 +21,6 @@ const Days = () => {
       .then(response => {
         if (response.data.Status === 'Success') {
           const data = response.data.Data;
-          console.log(data);
           const dayKeysWithData = Object.keys(data).filter(key => /^day_\d+$/.test(key) && data[key] !== null);
           const daysWithData = dayKeysWithData.map(dayKey => ({
             title: `Day ${parseInt(dayKey.split('_')[1])}`,
@@ -151,7 +150,6 @@ const Days = () => {
           <Button onClick={handleAddDay} variant="contained" color="primary" style={{ marginBottom: '10rem' }}>
             Add Day
           </Button>
-        {/* Render days */}
         {days.map((day, dayIndex) => (
           <div key={dayIndex}>
             <h2>{day.title}</h2>

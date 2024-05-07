@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import {Grid, Button, Autocomplete, TextField, Paper, 
-       Card, Typography, CardMedia, CardContent,
+       Card, Typography, CardContent,
        CircularProgress, Box, Alert} from '@mui/material'
 import EastIcon from '@mui/icons-material/East';
 import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
@@ -132,22 +132,17 @@ const AttractionComponent = ({attractionDetails}) => {
         </>
     )
 }
-const BarSearchTrip = () => {
+const BarSearchTrip = ({ fromLocation, setFromLocation, toLocation, setToLocation }) => {
     
     const [places, setPlaces] = useState([])
     const [rentBikes, setRentBikes] = useState([]);
     const [localRestaurants, setRestaurants] = useState([]);
-    const [fromLocation, setFromLocation] = useState("");
-    const [toLocation, setToLocation] = useState("");
     const [selectedDateFrom, setSelectedDateFrom] = useState("");
     const [selectedDateTo, setSelectedDateTo] = useState("");
-    const [numPersons, setNumPersons] = useState(1);
+    const [numPersons, setNumPersons] = useState("");
     const [flights, setFlights] = useState([]);
     const [attractions, setAttractions] = useState([])
-    const [codefromAirport, setCodeFromAirport] = useState("");
-    const [codetoAirport, setCodeToAirport] = useState("");
     const [loading, setLoading] = useState(false);
-    var [errorAiport, setErrorAirport] = useState("");
     const [searched, setSearched] = useState(0);
 
 
@@ -155,7 +150,7 @@ const BarSearchTrip = () => {
     const handleDateFrom = (e) => {setSelectedDateFrom(e.target.value)}
     const handleDateTo = (e) => {setSelectedDateTo(e.target.value)}
     const handlePersons = (e) => {setNumPersons(e.target.value)}
-
+      
     useEffect( () => {
 
         const fetchData = async () => {
@@ -189,12 +184,7 @@ const BarSearchTrip = () => {
            }
         });
         if (response1.data.Status === 'Success') {
-            if(response1.data.Message === 'Airport')
-                {
-                    setCodeFromAirport(response1.data.Data)
-                }
         } else {
-            setErrorAirport(response1.data.Error)
             console.log(response1.data.Error);
         }
     
@@ -204,10 +194,6 @@ const BarSearchTrip = () => {
          }
        });
       if (response2.data.Status === 'Success') {
-        if(response2.data.Message === 'Airport')
-        {
-            setCodeToAirport(response2.data.Data)
-        }
       } else {
           console.log(response2.data.Error);
       }

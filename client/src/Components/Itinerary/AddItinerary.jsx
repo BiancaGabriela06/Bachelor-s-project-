@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import { Box, Button, TextField, Typography, Grid, Alert } from '@mui/material';
 import axios from 'axios';
 import CheckIcon from '@mui/icons-material/Check';
@@ -7,7 +7,6 @@ const Days = () => {
   const [days, setDays] = useState([]);
   const [tripNotes, setNotesPlan] = useState('');
   var [titleTrip, setTitleTrip] = useState("");
-  var idPossibleItinerary = localStorage.getItem('idPossibleItinerary');
   const [selectedDateFrom, setSelectedDateFrom] = useState("");
   const [selectedDateTo, setSelectedDateTo] = useState("");
   var [location, setLocation] = useState("");
@@ -32,8 +31,6 @@ const Days = () => {
 
 
   const handleSaveItinerary = () => {
-    console.log("Itinerary saved:");
-    console.log(days); 
     const tripPlan = {
       title_trip: titleTrip,
       notes: tripNotes,

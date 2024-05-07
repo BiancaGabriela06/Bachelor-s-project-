@@ -6,13 +6,14 @@ const buttons = [
   { label: "Food", category: "food" },
   { label: "Vegan", category: "vegan" },
   { label: "Couple", category: "couple" },
+  {label: "Europe", category: "europe"},
+  {label: "Eco", category: "eco"}
 ];
 
 const Categories = ({ onCategorySelect }) => {
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   const handleCategorySelect = (category) => {
-    console.log(category);
     setSelectedCategory(category);
     onCategorySelect(category);
   };

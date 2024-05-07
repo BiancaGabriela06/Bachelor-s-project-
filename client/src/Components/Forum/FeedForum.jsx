@@ -27,7 +27,6 @@ const FeedForum = ({selectedGroup}) => {
         try {
             const response = await axios.post('http://localhost:3001/image/user', { username });
             if (response.data.Status === 'Success') {
-            console.log(response.data.Data);
             setProfileImage(response.data.Data);
             } else {
             console.log(response.err);

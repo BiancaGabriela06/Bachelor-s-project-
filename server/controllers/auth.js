@@ -92,9 +92,7 @@ export const RegisterSendVerification = async (req, res) => {
   };
   
 export const login = (req, res) => {
-    ///CHECK USER
   
-      console.log(req.body.username)
       const query = "SELECT * from users where username = ? or mail = ?"
        db.query(query, [req.body.username, req.body.username], (err, data) => {
           if(err) {

@@ -1,9 +1,8 @@
 import React from "react"
-import {Grid, TextField, Typography, Icon, Button} from '@mui/material';
+import {Grid, TextField, Typography, Button} from '@mui/material';
 import { useState } from "react";
 import "../Styling/AddTravelIntinerary.css"
 import axios from "axios"
-import { styled } from '@mui/material/styles';
 import { green } from '@mui/material/colors';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import PushPinIcon from '@mui/icons-material/PushPin';

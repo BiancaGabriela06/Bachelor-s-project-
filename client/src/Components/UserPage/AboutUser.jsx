@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "../../Styling/Profile.css"
-import {Grid, Avatar, Divider, Alert, Typography} from "@mui/material"
+import {Grid, Avatar, Divider, Typography} from "@mui/material"
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 
 

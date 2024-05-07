@@ -1,7 +1,7 @@
 import React from "react"
 import {Grid, Divider, Button} from "@mui/material"
 import { motion } from "framer-motion";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 const WelcomeComponent = () => {
@@ -29,8 +29,10 @@ const WelcomeComponent = () => {
                     delay: i / 10,
                 }} key={i} style = {{fontSize: '50px', color: 'white'}} > {el}{" "} </motion.span>))}
                  <Divider/>
-                <Button style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-                onClick={handleClick} variant="contained" size="large" color="success" >START</Button>             
+            <Grid item style={{ marginTop: '2rem',display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <Button onClick={handleClick} sx={{fontSize: '1.5rem'}} variant="contained" size="large" color="success" >LET'S BEGIN</Button>  
+            </Grid>
+                          
             </Grid>
                 
         </Grid>

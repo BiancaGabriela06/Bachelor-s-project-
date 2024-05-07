@@ -72,7 +72,6 @@ const Post = ({postid, user, likes, profileImage, postData, description, locatio
         setButtonDeletePost(1);
       
       if(answer === 1){
-          console.log(answer)
           try{
     
             const response = axios.delete(`http://localhost:3001/posts/deletepost/${postid}`);
@@ -108,7 +107,7 @@ const Post = ({postid, user, likes, profileImage, postData, description, locatio
   
 
   const showComments = async () => {
-    console.log("Show comments for string: " + postid.toString());
+
     try {
       if (commentsBool === 0) {
         setShowComments(1);
@@ -120,9 +119,7 @@ const Post = ({postid, user, likes, profileImage, postData, description, locatio
             postid: postid }});
   
           if (response.data.Status === 'Success') {
-            console.log("intra");
             setComments(response.data.Comments);
-            console.log(comments);
           } else {
             console.error('Error fetching comments:', response.data.ErrorMessage);
           }
@@ -159,7 +156,6 @@ const Post = ({postid, user, likes, profileImage, postData, description, locatio
      const response = await axios.delete(`http://localhost:3001/posts/deletecomment/${commId}`);
      if(response.data.Status === 'Success'){
        showComments(postid);
-       console.log('Foarte bine');
      }
     }catch(error){
      console.log(error);
@@ -170,7 +166,13 @@ const Post = ({postid, user, likes, profileImage, postData, description, locatio
   return (
     <Grid container justifyContent="center">
     <Card sx={{margin: '10px', position: 'relative' }}>
-      <Button size="large" color="success" onClick={handleClickOpen} style={{  position: 'absolute', top: 0, right: 0  }}><DeleteForeverIcon/>DELETE POST</Button>
+      { buttonDeletePost ? (
+          <Button size="large" 
+                  color="success" 
+                  onClick={handleClickOpen} 
+                  style={{  position: 'absolute', top: 0, right: 0  }}>
+                <DeleteForeverIcon/>DELETE POST</Button>
+      ): (<div></div>)}
       <SimpleDialog
         answer={answer}
         open={open}

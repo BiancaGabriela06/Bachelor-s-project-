@@ -1,5 +1,5 @@
 import React from "react"
-import {Grid, Paper, Avatar, Typography} from "@mui/material"
+import {Grid} from "@mui/material"
 import "../../Styling/ReviewUsers.css"
 import user1 from "../../assets/images/user1.jpg"
 import user2 from "../../assets/images/user2.jpg"

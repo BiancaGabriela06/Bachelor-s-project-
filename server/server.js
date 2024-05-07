@@ -44,6 +44,17 @@ app.use('/itinerary', itineraryRoutes)
 app.use('/attractions', attractionsRoutes)
 
 
+app.post('/ecovoyage/feedback', (req, res) => {
+  db.query('Insert into feedback (text) VALUES (?)', (req.body.feedback), (err, data) => {
+    if(err){
+      console.log(err);
+    }
+    else{
+      return res.json({Status: "Success", Message: "Thank you for feedback!"})
+    }
+  })
+})
+
 
 app.get('/api', (req, res) => {
     res.json(
@@ -85,7 +96,6 @@ app.post("/image/profile/user", (req,res, err) => {
 })
 
 app.post("/image/user", (req, res, err) => {
-  console.log(req.body.username)
   db.query("Select profileImage from users where username = ?;", [req.body.username], (err, data) => {
     if(err) {
       console.log(err);

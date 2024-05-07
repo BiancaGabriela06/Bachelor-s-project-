@@ -10,10 +10,8 @@ const Timeline = (username) => {
         const fetchData = async() => {
           try{
             const res = await axios.get('http://localhost:3001/posts/userposts', {params: {username: username}});
-              if(res.data.Status === 'Success')
-              {
+              if(res.data.Status === 'Success'){
                   setUserPosts(res.data.Data);
-                  console.log(userPosts);
               }
               else {
                   console.log(res.err);
