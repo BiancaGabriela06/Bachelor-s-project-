@@ -3,7 +3,6 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const sendMail = async (email, mailSubject, content) => {
-  console.log("Sending mail to " + email);
   try {
     const transport = nodemailer.createTransport({
       host: "smtp.gmail.com",
@@ -13,7 +12,7 @@ const sendMail = async (email, mailSubject, content) => {
         pass: "kbgpvwesfiwifrmh"
       }
     });
-
+    
     const mailOptions = {
       from: "ecovoyageromania@gmail.com",
       to: email,
@@ -22,10 +21,9 @@ const sendMail = async (email, mailSubject, content) => {
     };
 
     const info = await transport.sendMail(mailOptions);
-    console.log('Mail sent successfully:', info.response);
+
     return info;
   } catch (error) {
-    console.error('Error sending mail:', error);
     throw new Error('Failed to send email');
   }
 };

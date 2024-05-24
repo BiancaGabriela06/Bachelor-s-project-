@@ -1,6 +1,6 @@
 import {React, useState, useEffect} from 'react';
 import axios from 'axios';
-import {Grid, Avatar,  Typography, Button, Box, Card, CardContent, CardActions, Select, MenuItem} from "@mui/material"
+import {Grid, Avatar,  Typography, Alert, Button, Box, Card, CardContent, CardActions, Select, MenuItem} from "@mui/material"
 import Navbar from "../Navbar";
 import Footer from "../Footer";
 import AddItinerary from "./AddItinerary";
@@ -56,9 +56,14 @@ const TripItineraries = () => {
         
         const fetchData3 = async () => {
                 try {
-                    const response = await axios.get('http://localhost:3001/itinerary/getitineraries');
+                    const response = await axios.get('http://localhost:3001/itinerary/getitineraries', {params: {
+                        username: username,
+                         }
+                      });
                     if (response.data.Status === 'Success') {
                     setItineraries(response.data.Data);
+                    if(response.data.Data.length ===0)
+                        setShowItineraries(0);
                     } else {
                     console.log(response.err);
                     }
@@ -120,7 +125,23 @@ const TripItineraries = () => {
 
                        <Typography variant="h3" >{username}</Typography>
                        <Typography variant="subtitle1">Member since 23-07-2023{datemember}</Typography>
-                       <Button href="">Trip intineraries</Button>
+                       <Button
+                                color="success"
+                                variant="contained"
+                                sx={{
+                                    marginTop: '2rem',
+                                    marginBottom: '4rem',
+                                    '&:hover': {
+                                    backgroundColor: 'inherit',
+                                    color: 'inherit',
+                                    textDecoration: 'none'
+                                    }
+                                }}
+                                href={`/profile/${username}/tripitineraries`}
+                                >
+                                Trip itineraries
+                                </Button>
+
                        
                   </Grid>
                   <Grid item row xs={8} style={{ boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)', justifyContent: 'center', alignItems: 'center' }}>
@@ -145,6 +166,13 @@ const TripItineraries = () => {
                                 justifyContent: 'center', 
                                 alignItems: 'center',
                                  }}>
+                    {
+                        itineraries.length === 0 && showButtonBack === 0 &&  (
+                            <Alert variant="outlined" severity="warning" style={{ fontSize: '2rem' }}>
+                                There are no saved itineraries. 
+                            </Alert>
+                        )
+                    }
                     {showItineraries ? (
                             <>
                             <Select

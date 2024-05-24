@@ -38,7 +38,7 @@ const FeedForum = ({selectedGroup}) => {
 
         const fetchData2 = async () => {
             try{
-                axios.get('http://localhost:3001/dashboard/groupuser', {params: { username: username}})
+                axios.get('http://localhost:3001/groups/groupuser', {params: { username: username}})
                 .then(response => {
                     if(response.data.Status === 'Success')
                     setGroups(response.data.Data);
@@ -126,7 +126,7 @@ const FeedForum = ({selectedGroup}) => {
                                          style={{ borderBottom: 'none' }}/>
                                 </Grid>
                                 <Grid item xs={2}>
-                                     <Button>
+                                     <Button style={{marginTop: '1rem'}}>
                                          <input
                                                  type="file"
                                                  id="file"
@@ -145,7 +145,7 @@ const FeedForum = ({selectedGroup}) => {
                                      </Grid>
                                       )}
                                  </Grid>
-                                <Grid item xs = {5}> 
+                                <Grid item xs = {5} style={{marginTop: '1rem'}}> 
                                      <Autocomplete
                                             disablePortal
                                             id="combo-box-demo"
@@ -160,7 +160,7 @@ const FeedForum = ({selectedGroup}) => {
                                             )}
                                         />
                                       </Grid>
-                                     <Grid item xs = {5}>
+                                     <Grid item xs = {5} style={{marginTop: '1rem'}}>
                                              <Autocomplete id="combo-box-demo" options={places.map((option) => option.name)} sx={{ width: 200, height: 50 }}
                                                  renderInput={(params) => <TextField {...params} label="Location" 
                                                  value={location}
@@ -169,8 +169,8 @@ const FeedForum = ({selectedGroup}) => {
                                                  value={location}
                                                  onChange={(event, value) => setLocation(value)}/>
                                      </Grid>
-                                <Grid item xs = {3}>
-                                    <Button variant = "outlined" style = {{color: '#228B22'}}onClick={sharePost}>Share Post</Button>
+                                <Grid item xs = {3} style={{marginTop: '2rem'}}>
+                                    <Button variant = "contained" color="success" onClick={sharePost}>Share Post</Button>
                                 </Grid>
                                  
         </Grid>

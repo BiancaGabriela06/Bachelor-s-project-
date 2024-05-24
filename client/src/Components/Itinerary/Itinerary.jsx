@@ -42,8 +42,9 @@ const Itinerary = ({itinerary}) => {
 
     const handleDelete = async () => {
         try {
-            
-           const response =  await axios.delete(`http://localhost:3001/itinerary/deleteitinerary/${itinerary.id}`);
+          
+          const idItinerary=itinerary.id
+           const response =  await axios.delete(`http://localhost:3001/itinerary/deleteitinerary/${idItinerary}`);
            if(response.data.Status === "Success") {
                  setMessage("Itinerary deleted succesfully");
            }
@@ -126,7 +127,7 @@ const Itinerary = ({itinerary}) => {
                 onClick={handleDelete} 
                 size = "large" 
                 color="success"  
-                sx={{ marginLeft: '20rem'}}
+                sx={{ marginLeft: '35rem'}}
             >Delete Itinerary</Button>
             <Button variant="contained" 
                 onClick={handleEdit} 

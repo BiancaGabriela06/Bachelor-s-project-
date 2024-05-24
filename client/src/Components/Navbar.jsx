@@ -7,17 +7,18 @@ import EcoVoyageLogo from '../assets/images/logo.png'
 
 const Navbar = () => {
     var auth = localStorage.getItem("currentUser");
-    
+    var token = localStorage.getItem("token");
+
     return auth ? (
      <AppBar position="absolute" style={{ background: '#228B22', boxShadow: 'none' }}>
     <Grid container spacing = {30} rowSpacing={1} justifyContent= 'space-between' alignItems="center">
         <Grid item>
-          <Link href="/home">
+          <Link href={`/home/${token}`}>
           <Avatar src={EcoVoyageLogo} alt="EcoVoyageLogo" style={{ padding: 5, width: '80px', height: '80px' }}/>
             </Link>  
         </Grid>
         <Grid item  sx={{ color: 'white',  display: 'flex', justifyContent: 'space-between', textAlign: 'center' }}>
-        <Link  href="/home" sx={{
+        <Link  href={`/home/${token}`} sx={{
                         color: 'white', fontSize: '2rem', textDecoration: 'none', marginRight: '5rem', 
                         '&:hover': {
                         fontWeight: 'bold', color: 'white', textDecoration: 'none'
@@ -27,15 +28,15 @@ const Navbar = () => {
                         },
                     }} >Home</Link>
 
-               <Link href="/trip" sx={{
+               <Link href={`/trip/${token}`} sx={{
                         color: 'white', fontSize: '2rem', textDecoration: 'none', marginRight: '5rem', 
                         '&:hover': {
                         fontWeight: 'bold', color: 'white', textDecoration: 'none'},
                         '&:active': {
                         fontWeight: 'bold', color: 'white', textDecoration: 'none'
                         },
-                    }}>Plan your trip</Link>
-               <Link href="/forum" sx={{
+                    }}>Travel</Link>
+               <Link href={`/forum/${token}`} sx={{
                         color: 'white', fontSize: '2rem', textDecoration: 'none', marginRight: '5rem', 
                         '&:hover': {
                         fontWeight: 'bold', color: 'white', textDecoration: 'none' },
@@ -51,7 +52,7 @@ const Navbar = () => {
                         '&:active': {
                         fontWeight: 'bold', color: 'white', textDecoration: 'none'
                         },
-                    }}>Explore</Link>
+                    }}>Blog</Link>
         </Grid>
         <Grid item>
             <AfterLogin />

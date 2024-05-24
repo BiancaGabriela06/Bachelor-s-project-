@@ -40,9 +40,11 @@ const Register = () => {
     axios.post('http://localhost:3001/auth/register', values)
     .then(res => {
         if(res.data.Status === 'Success'){
+            setError("");
             setMessage(res.data.message);
         }
         else{
+            setMessage("");
             setError(res.data.Error)
         }
     })
@@ -81,9 +83,9 @@ const Register = () => {
             Become a member of EcoVoyage!
           </Typography>
           {message && 
-          (<Alert severity="success">{message}</Alert>)
+          (<Alert style={{marginTop: '2rem'}} severity="success">{message}</Alert>)
           }
-          {error && (<Alert severity="error">{error}</Alert>)}
+          {error && (<Alert style={{marginTop: '2rem'}} severity="error">{error}</Alert>)}
           <Box component="form"  onSubmit={handleRegister} style={{padding: '10px'}}sx={{ mt: 3 }}>
             <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -132,9 +134,10 @@ const Register = () => {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item >
-                <Link href="/login" variant="body2">
-                  Do you have an account? Sign in
-                </Link>
+              <Link href="/login" variant="body2" style={{textDecoration: "none", color: "inherit"}}>
+                Do you have an account? Sign in
+            </Link>
+
               </Grid>
               
             </Grid>

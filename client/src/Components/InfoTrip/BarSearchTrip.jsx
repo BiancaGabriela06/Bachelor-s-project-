@@ -321,7 +321,7 @@ const BarSearchTrip = ({ fromLocation, setFromLocation, toLocation, setToLocatio
                     <TextField type="text" placeholder="1 traveller" inputProps={{ style: { fontSize: '1.5rem' } }} variant="outlined" value={numPersons} onChange={handlePersons} />
                 </Grid>
                 <Grid item >
-                    <Button variant="contained" color="success" size="large" onClick={handleSubmit}>Plan a trip</Button>
+                    <Button variant="contained" color="success" size="large" onClick={handleSubmit}>SEARCH</Button>
                 </Grid>
             </Grid>
         </form>

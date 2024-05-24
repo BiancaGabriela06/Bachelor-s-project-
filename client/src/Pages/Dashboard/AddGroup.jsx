@@ -87,7 +87,7 @@ const AddGroup = () => {
                         <TextField {...params} label="Attributes" />
                     )}
                 />
-                <Button variant="outlined" color="success" onClick={addAttribute} disabled={!groupTitle.trim()} style={{marginLeft: "10px"}}>Add Attribute</Button>
+               
             </Grid>
             <Grid item xs={12}>
                 <Button variant="contained" color="success" onClick={addGroup}>

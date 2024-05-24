@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import { Box, Button, TextField, Typography, Grid, Alert } from '@mui/material';
 import axios from 'axios';
 import CheckIcon from '@mui/icons-material/Check';
@@ -13,6 +13,8 @@ const Days = () => {
   var [message, setMessage] = useState("");
   var [savedTrip, setSavedTrip] = useState("");
   var [idUser, setIdUser] = useState(0);
+  var currentUser = localStorage.getItem("currentUser");
+  const [username, setUsername] = useState(currentUser.replace(/^"|"$/g, ''));
 
   const handleAddDay = () => {
     const newDay = {
@@ -28,9 +30,32 @@ const Days = () => {
   const handleTitleChange = (e) => {setTitleTrip(e.target.value) }
   const handleDateFrom = (e) => {setSelectedDateFrom(e.target.value)}
   const handleDateTo = (e) => {setSelectedDateTo(e.target.value)}
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try{
+        const response = await axios.get(`http://localhost:3001/users/getuserid`, {
+          params: {
+            username: username 
+          }
+      })
+        console.log(response.data)
+         if(response.data.Status === 'Success'){
+          console.log(response.data.Data)
+          setIdUser(response.data.Data);
+         }
 
+      }catch(error){
+        console.log(error);
+      }
+    }
+    
+    fetchData();
+    
+  }, [])
 
   const handleSaveItinerary = () => {
+    
     const tripPlan = {
       title_trip: titleTrip,
       notes: tripNotes,
@@ -89,7 +114,7 @@ const Days = () => {
           <TextField type="date" style={{ marginBottom: '1.5rem' }} value={selectedDateTo} variant="outlined" onChange={handleDateTo} />
           <TextField
             id="trip-plan"
-            label="Trip Plan"
+            label="Trip Notes"
             multiline
             rows={4}
             value={tripNotes}
@@ -121,13 +146,13 @@ const Days = () => {
             />
           </div>
         ))}
-        <Button onClick={handleSaveItinerary} variant="contained" color="success">
+        <Button onClick={handleSaveItinerary} style={{marginLeft: '9rem'}} variant="contained" color="success">
           Save Itinerary
         </Button>
         {message && (
         <Grid item xs={12}>
           <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
-            {message}
+            Initerary saved successfully
           </Alert>
         </Grid>
       )}

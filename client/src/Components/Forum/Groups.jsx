@@ -75,7 +75,7 @@ const Groups = ({onSelect}) => {
                         </Grid>
                     ))}
                 </Grid>
-                <Typography variant="body2" gutterBottom>Membrii în grup: {group.member_count}</Typography>
+                <Typography variant="body2" gutterBottom>Members: {group.member_count}</Typography>
                 {group.isMember ? <Grid /> : (
                     <Button variant="contained" color="primary" onClick={() => handleJoinGroup(group.idgroup)}>
                         <AddIcon />

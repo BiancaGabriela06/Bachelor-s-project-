@@ -125,7 +125,22 @@ const Profile = () => {
 
                        <Typography variant="h3" >{username}</Typography>
                        <Typography fontWeight="bold" variant="subtitle1">Member since {datemember}</Typography>
-                       <Button color="success" href={`/profile/${username}/tripitineraries`}>Trip intineraries</Button>
+                       <Button
+                          color="success"
+                          variant="contained"
+                          sx={{
+                            marginTop: '2rem',
+                            '&:hover': {
+                              backgroundColor: 'inherit',
+                              color: 'inherit',
+                              textDecoration: 'none'
+                            }
+                          }}
+                          href={`/profile/${username}/tripitineraries`}
+                        >
+                          Trip itineraries
+                        </Button>
+
                        {nextTrip && <NotificationProfile itinerary={nextTrip} onClose={handleCloseNotification} />}
                   </Grid>
                   <Grid item row xs={8} style={{ boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)', justifyContent: 'space-between' }}>

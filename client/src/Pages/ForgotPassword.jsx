@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from 'axios'
-import Navbar from "../Components/Navbar"
+import { Grid, Card, CardHeader, CardContent, Typography, TextField, Button, Link, Box } from '@mui/material';
+import imageicon from "../assets/images/logo.png";
 import {NavLink} from 'react-router-dom'
 
 const ForgotPassword = () => {
@@ -28,33 +29,59 @@ const ForgotPassword = () => {
         .catch(err => console.log(err))
     }
     return (
-        <div className="container d-flex align-items-center justify-content-center vh-100">
-      <div className="card text-center" style={{ width: '300px' }}>
-        <div className="card-header h5 text-white bg-primary">Password Reset</div>
-        <div className="card-body px-4">
-          <p className="card-text py-2">
+      <Grid container justifyContent="center">
+      <Card sx={{ width: 500, textAlign: 'center', marginTop: '10rem' }}>
+        <CardHeader
+          title="Password Reset"
+          titleTypographyProps={{ variant: 'h3', color: 'white' }}
+          sx={{ backgroundColor: '#228B22' }}
+        />
+        <CardContent>
+        <Box component="img" 
+          sx={{ marginTop: 5, height: 150, width: 150, 
+            maxHeight: { xs: 200, md: 167 },
+            maxWidth: { xs: 300, md: 250 },
+          }} src={imageicon}/>
+          <Typography variant="h5" sx={{ py: 2 }}>
             Enter your email address, and we'll send you an email with instructions to reset your password.
-          </p>
+          </Typography>
           <form>
-            {message && message}
-            {error && error}
-            <div className="form-group">
-              <label htmlFor="typeEmail">Email address</label>
-              <input type="email" id="typeEmail" className="form-control" 
-               onChange={handleEmail}/>
-            </div>
-            <button type="submit" className="btn btn-primary w-100 mt-3" 
-             onClick={handleReset}>
+            {message && <Typography variant="h4" color="success.main">{message}</Typography>}
+            {error && <Typography  variant="h4"  color="error.main">{error}</Typography>}
+            <TextField
+              fullWidth
+              margin="normal"
+              placeholder="Email address"
+              type="email"
+              variant="outlined"
+              onChange={handleEmail}
+              sx={{
+                '& .MuiInputBase-input': {
+                  padding: '16px', 
+                  fontSize: '18px', 
+                },
+                '& .MuiInputLabel-root': {
+                  fontSize: '18px', 
+                },
+              }}
+            />
+            <Button
+              fullWidth
+              variant="contained"
+              color="success"
+              sx={{ mt: 3 }}
+              onClick={handleReset}
+            >
               Reset Password
-            </button>
+            </Button>
           </form>
-          <div className="d-flex justify-content-between mt-4">
-               <span className="link-danger" ><NavLink to ="/login" className="register"> Login</NavLink></span>
-               <span className="link-danger" ><NavLink to ="/register" className="register"> Register</NavLink></span>
-          </div>
-        </div>
-      </div>
-    </div>
+          <Box display="flex" justifyContent="space-between" mt={4}>
+            <NavLink to ="/login" className="register" style={{textDecoration: "none"}}> Login</NavLink>
+            <NavLink to ="/register" className="register"  style={{textDecoration: "none"}}>Register</NavLink>
+          </Box>
+        </CardContent>
+      </Card>
+    </Grid>
 
 );
 }

@@ -18,8 +18,7 @@ import dashboardRoutes from "./routes/dashboard.js"
 import exploreRoutes from "./routes/explore.js"
 import itineraryRoutes from "./routes/itinerary.js"
 import attractionsRoutes from "./routes/attractions.js"
-import { rmdirSync } from 'fs';
-import e from 'express';
+
 
 
 const app = express()

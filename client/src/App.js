@@ -24,31 +24,31 @@ import TripItineraries from './Components/Itinerary/TripItineraries';
 
 
 function App() {
-  
+  var token = localStorage.getItem("token");
   return (
     <>
     <div className="vh-100">
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/home" element={<Home />} />
+        <Route path={`/`} element={<Home />} />
+        <Route path="/home/:token" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
-        <Route path="/profilesettings" element={<ProfileSettings />} />
-        <Route path="/profile/timeline" element = {<Profile />} />
-        <Route path="/profile/about" element ={<AboutProfile />}/>
+        <Route path="/profilesettings/:token" element={<ProfileSettings />} />
+        <Route path="/profile/timeline/:token" element = {<Profile />} />
+        <Route path="/profile/about/:token" element ={<AboutProfile />}/>
         <Route path="/profile/gallery" element ={< Gallery/>} />
-        <Route path="/forum" element = {<Forum />} />
+        <Route path="/forum/:token" element = {<Forum />} />
         <Route path="/verify-mail" element = {<EmailVerification/>} />
         <Route path="/changepassword" element = {<ChangePassword/> } />
-        <Route path="/trip" element = {<Trip/>} />
+        <Route path="/trip/:token" element = {<Trip/>} />
         <Route path="/map" element = {<Map/>} />
         <Route path="/footer" element = {<Footer/>} />
         <Route path="/addtravelintinerary" element={<AddTravelIntinerary/>}/>
-        <Route path="/profile" element={<Profile/>}/>
+        <Route path="/profile/:token" element={<Profile/>}/>
         <Route path="/profile/gallery" element={<GalleryProfile/>}/>
         <Route path="/explore" element={<Explore/>}/>
-        <Route path="/dashboard" element={<HomeDashboard/>}/>
+        <Route path="/dashboard/:token" element={<HomeDashboard/>}/>
         <Route path="/users/:username" element={<UserPage/>}/>
         <Route path="/profile/:username/tripitineraries" element={<TripItineraries/>}/>
       </Routes>

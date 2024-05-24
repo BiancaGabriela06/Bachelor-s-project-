@@ -96,16 +96,23 @@ export const insertItinerary = (req, res) => {
   }
 
 export const getItineraries = (req, res) => {
-
-    db.query('Select * from itinerary', (err, data) => {
-        if(err){
-            console.log("Error get possible_itinerary");
-            console.log(err);
-        }
-        else{
-            return res.json({Status: "Success", Data: data})
-        }
+    db.query('Select id from users where username = ?', [req.query.username], (error, result) =>{
+      if(error) {
+        console.log(error)
+      }
+      else{
+        db.query('Select * from itinerary where iduser=?', [result[0].id], (err, data) => {
+          if(err){
+              console.log("Error get possible_itinerary");
+              console.log(err);
+          }
+          else{
+              return res.json({Status: "Success", Data: data})
+          }
+      })
+      }
     })
+   
 }
 
 export const getItinerary = (req, res) => {

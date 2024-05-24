@@ -6,7 +6,7 @@ import CheckIcon from '@mui/icons-material/Check';
 const Days = () => {
   const [days, setDays] = useState([]);
   const [tripNotes, setNotesPlan] = useState('');
-  var [titleTrip, setTitleTrip] = useState("Title Trip");
+  var [titleTrip, setTitleTrip] = useState("");
   var idPossibleItinerary = localStorage.getItem('idPossibleItinerary');
   const [selectedDateFrom, setSelectedDateFrom] = useState("");
   const [selectedDateTo, setSelectedDateTo] = useState("");
@@ -116,7 +116,7 @@ const Days = () => {
           <Typography variant="h3"  style={{ marginBottom: '2rem', textAlign: 'center'}}>TRIP ITINERARY</Typography>
           <TextField
               id="trip-plan"
-              label="Trip Notes"
+              label="Trip Title"
               value={titleTrip}
               onChange={handleTitleChange}
               variant="outlined"
@@ -138,7 +138,7 @@ const Days = () => {
           <TextField type="date" style={{ marginBottom: '1.5rem' }} value={selectedDateTo} variant="outlined" onChange={handleDateTo} />
           <TextField
             id="trip-plan"
-            label="Trip Plan"
+            label="Trip Notes"
             multiline
             rows={4}
             value={tripNotes}
@@ -169,8 +169,8 @@ const Days = () => {
             />
           </div>
         ))}
-        <Button onClick={handleSaveInfo} variant="contained" color="secondary">
-          Save Info
+        <Button onClick={handleSaveInfo} style={{marginLeft: '6rem', marginRight: '1rem'}} variant="contained" color="secondary">
+          Keep info
         </Button>
         <Button onClick={handleSaveItinerary} variant="contained" color="success">
           Save Itinerary

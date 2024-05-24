@@ -49,6 +49,7 @@ const Post = ({postid, user, likes, profileImage, postData, description, locatio
   const [buttonDeletePost, setButtonDeletePost] = useState(0);
   const [open, setOpen] = React.useState(false);
   const [answer, setAnswer] = useState(0);
+  const [currentUserId, setCurrentUserId] = useState(0);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -82,7 +83,25 @@ const Post = ({postid, user, likes, profileImage, postData, description, locatio
             console.log(error);
            }
         }
-          
+        const fetchData = async () => {
+          try{
+            const response = await axios.get(`http://localhost:3001/users/getuserid`, {
+              params: {
+                username: username 
+              }
+          })
+            console.log(response.data)
+             if(response.data.Status === 'Success'){
+              console.log(response.data.Data)
+              setCurrentUserId(response.data.Data);
+             }
+  
+          }catch(error){
+            console.log(error);
+          }
+        }
+        
+        fetchData();
   }, [])
 
   const handleLike = async () => {
@@ -219,12 +238,15 @@ const Post = ({postid, user, likes, profileImage, postData, description, locatio
                             <p style={{ textAlign: "left", color: "gray" }}>{comm.date}</p>
                           </Grid>
                         <Grid justifyContent="right" item xs zeroMinWidth>
-                             {currentUser && currentUser.id === comm.id}
-                             <Tooltip title="Delete">
-                                  <IconButton color="success" onClick={() => deleteComment(postid, comm.commentid)}>
-                                    <DeleteIcon />
-                                  </IconButton>
-                              </Tooltip>
+                
+                             {comm.id === currentUserId ? (
+                                  <Tooltip title="Delete">
+                                      <IconButton color="success" onClick={() => deleteComment(postid, comm.commentid)}>
+                                        <DeleteIcon />
+                                      </IconButton>
+                                  </Tooltip>
+                             ): (<div></div>)}
+                           
                         </Grid>
                   </Grid>
                   ))}

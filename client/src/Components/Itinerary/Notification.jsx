@@ -18,7 +18,7 @@ const Notification = ({itinerary,  onClose }) => {
             
                   zIndex: 999}}
          severity="info">
-        <IconButton  size="large" sx={{marginLeft: '25rem'  }} onClick={onClose}><CancelPresentationIcon/></IconButton>
+        <IconButton size="large" sx={{ position: 'relative', marginLeft: '37rem' }} onClick={onClose}><CancelPresentationIcon/></IconButton>
         <Typography variant="h3" sx={{textAlign: 'center' }} >Upcoming Trip: {itinerary.title}</Typography>
         <Typography variant="h4" sx={{ fontWeight: 'bold', textAlign: 'center'  }} >Days Until Trip: {daysUntilTrip}</Typography>
       </Alert>

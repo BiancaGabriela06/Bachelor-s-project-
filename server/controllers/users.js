@@ -244,3 +244,17 @@ export const get_usergroup = (req, res) =>{
    }
 );
 }
+
+export const getUserId = (req, res) => {
+    const query = "Select id from users where username = ?"
+    db.query(query, [req.query.username], (err, data) => {
+        if(err) {
+            console.log(err);
+            return res.json(err);
+        }
+        else{
+            console.log(data[0].id)
+            return res.send({ Status: 'Success', Data: data[0].id });
+        }
+    })
+}

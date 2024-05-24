@@ -26,11 +26,22 @@ app.use(
 export const RegisterSendVerification = async (req, res) => {
     try {
       const error = validationResult(req);
-      console.log(req.body.gmail);
+ 
       if (!error.isEmpty()) {
-        return res.status(400).json({ Status: 'Error', Error: error.array() });
+        return res.json({ Status: 'Error', Error: error.array() });
       }
   
+      const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail.com$/;
+      
+      if (!gmailRegex.test(req.body.gmail))  {
+        return res.send({Status: "Error",  Error: 'Please insert a valid gmail!', });
+      }
+    
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+     if (req.body.password.length < 6 && !passwordRegex.test(req.body.password)){
+        return res.send({Status: "Error",  
+        Error: 'Password needs to have at least 8 characters, at least one lowercase letter, one uppercase letter, one number and one special character. '});
+      }
       const query = promisify(db.query).bind(db);
   
       const result = await query(
@@ -65,7 +76,6 @@ export const RegisterSendVerification = async (req, res) => {
         [randomToken, req.body.gmail]
       );
   
-      console.log('User has been created');
       db.query("Select id from users where username = ?", [req.body.username], (err, data) => {
           if(err) {
               console.log(err);
@@ -223,7 +233,7 @@ export const forgetpassword = async (req, res) => {
 
         await sendMail(req.body.email, mailSubject, content);
 
-        return res.json({ Status: "Success" }); // Send the success response here
+        return res.json({ Status: "Success", Message: "Check your inbox!" }); // Send the success response here
     } catch (error) {
         console.log("Error sending mail for change password");
         return res.json({ Status: "Error", Error: "Internal server error" }); // Send an error response
@@ -243,13 +253,15 @@ export const changepassword = (req, res) => {
     if(newpassword != confirmpassword)
         return res.json({Status: "Error", Error: "Passwords don't match"});
 
-    if(newpassword < 6)
-        return res.json({Status: "Error", Error: "Password must have minimum 6 characters!"});
-    
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+     if (newpassword < 6 && !passwordRegex.test(newpassword)){
+        return res.send({Status: "Error",  
+        Error: 'Password needs to have at least 8 characters, at least one lowercase letter, one uppercase letter, one number and one special character. '});
+      }
     const salt = bycript.genSaltSync(10);
     const hash = bycript.hashSync(newpassword, salt);
-
-    db.query("UPDATE users set password = ?", [hash], (err, data) => {
+    const tokenpas = null;
+    db.query("UPDATE users set password = ?, tokenPassword = ?", [hash, tokenpas], (err, data) => {
         if(err)
            {
             console.log(err);

@@ -229,10 +229,10 @@ const Article = ({ article }) => {
   return (
     <>
       <Button onClick={handleClickOpen}>
-        <Card sx={{ width: '100rem' }} >
+        <Card sx={{ width: '100rem', marginTop: '3rem' }} >
           <CardHeader
             title={
-              <Typography variant="h4" fontWeight="bold">
+              <Typography variant="h4" style={{color: '#228B22'}} fontWeight="bold">
                 {article.title}
               </Typography>
             }

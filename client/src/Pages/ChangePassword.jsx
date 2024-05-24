@@ -1,8 +1,12 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import axios from "axios"
-import image from "../assets/images/changepasswordpage.jpg"
+import imageicon from "../assets/images/logo.png";
 import "../Styling/ChangePassword.css"
 import { useNavigate } from 'react-router-dom'
+import { Container, Grid, Card, CardHeader, CardContent, CardActions, Typography, TextField, Button, Box, IconButton, InputAdornment } from '@mui/material';
+import LockIcon from '@mui/icons-material/Lock';
+import LoginIcon from '@mui/icons-material/Login';
+import SaveIcon from '@mui/icons-material/Save';
 
 const ChangePassword = () => {
     const [values, setValues] = useState({
@@ -30,56 +34,94 @@ const ChangePassword = () => {
           .catch(err => console.log(err))
     }
      return (
-        <div>
-			<div class="container bootstrap snippets bootdey">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-6 col-md-offset-2">
-                        <div class="panel panel-info">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">
-                                    <span class="glyphicon glyphicon-th"></span>
-                                    Change password   
-                                </h3>
-                            </div>
-                            <div class="panel-body">
-                                <div class="row">
-                                    <div class="col-xs-6 col-sm-6 col-md-6 separator social-login-box"> <br/>
-                                    <img alt="" class="img-thumbnail" src={image}/>                        
-                                    </div>
-                                    <div style={{/*margin-top:80px;*/}} class="col-xs-6 col-sm-6 col-md-6 login-box">
-                                    <div class="form-group">
-                                        {error && error}
-                                        <div class="input-group">
-                                        <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
-                                        <input class="form-control" type="password" placeholder="New Password"
-                                        onChange={e => setValues({...values, newpassword: e.target.value})}/>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                        <div class="input-group-addon"><span class="glyphicon glyphicon-log-in"></span></div>
-                                        <input class="form-control" type="password" placeholder="Confirm Password"
-                                        onChange={e => setValues({...values, confirmpassword: e.target.value})}/>
-                                        </div>
-                                    </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel-footer">
-                                <div class="row">
-                                    <div class="col-xs-6 col-sm-6 col-md-6"></div>
-                                    <div class="col-xs-6 col-sm-6 col-md-6">
-                                        <button class="btn icon-btn-save btn-success" type="submit"
-                                        onClick={handleSubmit}>
-                                        <span class="btn-save-label"><i class="glyphicon glyphicon-floppy-disk"></i></span>Submit</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-		</div>
+    <Container>
+      <Grid container justifyContent="center" marginTop="10rem">
+        <Grid item xs={12} sm={12} md={6}>
+          <Card>
+            <CardHeader
+              title={
+                <Typography variant="h3" component="div">  <LockIcon fontSize='4rem'/> Change password </Typography>
+              }
+            />
+            <CardContent>
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                <Box component="img" 
+                    sx={{ marginTop: 5, marginLeft: 6, height: 150, width: 150, 
+                        maxHeight: { xs: 200, md: 167 },
+                        maxWidth: { xs: 300, md: 250 },
+                    }} src={imageicon}/>
+                </Grid>
+                <Grid item xs={6}>
+                  {error && <Typography color="error">{error}</Typography>}
+                  <TextField
+                    fullWidth
+                    margin="normal"
+                    placeholder="New Password"
+                    type="password"
+                    onChange={e => setValues({ ...values, newpassword: e.target.value })}
+                    sx={{
+                        '& .MuiInputBase-input': {
+                          padding: '16px', 
+                          fontSize: '18px', 
+                        },
+                        '& .MuiInputLabel-root': {
+                          fontSize: '18px', 
+                        },
+                      }}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <LockIcon />
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                  <TextField
+                    fullWidth
+                    margin="normal"
+                    placeholder="Confirm Password"
+                    type="password"
+                    onChange={e => setValues({ ...values, confirmpassword: e.target.value })}
+                    sx={{
+                        '& .MuiInputBase-input': {
+                          padding: '16px', 
+                          fontSize: '18px', 
+                        },
+                        '& .MuiInputLabel-root': {
+                          fontSize: '18px', 
+                        },
+                      }}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <LoginIcon />
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </Grid>
+              </Grid>
+            </CardContent>
+            <CardActions>
+              <Grid container justifyContent="flex-end">
+                <Grid item>
+                  <Button
+                    variant="contained"
+                    color="success"
+                    sx = {{ fontSize: '1.5rem', marginRight: '10rem'}}
+                    startIcon={<SaveIcon />}
+                    onClick={handleSubmit}
+                  >
+                    Submit
+                  </Button>
+                </Grid>
+              </Grid>
+            </CardActions>
+          </Card>
+        </Grid>
+      </Grid>
+    </Container>
 	);
 }
 

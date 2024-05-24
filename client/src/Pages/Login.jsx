@@ -11,7 +11,7 @@ import '../Styling/Login.css'
 
 function Copyright(props) {
   return (
-    <Typography sx = {{backgroundColor: 'white'}}variant="body2" color="text.secondary" align="center" {...props}>
+    <Typography sx = {{backgroundColor: 'white'} } variant="h4" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="http://localhost:3000/home">
        EcoVoyage
@@ -46,7 +46,7 @@ const Login = () => {
                 localStorage.setItem('token', token);
                 localStorage.setItem('idPossibleItinerary', res.data.IdPossibleItinerary);
                 console.log(token);
-                navigate("/home");
+                navigate(`/home/${token}`);
             }
             else if(res.data.Status === 'Error'){
                setValues({...values, username: ""})
@@ -63,29 +63,16 @@ const Login = () => {
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         
-        <Box
-          sx={{
-            backgroundColor: 'white',
-            marginTop: 10,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-          
-        > 
+        <Box sx={{ backgroundColor: 'white', marginTop: 10, display: 'flex', flexDirection: 'column', alignItems: 'center' }}> 
           <Box component="img" 
-          sx={{
-            marginTop: 5,
-            height: 150,
-            width: 150,
+          sx={{ marginTop: 5, height: 150, width: 150, 
             maxHeight: { xs: 200, md: 167 },
             maxWidth: { xs: 300, md: 250 },
-          }}
-          src={imageicon}/>
+          }} src={imageicon}/>
           <Avatar sx={{ m: 1, bgcolor: '#137639' }}>
             <LoginIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h3">
             Welcome Back!
           </Typography>
           {message && 
@@ -94,32 +81,50 @@ const Login = () => {
           {error && (<Alert severity="error">{error}</Alert>)}
           <Box component="form"  onSubmit={handleLogin} style={{padding: '10px'}}sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12}>
+              <Grid item xs={12} sx={{marginBottom: '1rem'}}>
                 <TextField
                   required
                   fullWidth
                   id="username"
-                  label="Username/Gmail"
+                  placeholder="Username/Gmail"
                   name="username"
                   autoComplete="username"
                   onChange = {e => setValues({...values, username: e.target.value})}
+                  sx={{
+                    '& .MuiInputBase-input': {
+                      padding: '16px', 
+                      fontSize: '18px', 
+                    },
+                    '& .MuiInputLabel-root': {
+                      fontSize: '18px', 
+                    },
+                  }}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} sx={{marginBottom: '1rem'}}>
                 <TextField
                   required
                   fullWidth
                   name="password"
-                  label="Password"
+                  placeholder="Password"
                   type="password"
                   id="password"
                   autoComplete="new-password"
                   onChange = {e => setValues({...values, password: e.target.value})}
+                  sx={{
+                    '& .MuiInputBase-input': {
+                      padding: '16px', 
+                      fontSize: '18px', 
+                    },
+                    '& .MuiInputLabel-root': {
+                      fontSize: '18px', 
+                    },
+                  }}
                 />
               </Grid>
             </Grid>
             <Grid item >
-                <Link href="/forgotpassword" variant="body2">
+                <Link href="/forgotpassword" variant="h6" style={{textDecoration: "none", marginTop: "2rem", color: "inherit"}}>
                   Forget password?
                 </Link>
               </Grid>
@@ -127,14 +132,14 @@ const Login = () => {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 3, mb: 2, fontSize: '1.5rem' }}
               style={{ backgroundColor: '#137639'}}
             >
               Sign IN
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item >
-                <Link href="/register" variant="body2">
+                <Link href="/register" variant="h6" style={{textDecoration: "none", color: "inherit"}}>
                   Don't have an account? Register
                 </Link>
               </Grid>

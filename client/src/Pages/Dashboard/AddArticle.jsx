@@ -28,7 +28,8 @@ const AddArticle = () => {
       {label: "sea"},
       {label: "couple"},
       {label: "single"},
-      {label: "europe"}
+      {label: "europe"},
+      {label: "accomodation"}
   ]
 
   const handleFileChange = (e) => {
@@ -65,7 +66,7 @@ const AddArticle = () => {
             axios.post('http://localhost:3001/image/article', formData, config)
             .then(res => {
               if (res.data.Status === 'Success') {
-                  setMessage(res.data.Message);
+                
                   }
               })
             .catch(err => console.log(err));
@@ -133,7 +134,6 @@ const AddArticle = () => {
                         <TextField {...params} label="Categories" />
                     )}
                 />
-      <Button variant="outlined" color="success" onClick={addCategory} disabled={!groupTitle.trim()} style={{marginLeft: "10px"}}>Add Category</Button>
       </Grid>
       <Grid item>
         <Button variant="contained" color="success" onClick={submitArticle}>

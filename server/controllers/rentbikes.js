@@ -46,7 +46,7 @@ export const rentbikes = async (req, res) => {
           businessDetailsArray.push(Business);
         }
         console.log(businessDetailsArray);
-        return res.json({Status: "Success", Data: businessDetailsArray})
+         
     } catch (error) {
         console.error(error);
     }

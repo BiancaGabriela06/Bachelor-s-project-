@@ -12,6 +12,7 @@ const Accesibility = () => {
     const [username, setUsername] = useState(currentUser.replace(/^"|"$/g, ''));
     const [admin, setAdmin] = useState(0);
     const navigate = useNavigate();
+    var token = localStorage.getItem("token");
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -20,7 +21,7 @@ const Accesibility = () => {
       };
     const handleProfile = () => {
         setAnchorEl(null);
-        navigate("/profile")
+        navigate(`/profile/`+token)
       };
 
     const handleLogout = () => {
@@ -31,7 +32,7 @@ const Accesibility = () => {
     
     const handleDashboard = () => {
       setAnchorEl(null);
-      navigate("/dashboard")
+      navigate(`/dashboard/` + token)
     }
       const handleClose = () => {
         setAnchorEl(null);
