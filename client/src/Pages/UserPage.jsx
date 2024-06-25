@@ -2,13 +2,14 @@ import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import { useParams } from 'react-router-dom';
 import Navbar from "../Components/Navbar"
-import {Grid, Avatar, Typography, Button, Box, Tab, Tabs} from "@mui/material"
+import {Grid, Avatar, Typography, Box, Tab, Tabs} from "@mui/material"
 import Footer from '../Components/Footer';
 import Groups from '../Components/UserPage/GroupsUser';
 import PropTypes from 'prop-types';
 import AboutUser from "../Components/UserPage/AboutUser"
 import Gallery from "../Components/UserPage/Gallery"
 import Timeline from "../Components/UserPage/Timeline"
+import moment from 'moment'; 
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -45,10 +46,10 @@ function CustomTabPanel(props) {
 
 const UserPage = () => {
 
-    const { username } = useParams();
+    const { username, token } = useParams();
     const [dataUser, setDataUser] = useState([]);
     const [value, setValue] = React.useState(0);
-
+    const [datemember, setDateMember] = useState("");
     const handleChange = (event, newValue) => {
       setValue(newValue);
     };
@@ -61,6 +62,8 @@ const UserPage = () => {
                    }
                 });
                   if (response.data.Status === 'Success') {
+                      const formattedDate = moment(response.data.Data.datamembership).format('MMMM Do YYYY');
+                      setDateMember(formattedDate);
                       setDataUser(response.data.Data);
                   }
                    else {
@@ -76,10 +79,7 @@ const UserPage = () => {
 
     return (
         <>
-        <div>
-            <Navbar/>
-        </div>
-        
+        <Navbar/>
         <Grid container  style={{ padding: '100px' }} spacing={1}>
               <Grid item xs={4} align="center" style={{ boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)' }}>
               <Avatar src={`http://localhost:3001/profileimages/` + dataUser.profileImage} 
@@ -88,20 +88,20 @@ const UserPage = () => {
               />
 
                    <Typography variant="h3" >{dataUser.username}</Typography>
-                   <Typography variant="subtitle1">Member since {dataUser.datamembership}</Typography>
+                   <Typography fontWeight="bold" variant="subtitle1" marginBottom='2rem'>Member since {datemember}</Typography>
                    <Groups username={username}/>
                    
               </Grid>
               <Grid item row xs={8} style={{ boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)', justifyContent: 'space-between' }}>
 
             <Box sx={{ padding: '100px', width: '100%' }}>
-                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                    <Tabs value={value} justifyContent="space-between" sx={{padding: '10px', margin: '10px'}} onChange={handleChange} aria-label="basic tabs example">
-                        <Tab label="Timeline" sx={{ color: '#228B22', fontSize: '13px' }} {...a11yProps(0)} />
-                        <Tab label="About"  sx={{ color: '#228B22', fontSize: '13px' }} {...a11yProps(1)} />
-                        <Tab label="Gallery"  sx={{ color: '#228B22', fontSize: '13px' }} {...a11yProps(2)} />
-                    </Tabs>
-                </Box>
+                        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                            <Tabs value={value} justifyContent="space-between" sx={{padding: '10px', margin: '10px'}} onChange={handleChange} aria-label="basic tabs example">
+                                <Tab label="Timeline" sx={{ color: '#228B22', fontSize: '2rem' }} {...a11yProps(0)} />
+                                <Tab label="About"  sx={{ color: '#228B22', fontSize: '2rem' }} {...a11yProps(1)} />
+                                <Tab label="Gallery"  sx={{ color: '#228B22', fontSize: '2rem' }} {...a11yProps(2)} />
+                            </Tabs>
+                        </Box>
                 <CustomTabPanel value={value} index={0}>
                     <Timeline username={username}/>
                 </CustomTabPanel>

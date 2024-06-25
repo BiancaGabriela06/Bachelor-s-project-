@@ -33,19 +33,16 @@ export const postArticleImages = (req, res) => {
 }
 
 export const postGroup = (req, res) => {
-    console.log("Add group");
-    console.log(req.body);
     db.query('Select id from users where username = ?', [req.body.admin], (err, data) => {
         if(err)
             console.log(err);
         else{
-            console.log(data[0])
             const iduser = data[0].id;
             if(iduser != 0){
                 const attributesString = JSON.stringify(req.body.attributes.join(','));
-                console.log(attributesString);
-                db.query('Insert into ecovoyage.groups (title, description, attributes, idadmin) VALUES (?, ?, ?, ?)', [req.body.title, req.body.description, attributesString, iduser], (err2, result) => {
-                    if(err)
+                db.query('Insert into ecovoyage.groups (title, description, attributes, idadmin) VALUES (?, ?, ?, ?)', 
+                    [req.body.title, req.body.description, attributesString, iduser], (err2, result) => {
+                    if(err2)
                         console.log("Error insert group: " + err2);
                     else {
                         db.query('Insert into group_user (groupid, userid) VALUES (?,?)', [result.insertId, iduser], (err3, data)=>{

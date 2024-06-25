@@ -231,7 +231,7 @@ export const userPosts = (req, res) => {
 export const getImages = (req, res) => {
     db.query(`Select p.image, p.location 
             from posts p join users u on u.id = p.userid
-            where u.username = 'BiancaA' AND p.image IS NOT NULL  AND p.image != ''
+            where u.username = ? AND p.image IS NOT NULL  AND p.image != ''
             order by p.date desc`, [req.query.username], (err, data) => {
                 if(err) console.log(err);
                 else {

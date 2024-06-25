@@ -155,16 +155,21 @@ const Calculator = ({ fromLocation, toLocation }) => {
                 </DialogContent>
                 {
                     trips.length!==0 && (
-                        <Grid container>
-                            <Typography style={{textAlign: 'center'}} variant="h4" >Options:</Typography>
-                            {trips.map((trip, index) => (
-                                <Typography key={index} style={{textAlign: 'center'}} variant="h5">
-                                    {index+1}. Using <span style={{fontWeight: 'bold', color: 'darkgreen'}}>{trip.Vehicle_title}</span>
-                                    : <span style={{fontWeight: 'bold', color: 'darkgreen'}}>{trip.Co2}</span>
-                                    kilograms emission CO2
+                        <Grid container direction="column" alignItems="center" marginBottom="2rem">
+                            <Grid item>
+                                <Typography style={{ textAlign: 'center' }} variant="h4">
+                                    Options:
                                 </Typography>
+                            </Grid>
+                            {trips.map((trip, index) => (
+                                <Grid item key={index}>
+                                    <Typography style={{ textAlign: 'center' }} variant="h5">
+                                        {index + 1}. Using <span style={{ fontWeight: 'bold', color: 'darkgreen' }}>{trip.Vehicle_title}</span>
+                                        : <span style={{ fontWeight: 'bold', color: 'darkgreen' }}>{trip.Co2e}</span> kilograms emission CO2
+                                    </Typography>
+                                </Grid>
                             ))}
-                        </Grid>
+                    </Grid>
                     )     
                 }
                 {error && (

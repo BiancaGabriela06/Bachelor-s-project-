@@ -12,7 +12,7 @@ const ReviewUsers = () => {
         <Grid style={{background: "linear-gradient(180deg, #B5BCBD, #eeeeee)"}}>
 			<div class="container">
                 <div class="mgb-40 padb-30 auto-invert line-b-4 align-center">
-                    <h1 class="font-cond-b fg-text-d lts-md fs-300 fs-300-xs no-mg" contenteditable="false">Read User Reviews</h1>
+                    <h1 class="font-cond-b fg-text-d lts-md fs-300 fs-300-xs no-mg">Read User Reviews</h1>
                 </div>
                 <ul class="hash-list cols-3 cols-1-xs pad-30-all align-center text-sm">
                     <li>

@@ -9,9 +9,10 @@ const WelcomeComponent = () => {
     const message1 = "Discover the World Responsibly: ".split(" ")
     const message2 = "EcoVoyage - Your Passport to Sustainable Travel Experiences!".split(" ")
     const navigate = useNavigate()
+    var token = localStorage.getItem("token");
 
     const handleClick = () => {
-        navigate("/trip");
+        navigate(`/trip/${token}`);
     }
 
     return (

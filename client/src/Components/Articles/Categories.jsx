@@ -3,11 +3,12 @@ import { Button, Box, ButtonGroup, Grid, Typography } from "@mui/material"
 
 const buttons = [
   { label: "All", category: ""},
-  { label: "Food", category: "food" },
+  { label: "Accomodation", category: "accomodation" },
   { label: "Vegan", category: "vegan" },
   { label: "Couple", category: "couple" },
   {label: "Europe", category: "europe"},
-  {label: "Eco", category: "eco"}
+  {label: "Eco", category: "eco"},
+  {label: "Mountains", category: "mountains"}
 ];
 
 const Categories = ({ onCategorySelect }) => {
@@ -22,7 +23,7 @@ const Categories = ({ onCategorySelect }) => {
     <>
       <Grid container padding = {5}>
         <Grid item  xs = {5} justifyContent="center">
-            <Typography style={{ fontWeight: 'bold'}}>CATEGORIES</Typography>
+            <Typography style={{ marginLeft: '3rem', fontWeight: 'bold'}}>CATEGORIES</Typography>
         </Grid>
         <Grid item  xs = {8} justifyContent="center">
             <Box sx={{ display: 'flex', '& > *': { m: 1, }, }}>

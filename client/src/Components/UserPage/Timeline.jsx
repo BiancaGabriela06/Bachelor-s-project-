@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
-import {Grid} from "@mui/material"
+import {Grid, Alert} from "@mui/material"
 import Post from "../Forum/Post"
 
 const Timeline = (username) => {
@@ -27,19 +27,24 @@ const Timeline = (username) => {
     return (
         <>
          <Grid container justifyContent="center">
-        {userPosts.map((post, index) => (
-              <Post
-                  postid={post.postid}
-                  user={post.username}
-                  likes = {post.likes}
-                  profileImage={post.profileImage}
-                  postData={post.date}
-                  description={post.description}
-                  location={post.location}
-                  group={post.title}
-                  photo={post.image}
-              />
-          ))}
+         {userPosts.length === 0 ? (
+        <Alert severity="info" sx={{fontSize: '3rem'}}>No posts found.</Alert>
+      ) : (
+        userPosts.map((post, index) => (
+          <Post
+            key={index}
+            postid={post.postid}
+            user={post.username}
+            likes={post.likes}
+            profileImage={post.profileImage}
+            postData={post.date}
+            description={post.description}
+            location={post.location}
+            group={post.title}
+            photo={post.image}
+          />
+        ))
+      )}
         </Grid>
         </>
     )

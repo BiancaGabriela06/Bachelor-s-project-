@@ -23,6 +23,16 @@ app.use(
   }),
 )
 
+const validatePassword = (password) => {
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasDigit = /\d/.test(password);
+    const hasSpecialChar = /[@$!%*?&]/.test(password);
+    const hasValidLength = password.length >= 8;
+
+    return hasLowerCase && hasUpperCase && hasDigit && hasSpecialChar && hasValidLength;
+};
+
 export const RegisterSendVerification = async (req, res) => {
     try {
       const error = validationResult(req);
@@ -37,11 +47,17 @@ export const RegisterSendVerification = async (req, res) => {
         return res.send({Status: "Error",  Error: 'Please insert a valid gmail!', });
       }
     
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-     if (req.body.password.length < 6 && !passwordRegex.test(req.body.password)){
+
+     if (req.body.password.length < 6){
         return res.send({Status: "Error",  
-        Error: 'Password needs to have at least 8 characters, at least one lowercase letter, one uppercase letter, one number and one special character. '});
+        Error: 'Password needs to have at least 8 characters'});
       }
+
+     if (!validatePassword(req.body.password)){
+        return res.send({Status: "Error",  
+        Error: 'Password needs to have at least one lowercase letter, one uppercase letter, one number and one special character.'});
+      }
+      
       const query = promisify(db.query).bind(db);
   
       const result = await query(
@@ -56,7 +72,7 @@ export const RegisterSendVerification = async (req, res) => {
       }
   
       const hash = await promisify(bycript.hash)(req.body.password, 10);
-      const image = 'icon-user.png';
+      const image = 'profile-user.png';
       const emailverified = 0;
   
       const insertResult = await query(
@@ -115,7 +131,6 @@ export const login = (req, res) => {
               return res.json({Status: "Error",  Error: "Wrong username or password."});
           }
           
-     
           /// get crypted password
           const isPasswordCorrect = bycript.compareSync(
               req.body.password, 
@@ -128,10 +143,10 @@ export const login = (req, res) => {
           } 
           else
               {   
-                  db.query("SELECT emailVerified from users where username = ?", [req.body.username], (err, result) => {
-                    if(err){
-                        console.log(err)
-                        return res.json({Status: "Error", Error: "Error in database query"});
+                  db.query("SELECT emailVerified from users where username = ?", [req.body.username], (err2, result) => {
+                    if(err2){
+                        console.log(err2)
+                        return res.json({Status: "Error", Error: "Email is not verified"});
                     }
                     else 
                        {
@@ -144,7 +159,8 @@ export const login = (req, res) => {
                             const id = data[0].id;
                             const mail = data[0].mail;
                             const token = generateToken(id, mail)
-                            db.query("UPDATE users SET tokenLogin = ? WHERE id = ?",[token, id], (error, message) => {
+                            console.log(token)
+                            db.query("UPDATE users SET tokenLogin = ? WHERE id = ?",[token, id], (error, data2) => {
                                 if(error) {
                                     console.log(error);
                                     return res.json({Status: "Error", Message: "Token not inserted in database"});
@@ -152,7 +168,7 @@ export const login = (req, res) => {
                                 else
                                 {
                                     console.log("Success")
-                                    console.log(data);
+                                    console.log(data2);
                                     const status="in-work";
                                     db.query("Insert into possible_itinerary (iduser, status) VALUES (?, ?)", [id, status], (err3, data3) =>{
                                         if(err) {

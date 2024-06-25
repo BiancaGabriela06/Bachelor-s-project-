@@ -12,7 +12,7 @@ const Home = () => {
 
     const [alert, setAlert] = useState(0);
     var currentUser = localStorage.getItem("currentUser");
-    const [username, setUsername] = useState(currentUser.replace(/^"|"$/g, ''));
+    const [username, setUsername] = useState(currentUser);
     const [nextTrip, setNextTrip] = useState("");
 
     const handleCloseNotification = () => {
@@ -20,21 +20,6 @@ const Home = () => {
     };
 
     useEffect(() => {
-      const fetchData1 = async () => {
-        try {
-          const response = await axios.get('http://localhost:3001/groups/needgroup', {params: {
-            username: username,
-             }});
-          if (response.data.Status === 'Yes') {
-            console.log("Da");
-            setAlert(1);
-          } else {
-            console.log(response.err);
-          }
-        } catch (error) {
-          console.error(error);
-        }
-      };
       const fetchData3 = async () => {
         try {
             const response = await axios.get('http://localhost:3001/itinerary/soonesttrip');
@@ -48,7 +33,6 @@ const Home = () => {
         }}
 
       fetchData3();
-      fetchData1();
     }, [])
 
     return (

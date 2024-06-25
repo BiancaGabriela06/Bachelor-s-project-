@@ -1,16 +1,14 @@
 import React, {useState} from "react";
 import axios from "axios";
 import videobackground from '../assets/videos/register-background.mp4'
-import {useNavigate} from 'react-router-dom'
 import {Typography , Alert, Link, Box, CssBaseline, Container, Avatar, TextField, Grid, Button}from '@mui/material';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import imageicon from "../assets/images/logo.png";
 import LoginIcon from '@mui/icons-material/Login';
 import '../Styling/Login.css'
 
 function Copyright(props) {
   return (
-    <Typography sx = {{backgroundColor: 'white'}}variant="body2" color="text.secondary" align="center" {...props}>
+    <Typography sx = {{backgroundColor: 'white'} } variant="h4" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="http://localhost:3000/home">
        EcoVoyage
@@ -21,10 +19,8 @@ function Copyright(props) {
   );
 }
 
-const defaultTheme = createTheme();
 
 const Register = () => {
-  const navigate = useNavigate();
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
 
@@ -53,14 +49,13 @@ const Register = () => {
 }
 
     return (
-      <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         
         <Box
           sx={{
             backgroundColor: 'white',
-            marginTop: 10,
+            marginTop: 3,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -69,7 +64,7 @@ const Register = () => {
         > 
           <Box component="img" 
           sx={{
-            marginTop: 5,
+            marginTop: 3,
             height: 150,
             width: 150,
             maxHeight: { xs: 200, md: 167 },
@@ -93,10 +88,19 @@ const Register = () => {
                   required
                   fullWidth
                   id="gmail"
-                  label="Gmail"
+                  placeholder="Gmail"
                   name="gmail"
                   autoComplete="gmail"
                   onChange = {e => setValues({...values, gmail: e.target.value})}
+                  sx={{
+                    '& .MuiInputBase-input': {
+                      padding: '16px', 
+                      fontSize: '18px', 
+                    },
+                    '& .MuiInputLabel-root': {
+                      fontSize: '18px', 
+                    },
+                  }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -104,10 +108,19 @@ const Register = () => {
                   required
                   fullWidth
                   id="username"
-                  label="Username"
+                  placeholder="Username"
                   name="username"
                   autoComplete="username"
                   onChange = {e => setValues({...values, username: e.target.value})}
+                  sx={{
+                    '& .MuiInputBase-input': {
+                      padding: '16px', 
+                      fontSize: '18px', 
+                    },
+                    '& .MuiInputLabel-root': {
+                      fontSize: '18px', 
+                    },
+                  }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -115,11 +128,20 @@ const Register = () => {
                   required
                   fullWidth
                   name="password"
-                  label="Password"
+                  placeholder="Password"
                   type="password"
                   id="password"
                   autoComplete="new-password"
                   onChange = {e => setValues({...values, password: e.target.value})}
+                  sx={{
+                    '& .MuiInputBase-input': {
+                      padding: '16px', 
+                      fontSize: '18px', 
+                    },
+                    '& .MuiInputLabel-root': {
+                      fontSize: '18px', 
+                    },
+                  }}
                 />
               </Grid>
             </Grid>
@@ -127,19 +149,15 @@ const Register = () => {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 3, mb: 2, fontSize: '1rem'  }}
               style={{ backgroundColor: '#137639'}}
-            >
-              Register
-            </Button>
+            >Register</Button>
             <Grid container justifyContent="flex-end">
               <Grid item >
-              <Link href="/login" variant="body2" style={{textDecoration: "none", color: "inherit"}}>
+              <Link href="/login" variant="h5" style={{textDecoration: "none", color: "inherit"}}>
                 Do you have an account? Sign in
-            </Link>
-
+              </Link>
               </Grid>
-              
             </Grid>
           </Box>
         </Box>
@@ -148,8 +166,6 @@ const Register = () => {
                 <source src={videobackground} type="video/mp4" />
         </video> 
       </Container>
-    </ThemeProvider>
-  
 );
 }
 

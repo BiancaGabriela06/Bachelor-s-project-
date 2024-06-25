@@ -15,6 +15,9 @@ function SimpleDialog({ open, onClose, article }) {
   const [images, setImages] = useState([]);
   const [comments, setComments] = useState([]);
   var [commentsBool, setShowComments] = useState(1);
+  const  categoriescleaned = article.categories.replace(/^"|"$/g, '');
+  const categories = categoriescleaned.split(',').map(category => category.trim()).join(', ');
+
   var idarticle = article.idarticle;
 
   var [comment, setComment] = useState({
@@ -115,9 +118,9 @@ function SimpleDialog({ open, onClose, article }) {
       <DialogTitle  sx={{ m: 'auto', p: 2, textAlign: 'center', color: '#228B22', fontSize: '4rem', fontWeight: 'bold'}} >{article.title}</DialogTitle>
       <DialogContent>
         <Grid>
-        <Typography onClick={() => handleNameClick(article.username)} variant="h4" sx={{marginLeft: '1rem'}}>Author: {article.username}</Typography>
-        <Typography variant="h4" sx={{marginLeft: '1rem'}}>Date: {article.date}</Typography>
-        <Typography variant="h4" sx={{marginLeft: '1rem'}}>Categories: {article.categories}</Typography>
+        <Typography onClick={() => handleNameClick(article.username)} variant="h4" sx={{marginLeft: '1rem'}}>Author: <span style={{ fontWeight: 'bold' }} >{article.username}</span></Typography>
+        <Typography variant="h4" sx={{marginLeft: '1rem'}}>Date: {new Date(article.date).toLocaleString()}</Typography>
+        <Typography variant="h4" sx={{marginLeft: '1rem'}}>Categories: {categories}</Typography>
         </Grid>
          <Grid sx={{marginTop: '4rem'}}>
           <Typography variant="h4" sx={{ pb: 2 }}>{article.text}</Typography>
@@ -236,13 +239,12 @@ const Article = ({ article }) => {
                 {article.title}
               </Typography>
             }
-            subheader={article.date}
+            subheader={new Date(article.date).toLocaleString()}
           />
           <CardMedia
             component="img"
             height="200"
             image={`http://localhost:3001/articleimages/${image}`}
-            
           />
         </Card>
       </Button>

@@ -207,9 +207,9 @@ const Post = ({postid, user, likes, profileImage, postData, description, locatio
         subheader={new Date(postData).toLocaleString()}
       />
       <CardContent>
-        <Typography variant="h5">{description}</Typography>
         <Typography variant="h6"><PlaceIcon sx={{fontSize: '2rem' , padding: "3px"}}/>{location}</Typography>
         <Typography variant="h6"><PeopleIcon sx={{fontSize: '2rem' , padding: "3px"}}/>{group}</Typography>
+        <Typography variant="h5" marginTop="2rem" >{description}</Typography> 
       </CardContent>
       {photo && <CardMedia component="img" image={`http://localhost:3001/postimages/` + photo} alt="Post" />}
       <CardContent>

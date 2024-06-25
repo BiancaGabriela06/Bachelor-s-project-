@@ -63,7 +63,7 @@ const Login = () => {
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         
-        <Box sx={{ backgroundColor: 'white', marginTop: 10, display: 'flex', flexDirection: 'column', alignItems: 'center' }}> 
+        <Box sx={{ backgroundColor: 'white', marginTop: 3, display: 'flex', flexDirection: 'column', alignItems: 'center' }}> 
           <Box component="img" 
           sx={{ marginTop: 5, height: 150, width: 150, 
             maxHeight: { xs: 200, md: 167 },

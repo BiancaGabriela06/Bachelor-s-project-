@@ -44,7 +44,7 @@ const Navbar = () => {
                         fontWeight: 'bold', color: 'white', textDecoration: 'none'
                         },
                     }}>Forum</Link>
-               <Link href="/explore" sx={{
+               <Link href={`/explore/${token}`} sx={{
                         color: 'white', fontSize: '2rem', textDecoration: 'none', marginRight: '5rem', 
                         '&:hover': {
                         fontWeight: 'bold', color: 'white', textDecoration: 'none'

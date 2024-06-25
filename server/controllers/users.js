@@ -185,7 +185,6 @@ export const getUsers = (req, res) => {
 
 export const get_userdata = (req, res) => {
     const username = req.query.username;
-    console.log('USer is : ' + username)
     const query = `Select u.username, u.profileImage,  DATE_FORMAT(ui.datamembership, '%Y-%m-%d') AS datamembership, ui.phonenumber, 
                     ui.emailContact, ui.aboutUser
                    From users u  JOIN users_info ui ON u.id = ui.iduser
@@ -193,7 +192,6 @@ export const get_userdata = (req, res) => {
     db.query(query, [username], (err, data) => {
         if(err) console.log(err);
         else {
-            console.log( data[0])
             return res.json({Status: "Success", Data: data[0]})
         }
     })

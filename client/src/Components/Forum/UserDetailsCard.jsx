@@ -4,8 +4,9 @@ import { Avatar, Card, CardContent, Typography, Grid } from '@mui/material';
 
 const UserDetailsCard = ({ user }) => {
   const navigate = useNavigate();
+  var token = localStorage.getItem("token");
   const handleNameClick = () => {
-    navigate(`/users/${user.username}`)
+    navigate(`/users/${user.username}/${token}`)
   };
   
 

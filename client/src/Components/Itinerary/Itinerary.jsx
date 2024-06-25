@@ -127,7 +127,7 @@ const Itinerary = ({itinerary}) => {
                 onClick={handleDelete} 
                 size = "large" 
                 color="success"  
-                sx={{ marginLeft: '35rem'}}
+                sx={{ marginLeft: '25rem'}}
             >Delete Itinerary</Button>
             <Button variant="contained" 
                 onClick={handleEdit} 

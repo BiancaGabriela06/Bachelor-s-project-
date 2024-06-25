@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import {Grid, Button, Autocomplete, TextField, Paper, 
        Card, Typography, CardContent,
-       CircularProgress, Box, Alert} from '@mui/material'
+       CircularProgress, Box, Alert, CardActions} from '@mui/material'
 import EastIcon from '@mui/icons-material/East';
 import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
 import FlightLandIcon from '@mui/icons-material/FlightLand';
@@ -10,61 +10,88 @@ import restaurant from "../../assets/images/restaurant.jpg";
 import bike from "../../assets/images/bike.jpg";
 
 const FlightDetailsComponent = ({ flightDetails }) => {
-    console.log(flightDetails)
     return (
-    <div style={{ width: "514px", margin: "16px" }}>
-         <Paper style={{ height: "100%", width: "95rem", padding: "20px" }}>
-            <Grid container spacing={2}>
-                 <Grid item style={{ marginLeft: "100px" }} sx={{ paddingRight: '200px' , borderRight: '1px solid #228B22' }}>
-                    <Typography variant="h4" fontWeight="bold"><FlightTakeoffIcon/>Departure</Typography>
-                    <Typography variant="h4" style={{ marginLeft: "100px" }}>{flightDetails.DepartureTime} <EastIcon/> {flightDetails.DepartureTimeArrival}</Typography>
-                    <Typography variant="h4" style={{ marginLeft: "100px" }}>{flightDetails.originStationCode}   {flightDetails.destinationStationCode}</Typography>
-                    <Typography variant="h4" fontWeight="bold"><FlightLandIcon/>Return</Typography>
-                    <Typography variant="h4" style={{ marginLeft: "100px" }}>{flightDetails.ArrivalTime} <EastIcon/>  {flightDetails.ArrivalTimeArrival}</Typography>
-                    <Typography variant="h4" style={{ marginLeft: "100px" }}>{flightDetails.destinationStationCode}   {flightDetails.originStationCode}</Typography>
-                 </Grid>
-                 <Grid item style={{ marginLeft: "200px" }}>
-                    <Button color="success" sx ={{fontSize: "20px"}} href={flightDetails.PurchaseLink} variant="outlined"  >SELECT</Button>
-                    <Typography variant="h6">{flightDetails.ClassOfservice}</Typography>
-                    <Typography variant="h6">Number of Stops: {flightDetails.NumberOfStops}</Typography>
-                    <Typography variant="h5">Total Price: {flightDetails.TotalPrice}</Typography>
-                    <Typography variant="h6">Total Price per Passenger: {flightDetails.TotalPricePerPassenger}</Typography>   
+        <div style={{ width: "514px", margin: "16px" }}>
+            <Grid container xs={15}>
+                <Grid item xs={6}>
+                    <Card style={{ height: "100%", width: "100rem" }}>
+                        <CardContent justifyContent="center">
+                            <Typography variant="h2" fontWeight="bold">
+                                <FlightTakeoffIcon /> Departure
+                            </Typography>
+                            <Typography variant="h3" style={{ marginLeft: "16px" }}>
+                                {flightDetails.DepartureTime} <EastIcon /> {flightDetails.DepartureTimeArrival}
+                            </Typography>
+                            <Typography variant="h3" style={{ marginLeft: "16px" }}>
+                                {flightDetails.originStationCode} <EastIcon /> {flightDetails.destinationStationCode}
+                            </Typography>
+                            <Typography variant="h2" fontWeight="bold" style={{ marginTop: "16px" }}>
+                                <FlightLandIcon /> Return
+                            </Typography>
+                            <Typography variant="h3" style={{ marginLeft: "16px" }}>
+                                {flightDetails.ArrivalTime} <EastIcon /> {flightDetails.ArrivalTimeArrival}
+                            </Typography>
+                            <Typography variant="h3" style={{ marginLeft: "16px" }}>
+                                {flightDetails.destinationStationCode} <EastIcon /> {flightDetails.originStationCode}
+                            </Typography>
+                        </CardContent>
+                    </Card>
                 </Grid>
-            </Grid> 
-        </Paper>
-    </div>   
+                <Grid item xs={6}>
+                    <Card style={{ height: "100%", width: "95rem",  }}>
+                        <CardContent style={{marginLeft: '10rem'}}>
+                            <Typography variant="h4" style={{ marginTop: "16px" }}>
+                                Class of Service: {flightDetails.ClassOfservice}
+                            </Typography>
+                            <Typography variant="h4">
+                                Number of Stops: {flightDetails.NumberOfStops}
+                            </Typography>
+                            <Typography variant="h4">
+                                Total Price: {flightDetails.TotalPrice}
+                            </Typography>
+                            <Typography variant="h4">
+                                Total Price per Passenger: {flightDetails.TotalPricePerPassenger}
+                            </Typography>
+                            <Button color="success" sx={{ fontSize: "20px", marginTop: "16px" }} href={flightDetails.PurchaseLink} variant="outlined">
+                                SELECT
+                            </Button>
+                        </CardContent>
+                    </Card>
+                </Grid>
+            </Grid>
+        </div>
     );
-  };
+};
 
 const RentBikesComponent = ({rentBikesDetails}) => {
     return (
         <>
-         <div style={{ width: "50rem", margin: "16px" }}>
-         <Grid container>
-         {rentBikesDetails.Photo !== null ? (
-            <Grid item xs={6}>
-                <img src={rentBikesDetails.Photo} alt="Rent Bikes" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-            </Grid>
-        ) : (
-            <Grid item xs={6}>
-                <img src={bike} alt="Rent Bikes2" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-            </Grid>
-        )}
+         <div style={{ width: "514px", margin: "16px" }}>
+            <Grid container>
+                {rentBikesDetails.Photo !== null ? (
+                    <Grid item xs={6}>
+                        <img src={rentBikesDetails.Photo} alt="Rent Bikes" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                    </Grid>
+                ) : (
+                    <Grid item xs={6}>
+                        <img src={bike} alt="Rent Bikes2" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                    </Grid>
+                )}
 
-        <Grid item xs={6}>
-            <Card style={{ height: "100%", width: "95rem", padding: "20px" }}>
-                <CardContent>
-                    <Typography variant="h3">{rentBikesDetails.Name}</Typography>
-                    <Typography variant="h4">Address: {rentBikesDetails.Address}</Typography>
-                    <Typography variant="h4">Review: {rentBikesDetails.Rating}</Typography>
-                    <Button color="success" variant="outlined" href={rentBikesDetails.Link_Map}>Use Google Maps</Button>
-                    {rentBikesDetails.Website && (
-                        <Button href={rentBikesDetails.Website}>Website</Button>
-                    )}
-                </CardContent>
-            </Card>
-        </Grid>
-    </Grid>
+                <Grid item xs={6}>
+                    <Card style={{ height: "100%", width: "95rem", padding: "20px" }}>
+                        <CardContent>
+                            <Typography variant="h3">{rentBikesDetails.Name}</Typography>
+                            <Typography variant="h4">Address: {rentBikesDetails.Address}</Typography>
+                            <Typography variant="h4">Review: {rentBikesDetails.Rating}</Typography>
+                            <Button color="success" variant="outlined" href={rentBikesDetails.Link_Map}>Use Google Maps</Button>
+                            {rentBikesDetails.Website && (
+                                <Button href={rentBikesDetails.Website}>Website</Button>
+                            )}
+                        </CardContent>
+                    </Card>
+                </Grid>
+             </Grid>
          </div>
         </>
     )
@@ -132,6 +159,7 @@ const AttractionComponent = ({attractionDetails}) => {
         </>
     )
 }
+
 const BarSearchTrip = ({ fromLocation, setFromLocation, toLocation, setToLocation }) => {
     
     const [places, setPlaces] = useState([])
@@ -311,12 +339,29 @@ const BarSearchTrip = ({ fromLocation, setFromLocation, toLocation, setToLocatio
                     />
 
                 </Grid>
-                <Grid item >
-                     <TextField type="date" value={selectedDateFrom} inputProps={{ style: { fontSize: '1.5rem' } }} variant="outlined" onChange={handleDateFrom} required />
-                </Grid>
-                <Grid item >
-                    <TextField type="date" value={selectedDateTo} inputProps={{ style: { fontSize: '1.5rem' } }} variant="outlined" onChange={handleDateTo} required />
-                </Grid>
+                <Grid item>
+                        <TextField
+                            type="date"
+                            value={selectedDateFrom}
+                            inputProps={{ style: { fontSize: '1.5rem' } }}
+                            variant="outlined"
+                            onChange={handleDateFrom}
+                            required
+                        />
+                    </Grid>
+                <Grid item>
+                        <TextField
+                            type="date"
+                            value={selectedDateTo}
+                            inputProps={{
+                                style: { fontSize: '1.5rem' },
+                                min: selectedDateFrom  // Set the minimum date for the end date input
+                            }}
+                            variant="outlined"
+                            onChange={handleDateTo}
+                            required
+                        />
+                    </Grid>
                 <Grid item >
                     <TextField type="text" placeholder="1 traveller" inputProps={{ style: { fontSize: '1.5rem' } }} variant="outlined" value={numPersons} onChange={handlePersons} />
                 </Grid>
@@ -337,7 +382,7 @@ const BarSearchTrip = ({ fromLocation, setFromLocation, toLocation, setToLocatio
                 There are no economic flights for this trip.
             </Alert>
         ) : null}
-        <div style={{ overflowY: 'scroll', overflowX: 'hidden',  margin: '4rem'}}>
+        <div style={{ overflowY: 'scroll', overflowX: 'hidden', maxHeight: '400px', margin: '20px'}}>
            {flights && flights.map((flight, index) => (
                 <div key={index}>
                     <FlightDetailsComponent flightDetails={flight}/>

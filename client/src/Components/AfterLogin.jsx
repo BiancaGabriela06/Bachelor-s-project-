@@ -105,9 +105,7 @@ const Accesibility = () => {
               }}
             >
               <MenuItem onClick={handleProfile}>Profile</MenuItem>
-              {admin && (
-                  <MenuItem onClick={handleDashboard}>Dashboard</MenuItem> 
-               )}
+              {admin === 1 && <MenuItem onClick={handleDashboard}>Dashboard</MenuItem>  }
               <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
         </>

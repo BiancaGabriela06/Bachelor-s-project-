@@ -30,7 +30,7 @@ const ForgotPassword = () => {
     }
     return (
       <Grid container justifyContent="center">
-      <Card sx={{ width: 500, textAlign: 'center', marginTop: '10rem' }}>
+      <Card sx={{ width: 500, textAlign: 'center', marginTop: '3rem' }}>
         <CardHeader
           title="Password Reset"
           titleTypographyProps={{ variant: 'h3', color: 'white' }}

@@ -110,12 +110,9 @@ const Profile = () => {
     }, []);
 
 
-    return (
+    return ( 
         <>
-            <div>
-                <Navbar/>
-            </div>
-            
+            <Navbar/>
             <Grid container  style={{ padding: '100px' }} spacing={1}>
                   <Grid item xs={4} align="center" style={{ boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)' }}>
                   <Avatar src={`http://localhost:3001/profileimages/` + profileImage} 

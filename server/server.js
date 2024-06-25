@@ -75,7 +75,7 @@ const storage = multer.diskStorage({
 const upload = multer({storage: storage});
 
 app.post("/image/profile", upload.single('file'), (req, res, err) => {
-
+  console.log(req.file.filename)
   return res.json({
     Status: "Success",
     filename: req.file.filename
@@ -84,6 +84,7 @@ app.post("/image/profile", upload.single('file'), (req, res, err) => {
 });
 
 app.post("/image/profile/user", (req,res, err) => {
+  console.log(req.body.filename)
   const query = "UPDATE users SET profileImage = ? where username = ?";
   db.query(query, [req.body.filename, req.body.user], (err, result) => {
     if(err) return json(err);

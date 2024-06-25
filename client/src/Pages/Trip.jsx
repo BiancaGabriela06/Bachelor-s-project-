@@ -1,9 +1,8 @@
 import React, {useState} from 'react'
 import Navbar from "../Components/Navbar"
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Map from "../Components/Map"
 import BarSearchTrip from '../Components/InfoTrip/BarSearchTrip';
-import {ImageList, Grid, Typography, Card, CardMedia, CardContent, CardActions, Button} from '@mui/material';
+import {Grid, Typography, Card, CardMedia, CardContent, CardActions, Button} from '@mui/material';
 import Footer from "../Components/Footer";
 import cover from "../assets/images/cover.png";
 import instructionspik from "../assets/images/instructionspik.jpg"

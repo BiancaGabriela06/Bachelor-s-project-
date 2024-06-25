@@ -41,8 +41,6 @@ export const getGroups = (req, res) => {
                     attributes: group.attributes.split(',').map(attribute => attribute.trim())
                 }));
                 
-               
-                // Check if the user is a member of each group
                 db.query(`
                     SELECT gu.groupid 
                     FROM users u JOIN group_user gu ON u.id = gu.userid 

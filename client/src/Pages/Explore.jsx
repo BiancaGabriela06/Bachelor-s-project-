@@ -1,13 +1,13 @@
-import React, {useEffect, axios, useState} from 'react'
+import React, {useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import Navbar from "../Components/Navbar"
 import Footer from "../Components/Footer"
-import {Grid, Typography, Divider, Button} from "@mui/material"
+import {Grid, Divider} from "@mui/material"
 import Intro from "../Components/Articles/Intro"
-import SearchBar from '../Components/Articles/SearchBar'
 import Categories from '../Components/Articles/Categories'
 import Articles from '../Components/Articles/Articles'
 import OpenItinerary from '../Components/Itinerary/OpenItinerary'
+import Feedback from "../Components/Feedback";
 
 const Explore = () => {
   const navigate =  useNavigate();
@@ -33,6 +33,7 @@ const Explore = () => {
           <Articles selectedCategory={selectedCategory} />
           </Grid>
         </Grid>
+        <Feedback/>
         <OpenItinerary/>
         <Footer/>
         </>

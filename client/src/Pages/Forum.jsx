@@ -7,10 +7,9 @@ import Groups from '../Components/Forum/Groups';
 import FeedForum from '../Components/Forum/FeedForum';
 import Users from "../Components/Forum/Users"
 import OpenItinerary from '../Components/Itinerary/OpenItinerary';
+import Feedback from "../Components/Feedback";
 
 const Forum = () => {
-    var currentUser = localStorage.getItem("currentUser");
-    const [username, setUsername] = useState(currentUser.replace(/^"|"$/g, ''));
     const [selectedGroup, setSelectedGroup] = useState(null);
 
     const handleGroupSelect = (group) => {
@@ -35,6 +34,7 @@ const Forum = () => {
                 </Grid>
             </Grid>
             <OpenItinerary/>
+            <Feedback/>
             <div>
                 <Footer/>
             </div>
