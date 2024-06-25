@@ -52,7 +52,7 @@ export const attractions = async (req, res) => {
 
                   attractionsArray.push(Attraction)
               }
-              console.log(attractionsArray);
+             
               return res.json({Status: "Success", Data: attractionsArray})
 
 

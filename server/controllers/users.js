@@ -105,7 +105,6 @@ export const userInfo = (req, res) => {
             }
           
             else if(data.length != 0) {
-                console.log(data[0])
                 return res.json({Status: "Success", data: data[0]});
             }
         })
@@ -177,7 +176,6 @@ export const getUsers = (req, res) => {
     db.query(query, [], (err, data) => {
         if(err) console.log(err);
         else {
-            console.log(data);
             return res.json({Status: "Success", Data: data})
         }
     })
@@ -251,7 +249,6 @@ export const getUserId = (req, res) => {
             return res.json(err);
         }
         else{
-            console.log(data[0].id)
             return res.send({ Status: 'Success', Data: data[0].id });
         }
     })

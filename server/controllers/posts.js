@@ -125,7 +125,7 @@ export const deleteComment = (req, res) => {
 }
 
 export const posts = (req, res) => {
-    const query1 = `SELECT 
+    const query1 = `SELECT DISTINCT
                     p.postid, 
                     u.username, 
                     p.image, 
@@ -145,6 +145,7 @@ export const posts = (req, res) => {
     db.query(query1, [], (err, data) => {
         if(err) console.log(err)
         else{
+          console.log(data)
           return res.json({Status: "Success", Data: data})
        
     }
@@ -202,7 +203,7 @@ export const increaseLikes = (req, res) => {
 }
 
 export const userPosts = (req, res) => {
-    const query1 = `SELECT 
+    const query1 = `SELECT DISTINCT
                     p.postid, 
                     u.username, 
                     p.image, 
@@ -222,6 +223,7 @@ export const userPosts = (req, res) => {
     db.query(query1, [req.query.username.username], (err, data) => {
         if(err) console.log(err)
         else{
+          console.log(data);
           return res.json({Status: "Success", Data: data})
        
     }

@@ -82,7 +82,6 @@ export const RegisterSendVerification = async (req, res) => {
   
       const mailSubject = 'Mail Verification';
       const randomToken = Randomstring.generate();
-      console.log(randomToken);
       const content = `<p>Hii ${req.body.username}, Please <a href="http://localhost:3000/verify-mail?token=${randomToken}">verify your email</a></p>`;
   
       await sendMail(req.body.gmail, mailSubject, content);
@@ -150,6 +149,7 @@ export const login = (req, res) => {
                     }
                     else 
                        {
+                        console.log(result.emailVerified)
                         if(result.emailVerified == 0)
                             {
                                 console.log("Email-ul not verified. Check you mails.");
