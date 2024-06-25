@@ -109,23 +109,26 @@ const Days = () => {
               style={{ marginBottom: '3rem' }}
             />
           <Typography style={{ marginBottom: '0.5rem' }}>Start Date</Typography>
-          <TextField 
-              type="date" 
-              inputProps={{ style: { fontSize: '1.5rem' } }}
-              style={{ marginBottom: '1.5rem' }} 
-              value={selectedDateFrom} 
-              variant="outlined" 
-              onChange={handleDateFrom} 
-          />
+          <TextField
+                            type="date"
+                            value={selectedDateFrom}
+                            inputProps={{ style: { fontSize: '1.5rem' } }}
+                            variant="outlined"
+                            onChange={handleDateFrom}
+                            required
+                        />
           <Typography style={{ marginBottom: '0.5rem' }}>End Date</Typography>
-          <TextField 
-           type="date" 
-           style={{ marginBottom: '1.5rem' }} 
-           inputProps={{
-           style: { fontSize: '1.5rem' },
-           min: selectedDateFrom  // Set the minimum date for the end date input
-          }}
-          value={selectedDateTo} variant="outlined" onChange={handleDateTo} />
+          <TextField
+                            type="date"
+                            value={selectedDateTo}
+                            inputProps={{
+                                style: { fontSize: '1.5rem' },
+                                min: selectedDateFrom 
+                            }}
+                            variant="outlined"
+                            onChange={handleDateTo}
+                            required
+                        />
           <TextField
             id="trip-plan"
             label="Trip Notes"

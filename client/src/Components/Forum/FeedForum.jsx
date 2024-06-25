@@ -40,8 +40,11 @@ const FeedForum = ({selectedGroup}) => {
             try{
                 axios.get('http://localhost:3001/groups/groupuser', {params: { username: username}})
                 .then(response => {
-                    if(response.data.Status === 'Success')
-                    setGroups(response.data.Data);
+                    if(response.data.Status === 'Success'){
+                        setGroups(response.data.Data);
+                        console.log(response.data.Data)
+                    }
+                    
                 })
                 .catch(error => {
                     console.error("Error fetching groups:", error);

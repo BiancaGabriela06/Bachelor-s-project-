@@ -11,7 +11,7 @@ const NotificationProfile = ({itinerary,  onClose }) => {
 
     return (
       <>
-      <Alert sx={{marginLeft: '4rem', marginRight: '4.5rem'}} className="notification" severity="info">
+      <Alert sx={{marginLeft: '4rem', marginTop:'4rem', marginBottom:'4rem', marginRight: '4.5rem'}} className="notification" severity="info">
         <Button  sx={{marginLeft: '23rem', textAlign: 'center'  }} onClick={onClose}><CancelPresentationIcon/></Button>
         <Typography variant="h3" sx={{textAlign: 'center' }} >Upcoming Trip: {itinerary.title}</Typography>
         <Typography variant="h4" sx={{ fontWeight: 'bold', textAlign: 'center'  }} >Days Until Trip: {daysUntilTrip}</Typography>
