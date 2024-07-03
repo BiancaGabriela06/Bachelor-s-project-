@@ -14,14 +14,24 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 function SimpleDialog(props) {
-  const { onClose, answer, open } = props;
+  const { onClose, answer, open, postid } = props;
 
   const handleClose = () => {
     onClose(answer);
   };
 
   const handleDelete = (value) => {
+    try{
+    
+      const response = axios.delete(`http://localhost:3001/posts/deletepost/${postid}`);
+      if(response.data.Status === 'Success'){
+        window.location.reload(false);
+      }
+     }catch(error){
+      console.log(error);
+     }
       onClose(value);
+      window.location.reload(false);
   }
   return (
     <Dialog onClose={handleClose} open={open}>
@@ -196,6 +206,7 @@ const Post = ({postid, user, likes, profileImage, postData, description, locatio
         answer={answer}
         open={open}
         onClose={handleClose}
+        postid = {postid}
       />
       <CardHeader
         avatar={<Avatar src={`http://localhost:3001/profileimages/` + profileImage} alt={user} />}

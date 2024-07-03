@@ -4,6 +4,8 @@ export const insertPost = (req, res) => {
 
     console.log(req.body);
     const query = "Select id from users where username = ?"
+    if(req.body.group == '')
+        return res.json({Status: 'Error', Error: 'Please select a group or join a group if you are not still a member.'})
     db.query(query, [req.body.username], (err, data) => {
         if(err) {
             console.log(err);

@@ -4,7 +4,6 @@ import { promisify } from "util";
 import { validationResult } from "express-validator";
 import Randomstring from "randomstring";
 import sendMail from '../helpers/sendMail.js'
-import jwt from 'jsonwebtoken'
 import session from 'express-session'
 import express from 'express'
 import {generateToken} from '../helpers/jwtHelper.js'

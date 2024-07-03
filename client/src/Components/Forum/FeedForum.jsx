@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
-import {Container, Grid, Avatar, Button, TextField, Autocomplete, Typography} from "@mui/material"
+import {Container, Grid, Avatar, Alert, Button, TextField, Autocomplete, Typography} from "@mui/material"
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import FeedPosts from './FeedPosts';
 
@@ -13,6 +13,7 @@ const FeedForum = ({selectedGroup}) => {
     const [location, setLocation] = useState("")
     const [groups, setGroups] = useState([])
     var [profileImage, setProfileImage] = useState();
+    const [error, setError] = useState('');
 
     const [post, setPost] = useState({
         username: "",
@@ -108,6 +109,7 @@ const FeedForum = ({selectedGroup}) => {
                    window.location.reload(false);
               }
               else{
+                 setError(res.data.Error);
                  console.log(res.data.Error)
               }
         })
@@ -175,6 +177,10 @@ const FeedForum = ({selectedGroup}) => {
                                 <Grid item xs = {3} style={{marginTop: '2rem'}}>
                                     <Button variant = "contained" color="success" onClick={sharePost}>Share Post</Button>
                                 </Grid>
+                        
+                        {error && (
+                            <Alert severity="error" sx={{fontSize: '2rem'}}>{error}</Alert>
+                        )}
                                  
         </Grid>
         <Grid container>
