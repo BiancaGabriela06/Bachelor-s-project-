@@ -183,12 +183,21 @@ export const updateItinerary = (req, res) => {
 }
 
 export const soonestTrip = (req, res) => {
-  db.query('SELECT * FROM itinerary WHERE start_date > NOW() ORDER BY start_date ASC LIMIT 1', (err, data)=>{
-    if(err){
-      console.log(err);
+  console.log(req.query.username);
+  db.query('Select id from users where username = ?', [req.query.username], (error, result) =>{
+    if(error) {
+      console.log(error)
     }
     else{
-      return res.json({Status: "Success", Data: data[0]})
-    }
-  })
+      console.log(result[0])
+        db.query('SELECT * FROM itinerary WHERE iduser = ? and start_date > NOW() ORDER BY start_date ASC LIMIT 1', [result[0].id], (err, data)=>{
+          if(err){
+            console.log(err);
+          }
+          else{
+            return res.json({Status: "Success", Data: data[0]})
+          }
+        })
+      }
+    });
 }

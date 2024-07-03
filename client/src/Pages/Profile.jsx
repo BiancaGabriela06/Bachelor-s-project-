@@ -94,7 +94,10 @@ const Profile = () => {
             };
           const fetchData3 = async () => {
               try {
-                  const response = await axios.get('http://localhost:3001/itinerary/soonesttrip');
+                  const response = await axios.get('http://localhost:3001/itinerary/soonesttrip', {params: {
+                    username: username,
+                     }
+                  })
                   if (response.data.Status === 'Success') {
                       setNextTrip(response.data.Data);
                   } else {
